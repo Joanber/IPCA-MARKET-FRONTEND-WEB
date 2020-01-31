@@ -1,0 +1,10 @@
+.form-login {
+    border-top: solid 10px #33d9b2;
+    border-bottom: solid 10px #33d9b2;
+}
+
+.mi-shadow {
+    -webkit-box-shadow: inset -13px 13px 17px -15px rgba(48, 57, 82, 1);
+    -moz-box-shadow: inset -13px 13px 17px -15px rgba(48, 57, 82, 1);
+    box-shadow: inset -13px 13px 17px -15px rgba(48, 57, 82, 1);
+}

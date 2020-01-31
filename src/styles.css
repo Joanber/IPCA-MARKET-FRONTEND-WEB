@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
+.bg-pri {
+    background-color: #042331 !important;
+}
+
+.bg-sec {
+    background-color: white !important
+}

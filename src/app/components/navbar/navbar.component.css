@@ -9,3 +9,21 @@ a {
 .fa {
     background-color: white;
 }
+
+.navbar ul a {
+    /* display: block; */
+    height: 100%;
+    width: 100%;
+    line-height: 65px;
+    font-size: 20px;
+    /* color: white; */
+    padding-left: 40px;
+    /* box-sizing: border-box; */
+    border-top: 1px solid rgba(255, 255, 255, .1);
+    /* border-bottom: 1px solid black; */
+    /* transition: .4s; */
+}
+
+.navbar ul a i {
+    margin-right: 6px;
+}

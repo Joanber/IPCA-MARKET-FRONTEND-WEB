@@ -6,11 +6,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UsuarioService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  url="http://localhost:2727/usuario/";
+  url = 'http://localhost:2727/usuario/';
 
-  login(username:string, password:string){
-    
+  login(username: string , password: string) {
   }
 }

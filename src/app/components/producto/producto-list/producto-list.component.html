@@ -1,0 +1,33 @@
+<h1>Lista de Productos</h1>
+<hr>
+<div>
+    <button class="btn btn-primary" routerLink="/producto-add"><i class="fa fa-cookie"></i><i class="fa fa-plus"></i></button>
+</div>
+<br>
+<div>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Categoria</th>
+                <th>Foto</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let producto of categoriaLista">
+                <td>{{ producto.productos[0].nombre_producto }}</td>
+                <td>{{ producto.productos[0].precio_producto }}</td>
+                <td>{{ producto.productos[0].cantidadActual_producto }}</td>
+                <td>{{ producto.nombre_categoria }}</td>
+                <td>{{ producto.productos[0].foto_producto }}</td>
+                <td>
+                    <button class="btn btn-warning"><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-danger ml-2"><i class="fa fa-trash"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,35 @@
+<h1>Lista de Personas</h1>
+<hr>
+<div>
+    <button class="btn btn-primary" routerLink="/persona-add"><i class="fa fa-user-plus"></i></button>
+</div>
+<br>
+<div>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>N. Cedula</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Telefono</th>
+                <th>Email</th>
+                <th>Foto</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor=" let persona of listaPersonas">
+                <td>{{persona.cedula_persona}}</td>
+                <td>{{persona.primer_nombre_persona}}</td>
+                <td>{{persona.primer_apellido_persona}}</td>
+                <td>{{persona.telefono_persona}}</td>
+                <td>{{persona.email_persona}}</td>
+                <td>{{persona.foto_persona}}</td>
+                <td>
+                    <button class="btn btn-warning"><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-danger ml-2"><i class="fa fa-trash"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

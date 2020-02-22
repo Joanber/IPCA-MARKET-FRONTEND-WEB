@@ -9,20 +9,20 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  public showMessage: boolean = false;
-  public usuario: Usuario = {
-    idUsuario:'',
+  showMessage = false;
+  usuario: Usuario = {
+    idUsuario: '',
     nombreUsuario: '',
     passwordUsuario: '',
-    idPersona:null
-  }
+    idPersona: null
+  };
   constructor(
-    private  router:Router
+    private  router: Router
   ) { }
 
   ngOnInit() {
   }
-  clickIniciarSesion(){
+  clickIniciarSesion() {
     this.router.navigate(['home']);
   }
 

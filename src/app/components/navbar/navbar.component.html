@@ -1,18 +1,26 @@
 <nav class="navbar navbar-expand-lg bg-pri text-white ">
 
-    <a class="navbar-brand"><img src="../../../assets/img/tienda.png" class="img-fluid" alt="">Ipca Market</a>
+    <a class="navbar-brand" routerLink="home"><img src="../../../assets/img/tienda.png" class="img-fluid" alt="">Ipca Market</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fa fa-bars" aria-hidden="true"></i>
     </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <div id="navbar" class="collapse navbar-collapse" id="navbarTogglerDemo01">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="nav-link"> <span> <i class="fas fa-pizza-slice"></i> </span>Productos</a>
+            <li class="nav-item ">
+                <a class="nav-link" routerLink="/producto-list"> <span> <i class="fas fa-pizza-slice"></i> </span>Productos</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Lista
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" routerLink="/persona-list">Persona</a>
+                    <a class="dropdown-item" routerLink="/usuario-list">Usuario</a>
+                </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link"><i class="fas fa-address-book"></i>Personas</a>
+                <a class="nav-link" routerLink="/inventario"><i class="fas fa-dollar-sign"></i>Inventario</a>
             </li>
-
         </ul>
 
     </div>

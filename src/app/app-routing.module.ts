@@ -13,8 +13,8 @@ import { UsuarioAddComponent } from './components/usuario/usuario-add/usuario-ad
 
 
 const routes: Routes = [
-  { path: '', component: LoginComponent},
-  { path: 'principal',
+  { path: 'login', component: LoginComponent},
+  { path: '',
     component: PrincipalComponent,
     children: [
       { path: 'home', component: HomeComponent },

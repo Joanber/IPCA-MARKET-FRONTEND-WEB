@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       user=>{
         sessionStorage.setItem('userssp', user.username);
         sessionStorage.setItem('usertokenss', user.token);
-        this.router.navigate(['principal']);
+        this.router.navigate(['home']);
       },
       err=>{
         console.log('No nos logueamos');

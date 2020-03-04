@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario';
 import { Router } from '@angular/router';
+import { UsuarioService } from '../services/usuario/usuario.service';
 
 @Component({
   selector: 'app-login',
@@ -8,22 +9,39 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  showMessage = false;
-  usuario: Usuario = {
-    idUsuario: '',
-    nombreUsuario: '',
-    passwordUsuario: '',
-    idPersona: null
-  };
+  username: string = '';
+  password = '';
+  esValido = true;
+  
   constructor(
-    private  router: Router
+    private  router: Router,
+    private usuarioService:UsuarioService
   ) { }
 
   ngOnInit() {
   }
-  clickIniciarSesion() {
-    this.router.navigate(['home']);
+
+  login(){
+    let res=this.usuarioService.login(
+      this.username,this.password
+    )
+
+    res.subscribe(
+      user=>{
+        sessionStorage.setItem('userssp', user.username);
+        sessionStorage.setItem('usertokenss', user.token);
+        this.router.navigate(['principal']);
+      },
+      err=>{
+        console.log('No nos logueamos');
+        console.log(err);
+        this.esValido=false
+      }
+    )
+  }
+ 
+  cerrarError() {
+    this.esValido = true;
   }
 
 }

@@ -1,6 +1,6 @@
 <div class="container mt-5">
 
-    <div *ngIf="showMessage" class="alert alert-danger" role="alert">
+    <div *ngIf="" class="alert alert-danger" role="alert">
         Datos Incorrectos!
     </div>
     <div class="row justify-content-center">
@@ -14,8 +14,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="">Username:</label>
-                    <input required class="form-control" type="text" name="user" placeholder="Nombre de Usuario" #user="ngModel" [(ngModel)]="usuario.nombreUsuario">
+                    <label for="" class="control-label">Usuario:</label>
+                    <input required class="form-control" type="text" name="user" placeholder="Nombre de Usuario" #user="ngModel" [(ngModel)]="username">
 
                     <p class="input-err-12" *ngIf="user.hasError('required') && user.touched">
                         El usuario es un campo requerido!
@@ -26,7 +26,7 @@
 
                 <div class="form-group ">
                     <label for="">Password:</label>
-                    <input required class="form-control" type="password" name="psswrd" placeholder="Contraseña" #psswrd="ngModel" [(ngModel)]="usuario.passwordUsuario">
+                    <input required class="form-control" type="password" name="psswrd" placeholder="Contraseña" #psswrd="ngModel" [(ngModel)]="password">
 
                     <p class="input-err-12" *ngIf="psswrd.hasError('required') && psswrd.touched">
                         El password es un campo requerido!
@@ -35,7 +35,7 @@
                 <!--INPUT PASSWORD-->
                 <div class="form-group mt-4">
 
-                    <button type="submit" [disabled]="loginForm.invalid" class="btn btn-block btn-primary" [routerLink]="['dashboard']" (click)="clickIniciarSesion()">Ingresar</button>
+                    <button type="submit" [disabled]="loginForm.invalid" class="btn btn-block btn-primary" (click)="login()">Ingresar</button>
                 </div>
 
             </form>

@@ -22,8 +22,9 @@ const routes: Routes = [
       { path: 'usuario-add', component: UsuarioAddComponent },
       { path: 'producto-list', component: ProductoListComponent },
       { path: 'producto-add', component: ProductoComponent },
-      { path: 'persona-list', component: PersonasListComponent },
-      { path: 'persona-add', component: PersonasAddComponent },
+      { path: 'personas', component: PersonasListComponent },
+      { path: 'personas/form', component: PersonasAddComponent },
+      { path: 'personas/form/:id', component: PersonasAddComponent },
       { path: 'inventario', component: InventarioComponent },
       { path: '**', pathMatch: 'full', redirectTo: 'home' }
     ]

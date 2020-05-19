@@ -1,33 +1,40 @@
-<h1>Lista de Personas</h1>
-<hr>
+<div class="text-center">
+    <h1>Personas</h1>
+</div>
+<hr class="separador-pri w-100 ">
 <div>
-    <button class="btn btn-primary" routerLink="/persona-add"><i class="fa fa-user-plus"></i></button>
+    <button class="btn bg-pri" style="width: 60px;" routerLink="/personas/form"><i class="fa fa-user-plus"></i></button>
 </div>
 <br>
 <div>
-    <table class="table">
-        <thead class="thead-dark">
+    <div class="alert alert-info text-center" *ngIf=" personas?.length==0 ">
+        No hay Registros
+    </div>
+    <table class="table table-bordered table-striped table-responsive-md text-center " *ngIf="personas?.length>0">
+        <thead class="bg-pri white">
             <tr>
-                <th>N. Cedula</th>
+                <th>Foto</th>
+                <th># Cedula</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Telefono</th>
-                <th>Email</th>
-                <th>Foto</th>
                 <th>Acción</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor=" let persona of listaPersonas">
-                <td>{{persona.cedula_persona}}</td>
-                <td>{{persona.primer_nombre_persona}}</td>
-                <td>{{persona.primer_apellido_persona}}</td>
-                <td>{{persona.telefono_persona}}</td>
-                <td>{{persona.email_persona}}</td>
-                <td>{{persona.foto_persona}}</td>
+            <tr *ngFor=" let persona of personas">
                 <td>
-                    <button class="btn btn-warning"><i class="fa fa-edit"></i></button>
-                    <button class="btn btn-danger ml-2"><i class="fa fa-trash"></i></button>
+                    <img class="img-fluid rounded" *ngIf="persona.fotoHashCode" [src]="baseEndpoint + '/img/' + persona.id + '?fotoHashCode=' +persona.fotoHashCode" style=" width:125px; height: 100px;">
+                    <img class="img-fluid rounded" *ngIf="!persona.fotoHashCode" src="../../../../../assets/img/notuser.png" style=" width: 70px;">
+                </td>
+                <td class="">{{persona.cedula}}</td>
+                <td>{{persona.nombre | uppercase}}</td>
+                <td>{{persona.apellido | uppercase}}</td>
+                <td>{{persona.telefono}}</td>
+
+                <td>
+                    <button class="btn btn-warning btn-sm" [routerLink]="['/personas/form/',persona.id]"><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-danger ml-2 btn-sm" (click)="delete(persona)"><i class="fa fa-trash "></i></button>
                 </td>
             </tr>
         </tbody>

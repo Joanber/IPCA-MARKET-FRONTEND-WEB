@@ -1,5 +1,6 @@
 export class TipoMovimiento {
-    idTipoMovimiento: string;
-    nombreTipoMovimiento: string;
-    esIngresoTipoMovimiento: boolean;
+    id:number;
+    fecha:string;
+    obeservacion:string;
+    tipo_movimiento:TipoMovimiento
 }

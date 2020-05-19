@@ -1,109 +1,110 @@
-<div>
-    <h1>Agregar Persona</h1>
-    <hr>
-    <form action="submit">
-        <div>
+<div class="container my-3">
+    <div class="row justify-content-center">
+        <h1>{{titulo}} </h1>
+        <button class="btn btn-danger mb-2 mx-3" (click)="irPersonas()">
+      <i class="fas fa-times"></i>
+    </button>
+    </div>
+    <hr class="separador-pri w-100">
 
-            <div class="form-group row">
-                <label class="col-2 col-form-label">N Cedula</label>
-                <div class="col-8">
+    <form class="border shadow rounded mx-5 " #MyForm="ngForm">
 
-                    <input class="form-control" type="text" placeholder="Cedula">
+        <div class="form-row mt-3">
+            <div class="col-md-5 mb-3 mx-auto">
+                <label for="cedula">Cedula:</label>
+                <input required class="form-control" type="text" name="cedula" #cedula="ngModel" [(ngModel)]="persona.cedula" />
+                <div class="text-center">
+                    <p class="field-error" *ngIf="cedula.hasError('required') && cedula.touched">
+                        Cedula es requerido!
+                    </p>
                 </div>
             </div>
-            <div class="form-group row">
-                <label class="col-2 col-form-label">Primer Nombre</label>
-                <div class="col-8">
-
-                    <input class="form-control" type="text" placeholder="Primer Nombre">
+            <div class="col-md-5 mx-auto">
+                <label for="nombre">Nombre:</label>
+                <input required class="form-control  mayusculas" type="text" name="nombre" #nombre="ngModel" [(ngModel)]="persona.nombre" />
+                <div class="text-center">
+                    <p class="field-error" *ngIf="nombre.hasError('required') && nombre.touched">
+                        Nombre es requerido!
+                    </p>
                 </div>
             </div>
-            <div class="form-group row">
-                <label class="col-2 col-form-label">Segundo Nombre</label>
-                <div class="col-8">
+        </div>
 
-                    <input class="form-control" type="text" placeholder="Segundo Nombre">
+        <div class="form-row">
+
+            <div class="col-md-5 mb-3 mx-auto">
+                <label for="apellido">Apellido:</label>
+                <input required class="form-control mayusculas" type="text" name="apellido" #apellido="ngModel" [(ngModel)]="persona.apellido" />
+                <div class="text-center">
+                    <p class="field-error" *ngIf="apellido.hasError('required') && apellido.touched">
+                        Apellido requerido!
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-5 mb-3 mx-auto">
+                <label for="email">Email:</label>
+                <input required class="form-control" type="email" name="email" #email="ngModel" [(ngModel)]="persona.email" />
+                <div class="text-center">
+                    <p class="field-error" *ngIf="email.hasError('required') && email.touched">
+                        Email requerido!
+                    </p>
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label class="col-2 col-form-label">Primer Apellido</label>
-                <div class="col-8">
+        </div>
 
-                    <input class="form-control" type="text" placeholder="Apellido">
+        <div class="form-row">
+
+            <div class="col-md-5 mb-3 mx-auto">
+                <label for="telefono">Telefono:</label>
+                <input class="form-control" type="text" name="telefono" #telefono="ngModel" [(ngModel)]="persona.telefono" />
+            </div>
+            <div class="col-md-5 mb-3 mx-auto">
+                <label for="">Direccion:</label>
+                <input class="form-control capitalize" type="text" name="direccion" #direccion="ngModel" [(ngModel)]="persona.direccion" />
+            </div>
+
+
+        </div>
+        <div class="form-row">
+            <div class="col-md-5 mb-3 mx-auto">
+                <label for="fecha">Fecha Nacimiento:</label>
+                <input [matDatepicker]="myDatepicker" class="form-control" style="display: inline;" name="fecha" #fecha="ngModel" required [(ngModel)]="persona.fecha">
+                <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
+                <mat-datepicker color="dark" #myDatepicker></mat-datepicker>
+                <div class="text-center">
+                    <p class="field-error" *ngIf="fecha.hasError('required') && fecha.touched">
+                        Fecha requerido!
+                    </p>
                 </div>
             </div>
-            <div class="form-group row">
-                <label class="col-2 col-form-label">Segundo Apellido</label>
-                <div class="col-8">
 
-                    <input class="form-control" type="text" placeholder="Apellido">
+            <div class="col-md-5 mb-3 mx-auto">
+                <label class="mt-3" for="foto">Foto:</label>
+                <div class="custom-file">
+                    <input type="file" (change)="seleccionarFoto($event)">
                 </div>
+
+                <img [src]="imageSrc" *ngIf="imageSrc else elseblockImg" class="img-fluid mt-2 text-center" style=" width:auto; " />
+                <ng-template #elseblockImg>
+                    <img class="img-fluid " *ngIf="persona.fotoHashCode" [src]="baseEndpoint + '/img/' + persona.id + '?fotoHashCode=' +persona.fotoHashCode " style=" width:auto;">
+                </ng-template>
             </div>
+
 
         </div>
+        <div class="form-row mb-3 ">
 
-        <div class="form-group row">
-            <label class="col-2 col-form-label">Fecha Nacimiento</label>
-            <div class="col-md-8">
+            <div class="col-md-5 mx-auto ">
+                <button class="btn bg-pri btn-block text-white " [disabled]="!MyForm.form.valid " (click)="crear()" *ngIf="!persona.id else elseBlock">Guardar
+            </button>
+                <ng-template #elseBlock>
+                    <button type="button" class="btn bg-pri btn-block text-white" (click)="editar()" [disabled]="!MyForm.form.valid">Actualizar</button>
+                </ng-template>
 
-                <input class="form-control" type="date">
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-2 col-form-label">Género</label>
-            <div class="col-md-8">
-                <select name="" id="">
-                    <option value="">Seleccione</option>
-                    <option value="">Masculino</option>
-                    <option value="">Femenino</option>
-                    <option value="">Otro</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-2 col-form-label">Correo</label>
-            <div class="col-md-8">
 
-                <input class="form-control" type="email" placeholder="Correo electrónico">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-2 col-form-label">N Telefono</label>
-            <div class="col-md-8">
-
-                <input class="form-control" type="text" placeholder="Numero Telefono">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-2 col-form-label">Dirección</label>
-            <div class="col-md-8">
-
-                <input class="form-control" type="text" placeholder="Dirección">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-2 col-form-label">Foto</label>
-            <div class="col-md-8">
-
-                <input class="form-control" type="file">
-            </div>
-        </div>
-
-
-
-        <div class="form-group row">
-            <label class="col-2 col-form-label">&nbsp;</label>
-            <div class="input-group col-md-6">
-                <button type="submit" class="btn btn-outline-primary">
-                Guardar
-              </button>
-            </div>
-            <div class="input-group col-md-6">
-                <button type="button" routerLink="/usuario-add" class="btn btn-outline-secondary">
-                Crear Usuario
-              </button>
-            </div>
         </div>
     </form>
+    <hr class="separador-pri w-100 ">
 </div>

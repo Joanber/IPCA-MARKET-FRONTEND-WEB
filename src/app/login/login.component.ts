@@ -28,12 +28,11 @@ export class LoginComponent implements OnInit {
 
     res.subscribe(
       user=>{
-        sessionStorage.setItem('userssp', user.username);
-        sessionStorage.setItem('usertokenss', user.token);
         this.router.navigate(['home']);
+        console.log(user.token);
       },
       err=>{
-        console.log('No nos logueamos');
+        console.log('Fallo al loguearse');
         console.log(err);
         this.esValido=false
       }

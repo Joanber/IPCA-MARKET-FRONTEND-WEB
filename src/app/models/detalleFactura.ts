@@ -1,11 +1,14 @@
 import { Producto } from './producto';
-import { EncabezadoFactura } from './encabezadoFactura';
 
-export class DeatlleFactura {
-    idDetalleFactura: string;
-    cantidadDetalleactura: number;
-    subtotalDetalleFactura: number;
-    totalDetalleFactura: number;
-    idProducto: Producto;
-    idEncabezadoProducto: EncabezadoFactura;
+
+export class DetalleFactura {
+    id:number;
+    cantidad:number;
+    producto:Producto;
+    total:number;
+
+    public calcularImporte():number{
+        return this.cantidad * this.producto.precio
+    }
+
 }

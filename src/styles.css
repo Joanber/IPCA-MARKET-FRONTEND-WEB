@@ -1,9 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .bg-pri {
     background-color: #042331 !important;
 }
 
 .bg-sec {
     background-color: white !important
+}
+
+html,
+body {
+    height: 100%;
+}
+
+.white {
+    color: white !important;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.fa {
+    color: white !important;
+}
+
+.separador-pri {
+    background-color: #042331;
+    height: 3.5px;
+    border-radius: 5px;
+}
+
+.field-error {
+    color: red;
+}
+
+.mayusculas {
+    text-transform: uppercase;
+}
+
+.capitalize {
+    text-transform: capitalize;
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UsuarioLogin } from 'src/app/models/UsuarioLogin';
-
+import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,21 +17,32 @@ export class UsuarioService {
       'http://localhost:2727/login',{
         username,password
       }
+    ).pipe(
+      map(
+        usuarioLogin => {
+          sessionStorage.setItem('username',username);
+          let tokenStr='Bearer '+usuarioLogin.token;
+          sessionStorage.setItem('token',tokenStr)
+          return usuarioLogin;
+          console.log('hola '+usuarioLogin);
+        }
+
+      )
     )
   }
   estaLogueado():boolean{
-    let user=sessionStorage.getItem('userssp')
+    let user=sessionStorage.getItem('username')
     return !(user==null);
   }
   getToken():string {
     if(this.estaLogueado()){
-      return sessionStorage.getItem('usertokenss');
+      return sessionStorage.getItem('token');
     }else{
       return '';
     }
   }
   salir(){
-    sessionStorage.removeItem('userssp');
-    sessionStorage.removeItem('usertokenss')
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('token')
   }
 }

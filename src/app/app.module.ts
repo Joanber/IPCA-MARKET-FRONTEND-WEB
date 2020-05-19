@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { NgModule,LOCALE_ID  } from '@angular/core';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
@@ -18,7 +18,14 @@ import { ProductoListComponent } from './components/producto/producto-list/produ
 import { Grafico1Component } from './elements/grafico1/grafico1.component';
 import { UsuarioListComponent } from './components/usuario/usuario-list/usuario-list.component';
 import { UsuarioAddComponent } from './components/usuario/usuario-add/usuario-add.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+/* LIbs necesarias */
+import { MatDatepickerModule } from '@angular/material';
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,10 +47,17 @@ import { UsuarioAddComponent } from './components/usuario/usuario-add/usuario-ad
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ChartsModule
+    ChartsModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatFormFieldModule 
 
   ],
-  providers: [],
+  providers: [{provide: LOCALE_ID, useValue: 'en-US' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

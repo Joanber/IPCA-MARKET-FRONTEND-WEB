@@ -2,12 +2,13 @@ a {
     cursor: pointer;
 }
 
-.text-white {
-    color: white !important;
+#main .navbar-nav li.nav-item a.nav-link {
+    color: #fff;
+    font-weight: bold;
 }
 
-.fa {
-    background-color: white;
+#main .navbar-nav li.nav-item a.nav-link:hover {
+    color: #D68910;
 }
 
 .navbar ul a {
@@ -19,11 +20,10 @@ a {
     /* color: white; */
     padding-left: 40px;
     /* box-sizing: border-box; */
-    border-top: 1px solid rgba(255, 255, 255, .1);
     /* border-bottom: 1px solid black; */
     /* transition: .4s; */
 }
 
-.navbar ul a i {
-    margin-right: 6px;
+#main .navbar-nav li.nav-item a.nav-link.active {
+    color: #D68910;
 }

@@ -26,6 +26,7 @@ import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { ArraypipePipe } from './pipes/arraypipe.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +41,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     ProductoListComponent,
     Grafico1Component,
     UsuarioListComponent,
-    UsuarioAddComponent
+    UsuarioAddComponent,
+    ArraypipePipe
   ],
   imports: [
     BrowserModule,

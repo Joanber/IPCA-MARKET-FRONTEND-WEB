@@ -17,10 +17,24 @@ export class PersonasListComponent implements OnInit {
 
   personas: Persona[];
 
-  ngOnInit() {
-    this.personaService.getPersonas().subscribe(
-      personas =>this.personas =personas
-    )
+  async ngOnInit() {
+    this.getPersonas();
+  }
+getPersonas():void{
+  this.personaService.getPersonas().subscribe(
+    personas =>this.personas =personas
+  )
+}
+
+  buscarPersona(termino:string){
+    if (termino.length > 0) {
+      this.personaService.getPersonasFiltradas(termino).subscribe(
+        personas => this.personas=personas
+      ) 
+    }else{
+      this.getPersonas()
+    }
+    
   }
 
   delete(persona: Persona): void {

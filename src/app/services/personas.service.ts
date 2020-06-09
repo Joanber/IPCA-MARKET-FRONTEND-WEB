@@ -18,6 +18,9 @@ export class PersonasService {
   getPersonas():Observable<Persona[]> {
     return this.http.get<Persona[]>(`${this.baseEndpoint}/`);
   }
+  getPersonasFiltradas(termino:string):Observable<Persona[]> {
+    return this.http.get<Persona[]>(`${this.baseEndpoint}/filtrar/${termino}`);
+  }
   crearConFoto(persona:Persona,archivo:File):Observable<Persona>{
     const formData = new FormData();
     formData.append('archivo', archivo);
@@ -95,11 +98,13 @@ export class PersonasService {
       delete(id:number):Observable<Persona>{
         return this.http.delete<Persona>(`${this.baseEndpoint}/${id}`).pipe(
           catchError(e =>{
-            Swal.fire('Error al editar al cliente',e.error.mensaje,'error');
+            Swal.fire('Error al eliminar a la persona',e.error.mensaje,'error');
             return throwError(e);
           })
         );
       }
+
+
 }
 
 

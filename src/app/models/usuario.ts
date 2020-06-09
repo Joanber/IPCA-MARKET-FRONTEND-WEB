@@ -1,7 +1,11 @@
 import { Persona } from './persona';
+import { Rol } from './rol';
 export class Usuario {
-    idUsuario?: string;
-    nombreUsuario?: string;
-    passwordUsuario?: string;
-    idPersona?: Persona;
+    id: number;
+    username: string;
+    password: string;
+    activo: boolean;
+    persona:Persona;
+    roles:Rol[]=[];
+    check:boolean=false;
 }

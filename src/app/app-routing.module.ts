@@ -18,8 +18,9 @@ const routes: Routes = [
     component: PrincipalComponent,
     children: [
       { path: 'home', component: HomeComponent },
-      { path: 'usuario-list', component: UsuarioListComponent },
-      { path: 'usuario-add', component: UsuarioAddComponent },
+      { path: 'usuarios', component: UsuarioListComponent },
+      { path: 'usuarios/form', component: UsuarioAddComponent },
+      { path: 'usuarios/form/:id', component: UsuarioAddComponent },
       { path: 'producto-list', component: ProductoListComponent },
       { path: 'producto-add', component: ProductoComponent },
       { path: 'personas', component: PersonasListComponent },

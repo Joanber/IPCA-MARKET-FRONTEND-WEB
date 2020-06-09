@@ -27,6 +27,10 @@ body {
     color: white !important;
 }
 
+.fas {
+    color: white !important;
+}
+
 .separador-pri {
     background-color: #042331;
     height: 3.5px;

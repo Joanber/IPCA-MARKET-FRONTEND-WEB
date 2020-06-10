@@ -4,7 +4,7 @@
 <hr class="separador-pri w-100 ">
 <div class="row">
     <div class="col-sm-2">
-        <button class="btn bg-pri" style="width: 60px;" routerLink="/usuarios/form"><i class="fa fa-user-plus"></i></button>
+        <button class="btn bg-pri white" routerLink="/dashper/usuarios/form"><i class="fa fa-user-plus"></i> Agregar</button>
     </div>
     <div class="col-sm-10  text-right">
         <div class="input-group">
@@ -57,7 +57,7 @@
                 <td>
                     <div class="row justify-content-center">
                         <div class="col-sm-3 mt-3 mb-1">
-                            <button class="btn btn-warning btn-sm " [routerLink]="['/usuarios/form/',usuario.id]"><i class="fa fa-edit"></i></button>
+                            <button class="btn btn-warning btn-sm " [routerLink]="['/dashper/usuarios/form/',usuario.id]"><i class="fa fa-edit"></i></button>
                         </div>
                         <div class="col-sm-3 mt-3">
                             <button class="btn btn-danger btn-sm" (click)="delete(usuario)"><i class="fa fa-trash "></i></button>

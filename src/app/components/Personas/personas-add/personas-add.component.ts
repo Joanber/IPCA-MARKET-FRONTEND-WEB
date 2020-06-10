@@ -52,7 +52,7 @@ export class PersonasAddComponent implements OnInit {
     this.route.paramMap.subscribe(params =>{
       const id:number = +params.get('id');
       if (id) {
-        this.titulo='Actualizar Información';
+        this.titulo='Actualizar Persona';
         this.srvP.getPersona(id).subscribe( persona =>{
           this.persona=persona
           console.log(this.persona);
@@ -115,7 +115,7 @@ export class PersonasAddComponent implements OnInit {
     }
   }
   irPersonas(){
-    this.router.navigate(['/personas'])
+    this.router.navigate(['/dashper/personas'])
   }
  
 

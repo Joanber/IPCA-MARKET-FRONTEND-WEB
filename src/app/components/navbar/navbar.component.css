@@ -28,6 +28,10 @@ a {
     color: #D68910;
 }
 
+#main .navbar-nav li.nav-item a.nav-link.active i.fas {
+    color: #D68910;
+}
+
 .dropdown-menu {
     background-color: #042331;
     border-top: 1px solid white;

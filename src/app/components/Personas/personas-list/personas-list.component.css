@@ -1,6 +1,3 @@
-@media screen and (max-width: 320px) {
-    table {
-        display: block;
-        overflow-x: auto;
-    }
+.fa:hover {
+    color: #042331 !important
 }

@@ -5,11 +5,12 @@ import { HomeComponent } from './components/home/home.component';
 import { PrincipalComponent } from './components/principal.component';
 import { ProductoListComponent } from './components/producto/producto-list/producto-list.component';
 import { PersonasListComponent } from './components/Personas/personas-list/personas-list.component';
-import { InventarioComponent } from './components/inventario/inventario.component';
+import { InventarioComponent } from './components/inventario/inventario/inventario.component';
 import { ProductoComponent } from './components/producto/producto-add/producto.component';
 import { PersonasAddComponent } from './components/Personas/personas-add/personas-add.component';
 import { UsuarioListComponent } from './components/usuario/usuario-list/usuario-list.component';
 import { UsuarioAddComponent } from './components/usuario/usuario-add/usuario-add.component';
+import { DashboardPersonasComponent } from './components/Personas/dashboard-personas/dashboard-personas.component';
 
 
 const routes: Routes = [
@@ -18,15 +19,22 @@ const routes: Routes = [
     component: PrincipalComponent,
     children: [
       { path: 'home', component: HomeComponent },
-      { path: 'usuarios', component: UsuarioListComponent },
-      { path: 'usuarios/form', component: UsuarioAddComponent },
-      { path: 'usuarios/form/:id', component: UsuarioAddComponent },
       { path: 'producto-list', component: ProductoListComponent },
       { path: 'producto-add', component: ProductoComponent },
-      { path: 'personas', component: PersonasListComponent },
-      { path: 'personas/form', component: PersonasAddComponent },
-      { path: 'personas/form/:id', component: PersonasAddComponent },
-      { path: 'inventario', component: InventarioComponent },
+      { path: 'dashper', component: DashboardPersonasComponent,children:[
+        { path: 'personas', component: PersonasListComponent },
+        { path: 'usuarios', component: UsuarioListComponent },
+        { path: 'usuarios/form', component: UsuarioAddComponent },
+        { path: 'usuarios/form/:id', component: UsuarioAddComponent },
+        { path: 'personas/form', component: PersonasAddComponent },
+        { path: 'personas/form/:id', component: PersonasAddComponent },
+        { path: '**', pathMatch: 'full', redirectTo: 'personas' }
+        ]
+      },
+      { path: 'inventario', component: InventarioComponent, children: [
+             
+        ] 
+      },
       { path: '**', pathMatch: 'full', redirectTo: 'home' }
     ]
   }

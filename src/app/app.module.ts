@@ -11,7 +11,6 @@ import { ProductoComponent } from './components/producto/producto-add/producto.c
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { PrincipalComponent } from './components/principal.component';
-import { InventarioComponent } from './components/inventario/inventario.component';
 import { PersonasListComponent } from './components/Personas/personas-list/personas-list.component';
 import { PersonasAddComponent } from './components/Personas/personas-add/personas-add.component';
 import { ProductoListComponent } from './components/producto/producto-list/producto-list.component';
@@ -27,6 +26,9 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { ArraypipePipe } from './pipes/arraypipe.pipe';
+import { ProductoInComponent } from './components/inventario/producto-in/producto-in.component';
+import { InventarioComponent } from './components/inventario/inventario/inventario.component';
+import { DashboardPersonasComponent } from './components/Personas/dashboard-personas/dashboard-personas.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +44,9 @@ import { ArraypipePipe } from './pipes/arraypipe.pipe';
     Grafico1Component,
     UsuarioListComponent,
     UsuarioAddComponent,
-    ArraypipePipe
+    ArraypipePipe,
+    ProductoInComponent,
+    DashboardPersonasComponent
   ],
   imports: [
     BrowserModule,

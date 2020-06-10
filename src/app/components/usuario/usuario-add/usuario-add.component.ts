@@ -35,7 +35,7 @@ export class UsuarioAddComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const id: number = +params.get('id');
       if (id) {
-        this.titulo = 'Actualizar Información';
+        this.titulo = 'Actualizar Usuario';
         this.srvU.getUsuario(id).subscribe(usuario => {
           this.usuario = usuario;
           this.usuario.roles.forEach(rol1 => {
@@ -91,7 +91,7 @@ export class UsuarioAddComponent implements OnInit {
 
 
   irUsuarios() {
-    this.router.navigate(['/usuarios'])
+    this.router.navigate(['/dashper/usuarios'])
   }
   compararPersona(o1: Persona, o2: Persona): boolean {
     if (o1 === undefined && o2 === undefined) {

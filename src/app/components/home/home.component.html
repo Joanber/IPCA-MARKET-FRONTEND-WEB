@@ -1,1 +1,84 @@
-<p>home works!</p>
+<div class="text-center">
+    <h2 class="display-4">Venta de Productos</h2>
+    <hr class="separador-pri w-100 ">
+</div>
+
+<form #form="ngForm">
+    <div class="row justify-content-center">
+        <div class="col-sm-10">
+            <div class="input-group">
+                <label for="buscar" class="col-form-label mr-2 font-weight-bold">Código del Producto:</label>
+                <input type="text" class="form-control" #termino id="buscar" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button class="btn bg-pri text-white" type="button" id="button-addon2"><span class="input-group-addon" id="basic-addon1"><i class="fas fa-hamburger mr-2"></i></span>Agregar Producto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="separador-pri w-100 ">
+
+    <table class="table table-bordered table-striped table-responsive-md text-center ">
+        <thead class="bg-pri white">
+            <tr>
+                <th>Codigo de Barras</th>
+                <th>Descripción del Producto</th>
+                <th>Precio Venta</th>
+                <th>Cantidad</th>
+                <th>Importe</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor=" let persona of personas">
+                <td>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-12 col-md-12 mt-3">
+                            <img class="img-fluid rounded" *ngIf="persona.fotoHashCode" [src]="baseEndpoint + '/img/' + persona.id + '?fotoHashCode=' +persona.fotoHashCode" style=" width:125px; height: 100px;">
+                            <img class="img-fluid rounded" *ngIf="!persona.fotoHashCode" src="../../../../../assets/img/notuser.png" style=" width: 70px;">
+                        </div>
+                    </div>
+
+                </td>
+                <td>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-6 mt-4">
+                            {{persona.cedula}}
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-6 mt-4">
+                            {{persona.nombre | uppercase}}
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-6 mt-4">
+                            {{persona.apellido | uppercase}}
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-6 mt-4">
+                            {{persona.telefono}}
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-3 mt-3 mb-1">
+                            <button class="btn btn-warning btn-sm" [routerLink]="['/dashper/personas/form/',persona.id]"><i class="fa fa-edit"></i></button>
+                        </div>
+                        <div class="col-sm-3 mt-3">
+                            <button class="btn btn-danger btn-sm" (click)="delete(persona)"><i class="fa fa-trash "></i></button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>

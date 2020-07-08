@@ -1,6 +1,6 @@
 <hr class="separador-pri w-100 ">
 <div class="text-center">
-    <h1>Personas</h1>
+    <h2 class="display-4">Personas</h2>
 </div>
 <hr class="separador-pri w-100 ">
 <div class="row">
@@ -87,4 +87,7 @@
             </tr>
         </tbody>
     </table>
+
+    <app-paginador *ngIf=" paginator " [paginator]="paginator "></app-paginador>
+
 </div>

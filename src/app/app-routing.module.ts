@@ -11,6 +11,7 @@ import { PersonasAddComponent } from './components/Personas/personas-add/persona
 import { UsuarioListComponent } from './components/usuario/usuario-list/usuario-list.component';
 import { UsuarioAddComponent } from './components/usuario/usuario-add/usuario-add.component';
 import { DashboardPersonasComponent } from './components/Personas/dashboard-personas/dashboard-personas.component';
+import { ProductoInComponent } from './components/inventario/producto-in/producto-in.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: 'producto-add', component: ProductoComponent },
       { path: 'dashper', component: DashboardPersonasComponent,children:[
         { path: 'personas', component: PersonasListComponent },
+        { path: 'personas/page/:page', component: PersonasListComponent },
         { path: 'usuarios', component: UsuarioListComponent },
         { path: 'usuarios/form', component: UsuarioAddComponent },
         { path: 'usuarios/form/:id', component: UsuarioAddComponent },
@@ -32,7 +34,8 @@ const routes: Routes = [
         ]
       },
       { path: 'inventario', component: InventarioComponent, children: [
-             
+        { path: 'producto', component: ProductoInComponent},
+      { path: '**', pathMatch: 'full', redirectTo: 'producto' }
         ] 
       },
       { path: '**', pathMatch: 'full', redirectTo: 'home' }

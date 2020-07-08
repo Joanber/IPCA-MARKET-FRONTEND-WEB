@@ -1,1 +1,37 @@
-<p>producto-in works!</p>
+<hr class="separador-pri w-100 ">
+<div class="row justify-content-center">
+    <div class="col-sm-6 col-md-7 col-lg-4 mt-2">
+        <div class="card text-center">
+            <h5 class="font-weight-bold mt-1">{{nombre_producto}} </h5>
+            <img class="card-img-top" *ngIf="producto.fotoHashCode " [src]="baseEndpoint + '/img/' + producto.id + '?fotoHashCode=' +producto.fotoHashCode">
+            <img class="card-img-top" *ngIf="!producto.fotoHashCode" src="../../../../../assets/img/notproducto.jpg">
+            <div class="card-block mt-2">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="town" class="col-xs-12 col-sm-10 control-label">Código del Producto</label>
+                        <div class="col-xs-12 col-sm-12">
+                            <input type="text" name="town" class="form-control " placeholder="Codigo" #termino (keyup)="obtenerProducto(termino.value)">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cantidadactual" class="col-xs-12 col-sm-10 control-label">Cantidad Actual</label>
+                        <div class="col-xs-12 col-sm-12">
+                            <label for="cantidadactual">{{producto.cantidad_maxima}}</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cantidadAgregar" class="col-xs-12 col-sm-10 control-label">Agregar Cantidad</label>
+                        <div class="col-xs-12 col-sm-12">
+                            <input type="text" name="cantidadAgregar" class="form-control" [(ngModel)]="producto.cantidad_maxima">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn bg-pri btn-block text-white ">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

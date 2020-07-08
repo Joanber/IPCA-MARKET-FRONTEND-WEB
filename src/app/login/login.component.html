@@ -13,7 +13,7 @@
                     <label for="" class="control-label">Usuario:</label>
                     <input required class="form-control" type="text" name="user" placeholder="Nombre de Usuario" #user="ngModel" [(ngModel)]="username">
 
-                    <p class="input-err-12" *ngIf="user.hasError('required') && user.touched">
+                    <p class="field-error text-center" *ngIf="user.hasError('required') && user.touched">
                         El usuario es un campo requerido!
                     </p>
 
@@ -24,14 +24,14 @@
                     <label for="">Password:</label>
                     <input required class="form-control" type="password" name="psswrd" placeholder="Contraseña" #psswrd="ngModel" [(ngModel)]="password">
 
-                    <p class="input-err-12" *ngIf="psswrd.hasError('required') && psswrd.touched">
+                    <p class="field-error text-center" *ngIf="psswrd.hasError('required') && psswrd.touched">
                         El password es un campo requerido!
                     </p>
                 </div>
                 <!--INPUT PASSWORD-->
                 <div class="form-group mt-4">
 
-                    <button type="submit" [disabled]="loginForm.invalid" class="btn btn-block btn-primary" (click)="login()">Ingresar</button>
+                    <button type="submit" [disabled]="loginForm.invalid" class="btn btn-block  btn bg-pri white" (click)="login()">Ingresar</button>
                 </div>
 
             </form>

@@ -57,7 +57,7 @@ export class PersonasAddComponent implements OnInit {
           this.persona=persona
           console.log(this.persona);
         }
-        )
+        ) 
       }
     })
   }

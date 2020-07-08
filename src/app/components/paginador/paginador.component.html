@@ -1,0 +1,25 @@
+<nav>
+
+    <ul *ngIf="paginas?.length>0" class="pagination pagination-circle pg-red justify-content-center" id="pag">
+        <li class="page-item mr-2" *ngIf="paginator.number > 0">
+            <a class="page-link" class="page-link" [routerLink]="['/dashper/personas/page',paginator.number-1]"><i style="color: yellowgreen;" class="fas fa-chevron-circle-left"></i></a>
+        </li>
+        <li [ngClass]="paginator.first?'disabled page-item':'page-item'" class="mr-2">
+            <a class="page-link" class="page-link" routerLinkActive="active" [routerLink]="['/dashper/personas/page',0]">Primera</a>
+        </li>
+
+        <li class="page-item mr-2" *ngFor="let pagina of paginas" [ngClass]="pagina -1 == paginator.number? 'active':''">
+            <span class="page-link" *ngIf="pagina-1== paginator.number">{{pagina}} </span>
+            <a *ngIf="pagina-1 != paginator.number" routerLinkActive="active" class="page-link" [routerLink]="['/dashper/personas/page/',pagina-1]">
+                    {{pagina}}
+                </a>
+        </li>
+        <li [ngClass]="paginator.last?'disabled page-item':'page-item'" class="mr-2">
+            <a class="page-link" class="page-link" routerLinkActive="active" [routerLink]="['/dashper/personas/page',paginator.totalPages-1]">Ultima</a>
+        </li>
+        <li class="page-item mr-2" *ngIf="paginator.number < paginator.totalPages-1">
+            <a class="page-link" class="page-link" routerLinkActive="active" [routerLink]="['/dashper/personas/page',paginator.number+1]"><i style="color: yellowgreen;" class="fas fa-chevron-circle-right"></i></a>
+        </li>
+
+    </ul>
+</nav>

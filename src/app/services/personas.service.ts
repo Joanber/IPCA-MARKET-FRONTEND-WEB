@@ -4,7 +4,7 @@ import { Persona } from '../models/persona';
 import { BASE_ENDPOINT } from '../DB_CONFIG/bdConig';
 import { Observable, pipe, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 @Injectable({
@@ -20,6 +20,23 @@ export class PersonasService {
   }
   getPersonasFiltradas(termino:string):Observable<Persona[]> {
     return this.http.get<Persona[]>(`${this.baseEndpoint}/filtrar/${termino}`);
+  }
+  getPersonasPage(page:number): Observable<any>{
+    return this.http.get(this.baseEndpoint+'/page/'+page).pipe(
+      tap((response:any) => {
+        (response.content  as Persona[]).forEach(persona => {
+          console.log(persona.nombre);
+        })
+      }),
+      map((response:any) => {
+        (response.content as Persona[]).map(persona => {
+
+          return persona;
+        })
+        return response
+      })
+
+    )
   }
   crearConFoto(persona:Persona,archivo:File):Observable<Persona>{
     const formData = new FormData();

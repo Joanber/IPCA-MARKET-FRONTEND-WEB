@@ -3,6 +3,8 @@ import { PersonasService } from '../../../services/personas.service';
 import { Persona } from 'src/app/models/persona';
 import { BASE_ENDPOINT } from 'src/app/DB_CONFIG/bdConig';
 import Swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
+import { tap } from 'rxjs/operators';
 
 
 @Component({
@@ -12,13 +14,35 @@ import Swal from 'sweetalert2';
 })
 export class PersonasListComponent implements OnInit {
   baseEndpoint = BASE_ENDPOINT + '/personas';
+  paginator:any;
 
-  constructor( private personaService: PersonasService ) { }
+  constructor( private personaService: PersonasService,private route: ActivatedRoute ) { }
 
   personas: Persona[];
 
   async ngOnInit() {
-    this.getPersonas();
+    this.getPersonasPage();
+  }
+  getPersonasPage():void{
+    this.route.paramMap.subscribe(params => {
+      let page: number = +params.get('page');
+      if (!page) {
+        page = 0;
+      }
+      this.personaService.getPersonasPage(page).
+        pipe(
+          tap(response => {
+            (response.content as Persona[]).forEach(persona => {
+              console.log(persona.nombre);
+            })
+          })
+        )
+        .subscribe(
+          response => {
+            this.personas = response.content as Persona[];
+            this.paginator= response;
+          });
+    });
   }
 getPersonas():void{
   this.personaService.getPersonas().subscribe(
@@ -32,7 +56,7 @@ getPersonas():void{
         personas => this.personas=personas
       ) 
     }else{
-      this.getPersonas()
+      this.getPersonasPage()
     }
     
   }

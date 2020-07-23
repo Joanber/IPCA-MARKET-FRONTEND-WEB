@@ -18,6 +18,10 @@ export class ProductoService {
     return this.http.get<Producto>(`${this.baseEndpoint}/codigo/${codigo}`)
   }
 
+  getProductos(): Observable<Producto>{
+    return this.http.get<Producto>(`${this.baseEndpoint}/`);
+  }
+
   editarCantidad(producto:Producto):Observable<Producto>{
     return  this.http.put<Producto>(`${this.baseEndpoint}/codigo/${producto.codigo_barras}`,producto).pipe(
       map((response:any) => response.producto as Producto),

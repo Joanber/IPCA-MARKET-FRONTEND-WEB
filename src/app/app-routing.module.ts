@@ -12,7 +12,9 @@ import { UsuarioListComponent } from './components/usuario/usuario-list/usuario-
 import { UsuarioAddComponent } from './components/usuario/usuario-add/usuario-add.component';
 import { DashboardPersonasComponent } from './components/Personas/dashboard-personas/dashboard-personas.component';
 import { ProductoInComponent } from './components/inventario/producto-in/producto-in.component';
-
+import { DashbordProductosComponent } from './components/producto/dashbord-productos/dashbord-productos.component';
+import { CategoriaListComponent } from './components/categoria/categoria-list/categoria-list.component';
+import { CategoriaAddComponent } from './components/categoria/categoria-add/categoria-add.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
@@ -20,8 +22,12 @@ const routes: Routes = [
     component: PrincipalComponent,
     children: [
       { path: 'home', component: HomeComponent },
-      { path: 'producto-list', component: ProductoListComponent },
-      { path: 'producto-add', component: ProductoComponent },
+      {path: 'dashprod', component: DashbordProductosComponent, children: [
+        { path: 'producto', component: ProductoListComponent },
+        { path: 'producto/form', component: ProductoComponent },
+        { path: 'categoria', component: CategoriaListComponent },
+        { path: 'categoria/form', component: CategoriaAddComponent }
+      ]},
       { path: 'dashper', component: DashboardPersonasComponent,children:[
         { path: 'personas', component: PersonasListComponent },
         { path: 'personas/page/:page', component: PersonasListComponent },
@@ -36,7 +42,7 @@ const routes: Routes = [
       { path: 'inventario', component: InventarioComponent, children: [
         { path: 'producto', component: ProductoInComponent},
       { path: '**', pathMatch: 'full', redirectTo: 'producto' }
-        ] 
+        ]
       },
       { path: '**', pathMatch: 'full', redirectTo: 'home' }
     ]

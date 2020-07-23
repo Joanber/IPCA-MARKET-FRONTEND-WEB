@@ -30,6 +30,9 @@ import { ProductoInComponent } from './components/inventario/producto-in/product
 import { InventarioComponent } from './components/inventario/inventario/inventario.component';
 import { DashboardPersonasComponent } from './components/Personas/dashboard-personas/dashboard-personas.component';
 import { PaginadorComponent } from './components/paginador/paginador.component';
+import { DashbordProductosComponent } from './components/producto/dashbord-productos/dashbord-productos.component';
+import { CategoriaListComponent } from './components/categoria/categoria-list/categoria-list.component';
+import { CategoriaAddComponent } from './components/categoria/categoria-add/categoria-add.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +51,10 @@ import { PaginadorComponent } from './components/paginador/paginador.component';
     ArraypipePipe,
     ProductoInComponent,
     DashboardPersonasComponent,
-    PaginadorComponent
+    PaginadorComponent,
+    DashbordProductosComponent,
+    CategoriaListComponent,
+    CategoriaAddComponent
   ],
   imports: [
     BrowserModule,

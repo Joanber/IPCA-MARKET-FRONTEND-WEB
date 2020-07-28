@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BASE_ENDPOINT } from '../DB_CONFIG/bdConig';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { Producto } from '../models/producto';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -13,7 +12,7 @@ import Swal from 'sweetalert2';
 export class ProductoService {
   protected baseEndpoint = BASE_ENDPOINT + '/productos';
 
-  constructor( private http: HttpClient,  private router:Router) { }
+  constructor( private http: HttpClient) { }
   getproductoByCodigoBarras(codigo:string): Observable<Producto>{
     return this.http.get<Producto>(`${this.baseEndpoint}/codigo/${codigo}`)
   }

@@ -23,11 +23,11 @@
                 <label for="nombre">Nombre:</label>
                 <input required class="form-control  mayusculas"
                   type="text" name="nombre"/>
-                <div class="text-center">
+                <!--<div class="text-center">
                     <p class="field-error" *ngIf="nombre.hasError('required') && nombre.touched">
                         Nombre es requerido!
                     </p>
-                </div>
+                </div>-->
             </div>
         </div>
 
@@ -37,20 +37,20 @@
                 <label for="apellido">Precio:</label>
                 <input required class="form-control mayusculas"
                   type="text" name="apellido"/>
-                <div class="text-center">
+                <!--<div class="text-center">
                     <p class="field-error" *ngIf="apellido.hasError('required') && apellido.touched">
                         Precio requerido!
                     </p>
-                </div>
+                </div>-->
             </div>
             <div class="col-md-5 mb-3 mx-auto">
                 <label for="email">Cantidad Minima:</label>
                 <input required class="form-control" type="email" name="email"/>
-                <div class="text-center">
+                <!--<div class="text-center">
                     <p class="field-error" *ngIf="email.hasError('required') && email.touched">
                         Cantidad Minima requerido!
                     </p>
-                </div>
+                </div>-->
             </div>
 
         </div>
@@ -71,14 +71,12 @@
         </div>
         <div class="form-row">
             <div class="col-md-5 mb-3 mx-auto">
-                <label for="fecha">Categoría:</label>
-                <input [matDatepicker]="myDatepicker"
-                  class="form-control" style="display: inline;" name="fecha" required />
-                <div class="text-center">
-                    <p class="field-error" *ngIf="fecha.hasError('required') && fecha.touched">
-                        Categoría requerido!
-                    </p>
-                </div>
+                <label for="categoria">Categoría:</label>
+                <select class="form-control"  name="categoria">
+                  <option value="">--Seleccionar categoria--</option>
+                  <option *ngFor="let categoria of listaCategoria"
+                    value="categoria.nombre">{{categoria.nombre}}</option>
+                </select>
             </div>
 
             <div class="col-md-5 mb-3 mx-auto">
@@ -87,18 +85,18 @@
                     <input type="file" (change)="seleccionarFoto($event)">
                 </div>
 
-                <img [src]="imageSrc" *ngIf="imageSrc else elseblockImg" class="img-fluid mt-2 text-center" style=" width:auto; " />
+                <!--<img [src]="imageSrc" *ngIf="imageSrc else elseblockImg" class="img-fluid mt-2 text-center" style=" width:auto; " />
                 <ng-template #elseblockImg>
                     <img class="img-fluid " *ngIf="persona.fotoHashCode" [src]="baseEndpoint + '/img/' + persona.id + '?fotoHashCode=' +persona.fotoHashCode " style=" width:auto;">
-                </ng-template>
+                </ng-template>-->
             </div>
 
 
         </div>
         <div class="form-row mb-3 ">
-
+<!-- *ngIf="!persona.id else elseBlock" [disabled]="!MyForm.form.valid "-->
             <div class="col-md-5 mx-auto ">
-                <button class="btn bg-pri btn-block text-white " [disabled]="!MyForm.form.valid " (click)="crear()" *ngIf="!persona.id else elseBlock">Guardar
+                <button class="btn bg-pri btn-block text-white "  (click)="crear()" >Guardar
             </button>
                 <ng-template #elseBlock>
                     <button type="button" class="btn bg-pri btn-block text-white" (click)="editar()" [disabled]="!MyForm.form.valid">Actualizar</button>

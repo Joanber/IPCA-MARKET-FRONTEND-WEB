@@ -21,6 +21,20 @@ export class ProductoService {
     return this.http.get<Producto>(`${this.baseEndpoint}/`);
   }
 
+
+  crearSinFoto(producto: Producto): Observable<Producto>{
+    return this.http.post<Producto>(`${this.baseEndpoint}/`, producto).pipe(
+      map((response:any)=> response.producto as Producto),
+      catchError(e => {
+        if (e.status ==400) {
+          return throwError(e);
+        }
+        Swal.fire('Error al crear producto',e.error.mensaje,'error');
+        return throwError(e);
+      })
+    )
+  }
+
   editarCantidad(producto:Producto):Observable<Producto>{
     return  this.http.put<Producto>(`${this.baseEndpoint}/codigo/${producto.codigo_barras}`,producto).pipe(
       map((response:any) => response.producto as Producto),

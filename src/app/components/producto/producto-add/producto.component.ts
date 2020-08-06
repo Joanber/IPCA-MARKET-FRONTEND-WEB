@@ -14,27 +14,38 @@ import { CategoriasService } from 'src/app/services/categorias.service';
   styleUrls: ['./producto.component.css']
 })
 export class ProductoComponent implements OnInit {
-  private fotoSeleccionada = File;
+  private fotoSeleccionada: File;
   titulo:string = 'Crear Producto';
   constructor( private catService: CategoriasService,
     private prodService: ProductoService,
     private router: Router ) { }
 
   public producto = new Producto;
-  listaCategoria: Categoria;
+  lista: Categoria;
   ngOnInit() {
-    this.catService.getCategorias().subscribe(categoria => this.listaCategoria = categoria );
+    this.catService.getCategorias().subscribe( data => {
+      this.lista = data;
+
+    });
+
   }
   cargarProdcuto() {
 
   }
 
   crear() {
+    this.producto.fotoHashCode = null;
+    this.producto.codigo_barras = "123456789";
     if (!this.fotoSeleccionada) {
+      console.log('Entre!!');
+
       this.prodService.crearSinFoto(this.producto).subscribe(producto => {
         this.irProductos();
-        Swal.fire('Nueva Persona',`${producto.nombre} creado con exito!`,'success');
+        Swal.fire('Nuevo Producto',`${producto.nombre} creado con exito!`,'success');
       })
+    } else {
+      console.log('Aki else');
+
     }
   }
 

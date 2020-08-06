@@ -22,7 +22,7 @@
             <div class="col-md-5 mx-auto">
                 <label for="nombre">Nombre:</label>
                 <input required class="form-control  mayusculas"
-                  type="text" name="nombre"/>
+                  type="text" name="nombre" [(ngModel)]="producto.nombre" />
                 <!--<div class="text-center">
                     <p class="field-error" *ngIf="nombre.hasError('required') && nombre.touched">
                         Nombre es requerido!
@@ -36,7 +36,7 @@
             <div class="col-md-5 mb-3 mx-auto">
                 <label for="apellido">Precio:</label>
                 <input required class="form-control mayusculas"
-                  type="text" name="apellido"/>
+                  type="number" name="precio" [(ngModel)]="producto.precio"/>
                 <!--<div class="text-center">
                     <p class="field-error" *ngIf="apellido.hasError('required') && apellido.touched">
                         Precio requerido!
@@ -45,7 +45,8 @@
             </div>
             <div class="col-md-5 mb-3 mx-auto">
                 <label for="email">Cantidad Minima:</label>
-                <input required class="form-control" type="email" name="email"/>
+                <input required class="form-control" type="number"
+                name="cantidad_minima" [(ngModel)]="producto.cantidad_minima"/>
                 <!--<div class="text-center">
                     <p class="field-error" *ngIf="email.hasError('required') && email.touched">
                         Cantidad Minima requerido!
@@ -59,30 +60,30 @@
 
             <div class="col-md-5 mb-3 mx-auto">
                 <label for="telefono">Cantidad Máxima:</label>
-                <input class="form-control" type="text" name="telefono" />
+                <input class="form-control" type="number"
+                name="cantidad_maxima" [(ngModel)]="producto.cantidad_maxima"/>
             </div>
             <div class="col-md-5 mb-3 mx-auto">
                 <label for="">Descripcion:</label>
                 <input class="form-control capitalize"
-                  type="text" name="direccion" />
+                  type="text" name="descripcion" [(ngModel)]="producto.descripcion"/>
             </div>
 
 
         </div>
         <div class="form-row">
-            <div class="col-md-5 mb-3 mx-auto">
+            <div class="col-md-5 mb-3 mx-auto" >
                 <label for="categoria">Categoría:</label>
-                <select class="form-control"  name="categoria">
-                  <option value="">--Seleccionar categoria--</option>
-                  <option *ngFor="let categoria of listaCategoria"
-                    value="categoria.nombre">{{categoria.nombre}}</option>
+                <select class="form-control"  name="categoria" [(ngModel)]="producto.categoria">
+                  <option value="null" >--Seleccionar categoria--</option>
+                  <option *ngFor="let categoria of lista" [ngValue]="categoria" >{{categoria.nombre}}</option>
                 </select>
             </div>
 
             <div class="col-md-5 mb-3 mx-auto">
                 <label class="mt-3" for="foto">Foto:</label>
                 <div class="custom-file">
-                    <input type="file" (change)="seleccionarFoto($event)">
+                    <input type="file" (change)="seleccionarFoto($event)" name="fotoHashCode">
                 </div>
 
                 <!--<img [src]="imageSrc" *ngIf="imageSrc else elseblockImg" class="img-fluid mt-2 text-center" style=" width:auto; " />

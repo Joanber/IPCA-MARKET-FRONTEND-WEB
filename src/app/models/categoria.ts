@@ -1,5 +1,5 @@
 import { Producto } from './producto';
 export class Categoria {
-    id: string;
+    id: number;
     nombre: string;
 }

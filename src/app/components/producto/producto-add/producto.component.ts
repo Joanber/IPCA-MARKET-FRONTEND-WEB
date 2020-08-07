@@ -18,19 +18,27 @@ export class ProductoComponent implements OnInit {
   titulo:string = 'Crear Producto';
   constructor( private catService: CategoriasService,
     private prodService: ProductoService,
-    private router: Router ) { }
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   public producto = new Producto;
-  lista: Categoria;
+  lista: Categoria[];
   ngOnInit() {
     this.catService.getCategorias().subscribe( data => {
       this.lista = data;
-
     });
 
-  }
-  cargarProdcuto() {
+    this.cargarProducto();
 
+  }
+  cargarProducto() {
+    this.route.paramMap.subscribe( param => {
+      const id:number = +param.get('id');
+      if (id) {
+        this.titulo = 'Actualizar Producto';
+        this.prodService.getProductoById(id).subscribe(producto => this.producto = producto);
+      }
+    });
   }
 
   crear() {
@@ -46,6 +54,15 @@ export class ProductoComponent implements OnInit {
     } else {
       console.log('Aki else');
 
+    }
+  }
+
+  editar():void {
+    if (!this.fotoSeleccionada) {
+      this.prodService.editarSinFoto(this.producto).subscribe( producto =>{
+        this.irProductos();
+        Swal.fire('Actualizar Producto',`¡${producto.nombre} actualizado con exito!`,'success');
+      });
     }
   }
 

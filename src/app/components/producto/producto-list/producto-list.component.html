@@ -69,10 +69,10 @@
                 <td>
                     <div class="row justify-content-center">
                         <div class="col-sm-3 mt-3 mb-1">
-                            <button class="btn btn-warning btn-sm" ><i class="fa fa-edit"></i></button>
+                            <button class="btn btn-warning btn-sm"  [routerLink]="['/dashprod/producto/form/',producto.id]"><i class="fa fa-edit"></i></button>
                         </div>
                         <div class="col-sm-3 mt-3">
-                            <button class="btn btn-danger btn-sm" ><i class="fa fa-trash "></i></button>
+                            <button class="btn btn-danger btn-sm" (click)="delete(producto)" ><i class="fa fa-trash "></i></button>
                         </div>
                     </div>
                 </td>

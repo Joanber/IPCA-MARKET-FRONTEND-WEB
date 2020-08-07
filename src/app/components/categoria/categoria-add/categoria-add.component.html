@@ -10,18 +10,18 @@
     <div class="col-md-5 mx-auto">
         <label for="nombre">Nombre:</label>
         <input required class="form-control  mayusculas"
-          type="text" name="nombre"  [(ngModel)]="categoria.nombre" />
-        <!--<div class="text-center">
+          type="text" name="nombre"  [(ngModel)]="categoria.nombre" required #nombre="ngModel"/>
+        <div class="text-center">
             <p class="field-error" *ngIf="nombre.hasError('required') && nombre.touched">
                 Nombre es requerido!
             </p>
-        </div>-->
+        </div>
     </div>
     <div class="form-row mt-3 ">
-<!-- *ngIf="!persona.id else elseBlock" [disabled]="!MyForm.form.valid "-->
-        <div class="col-md-5 mx-auto ">
-            <button class="btn bg-pri btn-block text-white "  (click)="crear()" >Guardar
-        </button>
+        <div class="col-md-5 mx-auto " *ngIf="MyForm.form.valid">
+            <button class="btn bg-pri btn-block text-white " *ngIf="!categoria.id else elseBlock" (click)="crear()" >
+              Guardar
+            </button>
             <ng-template #elseBlock>
                 <button type="button" class="btn bg-pri btn-block text-white" (click)="editar()" [disabled]="!MyForm.form.valid">Actualizar</button>
             </ng-template>

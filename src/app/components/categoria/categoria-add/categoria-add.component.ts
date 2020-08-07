@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Categoria } from 'src/app/models/categoria';
 import Swal from 'sweetalert2';
 import { CategoriasService } from 'src/app/services/categorias.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 
@@ -15,10 +15,12 @@ import { Router } from '@angular/router';
 export class CategoriaAddComponent implements OnInit {
 
   constructor( private categoriaS: CategoriasService,
-    private router: Router) { }
+    private router: Router,
+    private route: ActivatedRoute) { }
   titulo:string = 'Crear Categoría';
   categoria= new Categoria;
   ngOnInit() {
+    this.cargarCategoria();
   }
 
 
@@ -28,6 +30,22 @@ export class CategoriaAddComponent implements OnInit {
       Swal.fire('Nueva Categoría',`${this.categoria.nombre} creada con exito!`,'success');
     });
 
+  }
+  cargarCategoria(): void {
+    this.route.paramMap.subscribe( param => {
+      const id:number = +param.get('id');
+      if (id) {
+        this.titulo = 'Actualizar Categoría';
+        this.categoriaS.getCategoria(id).subscribe(categoria => this.categoria = categoria);
+      }
+    });
+  }
+
+  editar(): void {
+    this.categoriaS.editarCategoria(this.categoria).subscribe( categoria =>{
+      this.irCategorias();
+      Swal.fire('Actualizar Categoría',`¡${categoria.nombre} actualizado con exito!`,'success');
+    });
   }
 
   irCategorias() {

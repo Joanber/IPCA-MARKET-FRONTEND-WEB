@@ -25,8 +25,10 @@ const routes: Routes = [
       {path: 'dashprod', component: DashbordProductosComponent, children: [
         { path: 'producto', component: ProductoListComponent },
         { path: 'producto/form', component: ProductoComponent },
+        { path: 'producto/form/:id', component: ProductoComponent },
         { path: 'categoria', component: CategoriaListComponent },
         { path: 'categoria/form', component: CategoriaAddComponent },
+        { path: 'categoria/form/:id', component: CategoriaAddComponent },
         { path: '**', pathMatch: 'full', redirectTo: 'producto' }
       ]},
       { path: 'dashper', component: DashboardPersonasComponent,children:[

@@ -17,8 +17,21 @@ export class ProductoService {
     return this.http.get<Producto>(`${this.baseEndpoint}/codigo/${codigo}`)
   }
 
-  getProductos(): Observable<Producto>{
-    return this.http.get<Producto>(`${this.baseEndpoint}/`);
+  getProductos(): Observable<Producto[]>{
+    return this.http.get<Producto[]>(`${this.baseEndpoint}/`);
+  }
+
+  editarSinFoto(producto: Producto): Observable<Producto>{
+    return this.http.put<Producto>(`${this.baseEndpoint}/${producto.id}`, producto).pipe(
+      map((response:any)=> response.producto as Producto),
+      catchError(e => {
+        if (e.status ==400) {
+          return throwError(e);
+        }
+        Swal.fire('Error al editar producto',e.error.mensaje,'error');
+        return throwError(e);
+      })
+    )
   }
 
 
@@ -35,6 +48,16 @@ export class ProductoService {
     )
   }
 
+
+  eliminarSinFoto(id:number): Observable<Producto> {
+    return this.http.delete<Producto>(`${this.baseEndpoint}/${id}`).pipe(
+      catchError(e =>{
+        Swal.fire('Error al eliminar el producto ',e.error.mensaje,'error');
+        return throwError(e);
+      })
+    );
+  }
+
   editarCantidad(producto:Producto):Observable<Producto>{
     return  this.http.put<Producto>(`${this.baseEndpoint}/codigo/${producto.codigo_barras}`,producto).pipe(
       map((response:any) => response.producto as Producto),
@@ -46,5 +69,10 @@ export class ProductoService {
        return throwError(e);
      })
     )
-    }
+  }
+
+
+  getProductoById(id: number): Observable<Producto> {
+    return this.http.get<Producto>(`${this.baseEndpoint}/${id}`);
+  }
 }

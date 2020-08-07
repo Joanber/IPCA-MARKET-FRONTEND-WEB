@@ -10,24 +10,16 @@
     <form class="border shadow rounded mx-5 " #MyForm="ngForm">
 
         <div class="form-row mt-3">
-            <!--<div class="col-md-5 mb-3 mx-auto">
-                <label for="cedula">Cedula:</label>
-                <input required class="form-control" type="text" name="cedula" #cedula="ngModel" [(ngModel)]="persona.cedula" />
-                <div class="text-center">
-                    <p class="field-error" *ngIf="cedula.hasError('required') && cedula.touched">
-                        Cedula es requerido!
-                    </p>
-                </div>
-            </div>-->
+
             <div class="col-md-5 mx-auto">
                 <label for="nombre">Nombre:</label>
                 <input required class="form-control  mayusculas"
-                  type="text" name="nombre" [(ngModel)]="producto.nombre" />
-                <!--<div class="text-center">
+                  type="text" name="nombre" [(ngModel)]="producto.nombre" required #nombre="ngModel"/>
+                <div class="text-center">
                     <p class="field-error" *ngIf="nombre.hasError('required') && nombre.touched">
                         Nombre es requerido!
                     </p>
-                </div>-->
+                </div>
             </div>
         </div>
 
@@ -36,22 +28,22 @@
             <div class="col-md-5 mb-3 mx-auto">
                 <label for="apellido">Precio:</label>
                 <input required class="form-control mayusculas"
-                  type="number" name="precio" [(ngModel)]="producto.precio"/>
-                <!--<div class="text-center">
-                    <p class="field-error" *ngIf="apellido.hasError('required') && apellido.touched">
+                  type="number" name="precio" [(ngModel)]="producto.precio" required #precio="ngModel"/>
+                <div class="text-center">
+                    <p class="field-error" *ngIf="precio.hasError('required') && precio.touched">
                         Precio requerido!
                     </p>
-                </div>-->
+                </div>
             </div>
             <div class="col-md-5 mb-3 mx-auto">
                 <label for="email">Cantidad Minima:</label>
                 <input required class="form-control" type="number"
-                name="cantidad_minima" [(ngModel)]="producto.cantidad_minima"/>
-                <!--<div class="text-center">
-                    <p class="field-error" *ngIf="email.hasError('required') && email.touched">
+                name="cantidad_minima" [(ngModel)]="producto.cantidad_minima" required #cantidad_minima="ngModel"/>
+                <div class="text-center">
+                    <p class="field-error" *ngIf="cantidad_minima.hasError('required') && cantidad_minima.touched">
                         Cantidad Minima requerido!
                     </p>
-                </div>-->
+                </div>
             </div>
 
         </div>
@@ -61,12 +53,22 @@
             <div class="col-md-5 mb-3 mx-auto">
                 <label for="telefono">Cantidad Máxima:</label>
                 <input class="form-control" type="number"
-                name="cantidad_maxima" [(ngModel)]="producto.cantidad_maxima"/>
+                  name="cantidad_maxima" [(ngModel)]="producto.cantidad_maxima" required #cantidad_maxima="ngModel"/>
+                <div class="text-center">
+                    <p class="field-error" *ngIf="cantidad_maxima.hasError('required') && cantidad_maxima.touched">
+                        Cantidad Máxima requerido!
+                    </p>
+                </div>
             </div>
             <div class="col-md-5 mb-3 mx-auto">
                 <label for="">Descripcion:</label>
-                <input class="form-control capitalize"
-                  type="text" name="descripcion" [(ngModel)]="producto.descripcion"/>
+                <textarea class="form-control capitalize" name="descripcion"
+                rows="2" cols="80" [(ngModel)]="producto.descripcion" required #descripcion="ngModel"></textarea>
+                <div class="text-center">
+                    <p class="field-error" *ngIf="descripcion.hasError('required') && descripcion.touched">
+                        Descripción requerido!
+                    </p>
+                </div>
             </div>
 
 
@@ -74,10 +76,15 @@
         <div class="form-row">
             <div class="col-md-5 mb-3 mx-auto" >
                 <label for="categoria">Categoría:</label>
-                <select class="form-control"  name="categoria" [(ngModel)]="producto.categoria">
+                <select class="form-control"  name="categoria" [(ngModel)]="producto.categoria" required #categoria="ngModel">
                   <option value="null" >--Seleccionar categoria--</option>
                   <option *ngFor="let categoria of lista" [ngValue]="categoria" >{{categoria.nombre}}</option>
                 </select>
+                <div class="text-center">
+                    <p class="field-error" *ngIf="categoria.hasError('required') && categoria.touched">
+                        Categoría requerido!
+                    </p>
+                </div>
             </div>
 
             <div class="col-md-5 mb-3 mx-auto">
@@ -95,12 +102,13 @@
 
         </div>
         <div class="form-row mb-3 ">
-<!-- *ngIf="!persona.id else elseBlock" [disabled]="!MyForm.form.valid "-->
-            <div class="col-md-5 mx-auto ">
-                <button class="btn bg-pri btn-block text-white "  (click)="crear()" >Guardar
-            </button>
+            <div class="col-md-5 mx-auto " *ngIf="MyForm.form.valid">
+                <button class="btn bg-pri btn-block text-white "
+                  *ngIf="!producto.id else elseBlock"  (click)="crear()" >
+                  Guardar
+                </button>
                 <ng-template #elseBlock>
-                    <button type="button" class="btn bg-pri btn-block text-white" (click)="editar()" [disabled]="!MyForm.form.valid">Actualizar</button>
+                    <button type="button" class="btn bg-pri btn-block text-white" (click)="editar()" >Actualizar</button>
                 </ng-template>
 
             </div>

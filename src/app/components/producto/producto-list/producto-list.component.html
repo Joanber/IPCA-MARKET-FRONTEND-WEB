@@ -12,7 +12,8 @@
 
     <div class="col-sm-10 text-right">
         <div class="input-group">
-            <input type="text" class="form-control" #termino placeholder="Buscar" (keyup)="buscarPersona(termino.value)" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <input type="text" class="form-control" #termino placeholder="Buscar" (keyup)="buscarProducto(termino.value)"
+              aria-label="Recipient's username" aria-describedby="button-addon2">
             <div class="input-group-append">
                 <button class="btn bg-pri text-white" type="button" id="button-addon2">Buscar</button>
             </div>
@@ -39,8 +40,11 @@
                 <td>
                     <div class="row justify-content-center">
                         <div class="col-sm-12 col-md-12 mt-3">
-                            <img class="img-fluid rounded" *ngIf="producto.fotoHashCode" [src]="baseEndpoint + '/img/' + producto.id + '?fotoHashCode=' +producto.fotoHashCode" style=" width:125px; height: 100px;">
-                            <img class="img-fluid rounded" *ngIf="!producto.fotoHashCode" src="../../../../../assets/img/notproducto.jpg" style=" width: 70px;">
+                            <img class="img-fluid rounded" *ngIf="producto.fotoHashCode"
+                              [src]="baseEndpoint + '/img/' + producto.id + '?fotoHashCode=' +producto.fotoHashCode"
+                              style=" width:125px; height: 100px;">
+                            <img class="img-fluid rounded" *ngIf="!producto.fotoHashCode"
+                              src="../../../../../assets/img/notproducto.jpg" style=" width: 70px;">
                         </div>
                     </div>
 
@@ -69,7 +73,8 @@
                 <td>
                     <div class="row justify-content-center">
                         <div class="col-sm-3 mt-3 mb-1">
-                            <button class="btn btn-warning btn-sm"  [routerLink]="['/dashprod/producto/form/',producto.id]"><i class="fa fa-edit"></i></button>
+                            <button class="btn btn-warning btn-sm"
+                              [routerLink]="['/dashprod/producto/form/',producto.id]"><i class="fa fa-edit"></i></button>
                         </div>
                         <div class="col-sm-3 mt-3">
                             <button class="btn btn-danger btn-sm" (click)="delete(producto)" ><i class="fa fa-trash "></i></button>

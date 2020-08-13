@@ -16,6 +16,10 @@ export class CategoriasService {
     return this.http.get<Categoria[]>(`${this.baseEndpoint}/`);
   }
 
+  // getCategoriasFiltro(termino: string): Observable<Categoria[]>{
+  //   return this.http.get<Categoria[]>(`${this.baseEndpoint}/filtrar/${termino}`);
+  // }
+
   crearCategoria(categoria: Categoria): Observable<Categoria> {
     return this.http.post<Categoria>(`${this.baseEndpoint}/`, categoria).pipe(
       map((response:any)=> response.categoria as Categoria),
@@ -30,7 +34,7 @@ export class CategoriasService {
   }
 
   editarCategoria(categoria: Categoria): Observable<Categoria> {
-    return this.http.post<Categoria>(`${this.baseEndpoint}/${categoria.id}`, categoria).pipe(
+    return this.http.put<Categoria>(`${this.baseEndpoint}/${categoria.id}`, categoria).pipe(
       map((response:any)=> response.categoria as Categoria),
       catchError(e => {
         if (e.status ==400) {

@@ -26,23 +26,23 @@ export class ProductoService {
   }
 
 
-  getProductosPage(page: number): Observable<any>{
-    return this.http.get(this.baseEndpoint+'/page/'+page).pipe(
-      tap((response:any) => {
-        (response.content  as Producto[]).forEach(producto => {
-          console.log(producto.nombre);
-        })
-      }),
-      map((response:any) => {
-        (response.content as Producto[]).map(producto => {
-
-          return producto;
-        })
-        return response
-      })
-
-    )
-  }
+  // getProductosPage(page: number): Observable<any>{
+  //   return this.http.get(this.baseEndpoint+'/page/'+page).pipe(
+  //     tap((response:any) => {
+  //       (response.content  as Producto[]).forEach(producto => {
+  //         console.log(producto.nombre);
+  //       })
+  //     }),
+  //     map((response:any) => {
+  //       (response.content as Producto[]).map(producto => {
+  //
+  //         return producto;
+  //       })
+  //       return response
+  //     })
+  //
+  //   )
+  // }
 
   editarSinFoto(producto: Producto): Observable<Producto>{
     return this.http.put<Producto>(`${this.baseEndpoint}/${producto.id}`, producto).pipe(
@@ -57,6 +57,53 @@ export class ProductoService {
     )
   }
 
+  crearConFoto(producto:Producto,archivo:File):Observable<Producto>{
+    const formData = new FormData();
+    formData.append('archivo', archivo);
+    formData.append('nombre', producto.nombre);
+    formData.append('precio', String(producto.precio));
+    formData.append('cantidad_minima', String(producto.cantidad_minima));
+    formData.append('cantidad_maxima', String(producto.cantidad_maxima));
+    formData.append('descripcion', producto.descripcion);
+    formData.append('codigo_barras', producto.codigo_barras);
+    formData.append('categoria.id', String(producto.categoria.id));
+    formData.append('categoria.nombre', producto.categoria.nombre);
+    return this.http.post<Producto>(`${this.baseEndpoint}`+'/crear-con-foto',
+     formData).pipe(
+      map((response:any) => response.producto as Producto),
+      catchError(e => {
+        if (e.status ==400) {
+          return throwError(e);
+        }
+        Swal.fire('Error al crear producto',e.error.mensaje,'error');
+         return throwError(e);
+      })
+    )
+  }
+
+  editarConFoto(producto:Producto,archivo:File):Observable<Producto>{
+    const formData = new FormData();
+    formData.append('archivo', archivo);
+    formData.append('nombre', producto.nombre);
+    formData.append('precio', String(producto.precio));
+    formData.append('cantidad_minima', String(producto.cantidad_minima));
+    formData.append('cantidad_maxima', String(producto.cantidad_maxima));
+    formData.append('descripcion', producto.descripcion);
+    formData.append('codigo_barras', producto.codigo_barras);
+    formData.append('categoria.id', String(producto.categoria.id));
+    formData.append('categoria.nombre', producto.categoria.nombre);
+    return this.http.put<Producto>(`${this.baseEndpoint}`+'/editar-con-foto',
+     formData).pipe(
+      map((response:any) => response.producto as Producto),
+      catchError(e => {
+        if (e.status ==400) {
+          return throwError(e);
+        }
+        Swal.fire('Error al editar producto',e.error.mensaje,'error');
+         return throwError(e);
+      })
+    )
+  }
 
   crearSinFoto(producto: Producto): Observable<Producto>{
     return this.http.post<Producto>(`${this.baseEndpoint}/`, producto).pipe(

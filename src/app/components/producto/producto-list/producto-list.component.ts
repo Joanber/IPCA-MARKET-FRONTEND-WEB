@@ -4,6 +4,7 @@ import { Producto } from 'src/app/models/producto';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs/operators';
+import { BASE_ENDPOINT } from 'src/app/DB_CONFIG/bdConig';
 
 @Component({
   selector: 'app-producto-list',
@@ -14,34 +15,11 @@ export class ProductoListComponent implements OnInit {
 
   constructor( private prodService: ProductoService,
     private route: ActivatedRoute) { }
+  baseEndpoint = BASE_ENDPOINT + '/productos';
   prodLista: Producto[];
   paginator:any;
   ngOnInit() {
-
-    this.getProductoPage();
     this.getProductos();
-  }
-
-  getProductoPage(): void {
-    this.route.paramMap.subscribe(params => {
-      let page: number = +params.get('page');
-      if (!page) {
-        page = 0;
-      }
-      this.prodService.getProductosPage(page).
-        pipe(
-          tap(response => {
-            (response.content as Producto[]).forEach(proucto => {
-              console.log(proucto.nombre);
-            })
-          })
-        )
-        .subscribe(
-          response => {
-            this.prodLista = response.content as Producto[];
-            this.paginator= response;
-          });
-    });
   }
 
   getProductos() :void {

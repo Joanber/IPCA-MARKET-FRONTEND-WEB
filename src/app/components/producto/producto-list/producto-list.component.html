@@ -40,7 +40,7 @@
                 <td>
                     <div class="row justify-content-center">
                         <div class="col-sm-12 col-md-12 mt-3">
-                            <img class="img-fluid rounded" *ngIf="producto.fotoHashCode"
+                            <img class="img-fluid rounded" *ngIf="producto.fotoHashCode" alt="Imagen Producto"
                               [src]="baseEndpoint + '/img/' + producto.id + '?fotoHashCode=' +producto.fotoHashCode"
                               style=" width:125px; height: 100px;">
                             <img class="img-fluid rounded" *ngIf="!producto.fotoHashCode"

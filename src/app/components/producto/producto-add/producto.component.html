@@ -1,7 +1,7 @@
 <div class="container my-3">
     <div class="row justify-content-center">
         <h1>{{ titulo }}</h1>
-        <button class="btn btn-danger mb-2 mx-3" (click)="irPersonas()">
+        <button class="btn btn-danger mb-2 mx-3" (click)="irProductos()">
           <i class="fas fa-times"></i>
         </button>
     </div>
@@ -76,8 +76,8 @@
         <div class="form-row">
             <div class="col-md-5 mb-3 mx-auto" >
                 <label for="categoria">Categoría:</label>
-                <select class="form-control"  name="categoria" [(ngModel)]="producto.categoria" required #categoria="ngModel">
-                  <option value="null" >--Seleccionar categoria--</option>
+                <select [compareWith]="compararProducto" class="form-control"  name="categoria" [(ngModel)]="producto.categoria" required #categoria="ngModel">
+                  <option [ngValue]="undefined" >--Seleccionar categoria--</option>
                   <option *ngFor="let categoria of lista" [ngValue]="categoria" >{{categoria.nombre}}</option>
                 </select>
                 <div class="text-center">
@@ -93,10 +93,10 @@
                     <input type="file" (change)="seleccionarFoto($event)" name="fotoHashCode">
                 </div>
 
-                <!--<img [src]="imageSrc" *ngIf="imageSrc else elseblockImg" class="img-fluid mt-2 text-center" style=" width:auto; " />
+                <img [src]="imageSrc" *ngIf="imageSrc else elseblockImg" class="img-fluid mt-2 text-center" style=" width:auto; " />
                 <ng-template #elseblockImg>
-                    <img class="img-fluid " *ngIf="persona.fotoHashCode" [src]="baseEndpoint + '/img/' + persona.id + '?fotoHashCode=' +persona.fotoHashCode " style=" width:auto;">
-                </ng-template>-->
+                    <img class="img-fluid " *ngIf="producto.fotoHashCode" [src]="baseEndpoint + '/img/' + producto.id + '?fotoHashCode=' +producto.fotoHashCode " style=" width:auto;">
+                </ng-template>
             </div>
 
 

@@ -33,6 +33,13 @@ import { PaginadorComponent } from './components/paginador/paginador.component';
 import { DashbordProductosComponent } from './components/producto/dashbord-productos/dashbord-productos.component';
 import { CategoriaListComponent } from './components/categoria/categoria-list/categoria-list.component';
 import { CategoriaAddComponent } from './components/categoria/categoria-add/categoria-add.component';
+import { PdfMakeWrapper } from 'pdfmake-wrapper';
+import pdfFonts from "pdfmake/build/vfs_fonts"; // fonts provided for pdfmake
+
+// Set the fonts to use
+PdfMakeWrapper.setFonts(pdfFonts);
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,7 +75,7 @@ import { CategoriaAddComponent } from './components/categoria/categoria-add/cate
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatInputModule,
-    MatFormFieldModule 
+    MatFormFieldModule
 
   ],
   providers: [{provide: LOCALE_ID, useValue: 'en-US' }],

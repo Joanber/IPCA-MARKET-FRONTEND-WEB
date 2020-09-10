@@ -8,6 +8,9 @@ import { CategoriasService } from 'src/app/services/categorias.service';
 import { BASE_ENDPOINT } from 'src/app/DB_CONFIG/bdConig';
 
 
+
+
+
 @Component({
   selector: 'app-producto',
   templateUrl: './producto.component.html',
@@ -54,6 +57,9 @@ export class ProductoComponent implements OnInit {
 
 
   }
+
+
+
 
   compararProducto(o1: Producto, o2: Producto): boolean {
     if (o1 === undefined && o2 === undefined) {

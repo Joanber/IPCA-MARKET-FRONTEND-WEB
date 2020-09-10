@@ -5,6 +5,9 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { BASE_ENDPOINT } from 'src/app/DB_CONFIG/bdConig';
+import { PdfMakeWrapper } from 'pdfmake-wrapper';
+import { Txt, Columns, Rect, Canvas} from 'pdfmake-wrapper';
+
 
 @Component({
   selector: 'app-producto-list',
@@ -36,6 +39,37 @@ export class ProductoListComponent implements OnInit {
     }else{
       this.getProductos();
     }
+  }
+
+  reportePDF() {
+    const pdf = new PdfMakeWrapper();
+    pdf.header(
+       new Txt('Productos').alignment('center').bold().italics().end
+    );
+    // pdf.add(
+    //   new Txt('Productos').alignment('center').bold().italics().end
+    // );
+    // pdf.add(
+    //   new Table([[ '#','Nombre', 'Descripción','Precio' ]]).layout('noBorders').bold().end
+    // );
+    pdf.add(
+      new Columns([ '#','Nombre','Categoria', 'Descripción', 'Precio' ]).columnGap(3).end
+    );
+    this.prodLista.forEach( prod => {
+      pdf.add(
+        new Columns([ prod.id,prod.nombre,prod.categoria.nombre, prod.descripcion, prod.precio ]).columnGap(3).end
+      );
+    });
+    // this.prodLista.forEach( prod => {
+    //   pdf.add(
+    //     new Table([
+    //       [prod.id,prod.nombre, prod.descripcion, prod.precio]
+    //     ]).layout('noBorders').end
+    //
+    //   )
+    // })
+
+    pdf.create().open()
   }
 
 

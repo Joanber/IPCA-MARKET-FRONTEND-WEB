@@ -43,15 +43,18 @@ export class ProductoListComponent implements OnInit {
 
   reportePDF() {
     const pdf = new PdfMakeWrapper();
-    pdf.header(
+    pdf.info({
+      title: 'Productos',
+      author: 'IPCA',
+      subject: 'Productos reporte',
+    });
+    pdf.add(
+      pdf.ln(1)
+    );
+    pdf.add(
        new Txt('Productos').alignment('center').bold().italics().end
     );
-    // pdf.add(
-    //   new Txt('Productos').alignment('center').bold().italics().end
-    // );
-    // pdf.add(
-    //   new Table([[ '#','Nombre', 'Descripción','Precio' ]]).layout('noBorders').bold().end
-    // );
+
     pdf.add(
       new Columns([ '#','Nombre','Categoria', 'Descripción', 'Precio' ]).columnGap(3).end
     );
@@ -60,15 +63,8 @@ export class ProductoListComponent implements OnInit {
         new Columns([ prod.id,prod.nombre,prod.categoria.nombre, prod.descripcion, prod.precio ]).columnGap(3).end
       );
     });
-    // this.prodLista.forEach( prod => {
-    //   pdf.add(
-    //     new Table([
-    //       [prod.id,prod.nombre, prod.descripcion, prod.precio]
-    //     ]).layout('noBorders').end
-    //
-    //   )
-    // })
-
+    pdf.footer(`${ new Date() }`);
+    pdf.watermark('IPCA');
     pdf.create().open()
   }
 

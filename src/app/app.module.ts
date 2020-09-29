@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule,LOCALE_ID  } from '@angular/core';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 
 import { AppComponent } from './app.component';
@@ -30,6 +30,9 @@ import { ProductoInComponent } from './components/inventario/producto-in/product
 import { InventarioComponent } from './components/inventario/inventario/inventario.component';
 import { DashboardPersonasComponent } from './components/Personas/dashboard-personas/dashboard-personas.component';
 import { PaginadorComponent } from './components/paginador/paginador.component';
+import { TokenInterceptor } from './services/Interceptores/token.interceptor';
+import { AuthInterceptor } from './services/Interceptores/AuthInterceptor';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +51,7 @@ import { PaginadorComponent } from './components/paginador/paginador.component';
     ArraypipePipe,
     ProductoInComponent,
     DashboardPersonasComponent,
-    PaginadorComponent
+    PaginadorComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,7 +68,9 @@ import { PaginadorComponent } from './components/paginador/paginador.component';
     MatFormFieldModule 
 
   ],
-  providers: [{provide: LOCALE_ID, useValue: 'en-US' }],
+  providers: [{provide: LOCALE_ID, useValue: 'en-US' },
+              {provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},
+              {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

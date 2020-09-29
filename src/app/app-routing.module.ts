@@ -12,6 +12,8 @@ import { UsuarioListComponent } from './components/usuario/usuario-list/usuario-
 import { UsuarioAddComponent } from './components/usuario/usuario-add/usuario-add.component';
 import { DashboardPersonasComponent } from './components/Personas/dashboard-personas/dashboard-personas.component';
 import { ProductoInComponent } from './components/inventario/producto-in/producto-in.component';
+import { AuthGuard } from './services/guards/auth.guard';
+import { RoleGuard } from './services/guards/role.guard';
 
 
 const routes: Routes = [
@@ -23,7 +25,7 @@ const routes: Routes = [
       { path: 'producto-list', component: ProductoListComponent },
       { path: 'producto-add', component: ProductoComponent },
       { path: 'dashper', component: DashboardPersonasComponent,children:[
-        { path: 'personas', component: PersonasListComponent },
+        { path: 'personas', component: PersonasListComponent , canActivate:[AuthGuard,RoleGuard],data:{role:'ROLE_ADMIN'}},
         { path: 'personas/page/:page', component: PersonasListComponent },
         { path: 'usuarios', component: UsuarioListComponent },
         { path: 'usuarios/form', component: UsuarioAddComponent },

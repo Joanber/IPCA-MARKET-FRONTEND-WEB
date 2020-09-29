@@ -1,28 +1,42 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-import { TokenStorageService } from '../login_services/token-storage.service';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { AuthService } from '../login_services/auth.service';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 
-const TOKEN_HEADER_KEY = 'Authorization';       // for Spring Boot back-end
-// const TOKEN_HEADER_KEY = 'x-access-token';   // for Node.js Express back-end
+
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private token: TokenStorageService) { }
+  constructor(private authService: AuthService,
+    private router: Router) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
-    let authReq = req;
-    const token = this.token.getToken();
-    if (token != null) {
-      // for Spring Boot back-end
-      authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, 'Bearer ' + token) });
+  intercept(req: HttpRequest<any>, next: HttpHandler):
+    Observable<HttpEvent<any>> {
 
-      // for Node.js Express back-end
-      // authReq = req.clone({ headers: req.headers.set(TOKEN_HEADER_KEY, token) });
-    }
-    return next.handle(authReq);
+
+    return next.handle(req).pipe(
+      catchError(e => {
+        if (e.status == 401) {
+
+          if (this.authService.isAuthenticated()) {
+            this.authService.logout();
+          }
+          this.router.navigate(['/login']);
+        }
+
+        if (e.status == 403) {
+          Swal.fire('Acceso denegado', `Hola ${this.authService.usuario.username} no tienes acceso a este recurso!`, 'warning');
+          this.router.navigate(['/home']);
+        }
+        return throwError(e);
+      })
+    );
   }
 }
 

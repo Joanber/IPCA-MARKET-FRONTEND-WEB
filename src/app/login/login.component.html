@@ -2,7 +2,7 @@
     <div class="row justify-content-center">
         <div class="h-75 border m-auto rounded-lg shadow px-8 ">
 
-            <form #loginForm="ngForm" class="form-horizontal d-block mx-5 mt-4">
+            <form #f="ngForm" name="form" class="form-horizontal d-block mx-5 mt-4" method="POST">
 
                 <h1 class="text-center mt-4 mb-2">Login</h1>
                 <div>
@@ -10,37 +10,34 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="" class="control-label">Usuario:</label>
-                    <input required class="form-control" type="text" name="user" placeholder="Nombre de Usuario" #user="ngModel" [(ngModel)]="username">
+                    <label for="username" class="control-label">Usuario:</label>
+                    <input class="form-control" type="text" name="username" placeholder="Nombre de Usuario" [(ngModel)]="usuario.username" required>
 
-                    <p class="field-error text-center" *ngIf="user.hasError('required') && user.touched">
-                        El usuario es un campo requerido!
-                    </p>
+
 
                 </div>
                 <!--INPUT USERNAME-->
 
                 <div class="form-group ">
                     <label for="">Password:</label>
-                    <input required class="form-control" type="password" name="psswrd" placeholder="Contraseña" #psswrd="ngModel" [(ngModel)]="password">
+                    <input required class="form-control" type="password" name="password" placeholder="Contraseña" [(ngModel)]="usuario.password" required>
 
-                    <p class="field-error text-center" *ngIf="psswrd.hasError('required') && psswrd.touched">
-                        El password es un campo requerido!
-                    </p>
+
                 </div>
                 <!--INPUT PASSWORD-->
                 <div class="form-group mt-4">
 
-                    <button type="submit" [disabled]="loginForm.invalid" class="btn btn-block  btn bg-pri white" (click)="login()">Ingresar</button>
+                    <button type="submit" (click)='login()' class="btn btn-block bg-pri white">Ingresar</button>
                 </div>
 
             </form>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="!esValido">
-                Usuario o contraseña incorrectos.
+            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert" *ngIf="!esValido">
+                {{invalido}}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="cerrarError()">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+              <span aria-hidden="true">&times;</span>
+            </button>
             </div>
+
         </div>
 
 

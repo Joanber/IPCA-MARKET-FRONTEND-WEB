@@ -1,3 +1,8 @@
 fas:hover {
-    color: #042331 !important
+  color: #042331 !important;
+}
+
+.fa-eye-slash:hover,
+.fa-eye:hover {
+  cursor: pointer;
 }

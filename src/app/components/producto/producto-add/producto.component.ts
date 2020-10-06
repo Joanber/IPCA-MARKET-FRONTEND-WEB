@@ -48,7 +48,7 @@ export class ProductoComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       const reader = new FileReader();
-      reader.onload = (e) => (this.imageSrc = reader.result);
+      reader.onload = (e) => this.imageSrc = reader.result;
       reader.readAsDataURL(file);
       console.log(this.producto);
     }
@@ -110,12 +110,13 @@ export class ProductoComponent implements OnInit {
         );
       });
     } else if (!this.fotoSeleccionada && this.producto.fotoHashCode != null) {
+
+
       const hashcode: number = this.producto.fotoHashCode;
       this.producto.fotoHashCode = hashcode;
-      this.prodService
-        .editarConFoto(this.producto, this.fotoSeleccionada)
-        .subscribe((producto) => {
-          console.log("persona con foto", producto);
+      this.prodService.editarConFoto(this.producto, this.fotoSeleccionada).subscribe(
+        producto => {
+          console.log("producto con foto", producto);
           Swal.fire(
             "Actualizar Producto",
             `¡${producto.nombre} actualizado con exito!`,
@@ -124,12 +125,10 @@ export class ProductoComponent implements OnInit {
           this.irProductos();
         });
     } else {
-      this.prodService
-        .editarConFoto(this.producto, this.fotoSeleccionada)
-        .subscribe((producto) => {
-          console.log("persona con foto", producto);
+      this.prodService.editarConFoto(this.producto, this.fotoSeleccionada).subscribe(producto => {
+          console.log("producto con foto", producto);
           Swal.fire(
-            "Actualizar Persona",
+            "Actualizar Producto",
             `¡${producto.nombre} actualizado con exito!`,
             "success"
           );

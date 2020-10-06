@@ -12,6 +12,7 @@ import { UsuarioListComponent } from './components/usuario/usuario-list/usuario-
 import { UsuarioAddComponent } from './components/usuario/usuario-add/usuario-add.component';
 import { DashboardPersonasComponent } from './components/Personas/dashboard-personas/dashboard-personas.component';
 import { ProductoInComponent } from './components/inventario/producto-in/producto-in.component';
+import { ReportesComponent } from './components/inventario/reportes/reportes.component';
 import { DashbordProductosComponent } from './components/producto/dashbord-productos/dashbord-productos.component';
 import { CategoriaListComponent } from './components/categoria/categoria-list/categoria-list.component';
 import { CategoriaAddComponent } from './components/categoria/categoria-add/categoria-add.component';
@@ -44,6 +45,7 @@ const routes: Routes = [
       },
       { path: 'inventario', component: InventarioComponent, children: [
         { path: 'producto', component: ProductoInComponent},
+        { path: 'reporte', component: ReportesComponent},
       { path: '**', pathMatch: 'full', redirectTo: 'producto' }
         ]
       },

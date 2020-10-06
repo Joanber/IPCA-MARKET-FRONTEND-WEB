@@ -114,7 +114,7 @@ export class ProductoService {
     formData.append("categoria.id", String(producto.categoria.id));
     formData.append("categoria.nombre", producto.categoria.nombre);
     return this.http
-      .put<Producto>(`${this.baseEndpoint}` + "/editar-con-foto", formData)
+      .put<Producto>(`${this.baseEndpoint}` + `/editar-con-foto/${producto.id}`, formData)
       .pipe(
         map((response: any) => response.producto as Producto),
         catchError((e) => {

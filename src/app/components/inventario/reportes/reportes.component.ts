@@ -9,11 +9,24 @@ import { DatePipe } from '@angular/common';
 })
 export class ReportesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private miDatePipe: DatePipe) { }
 
   listRegistros = [];
 
   ngOnInit() {
   }
+
+  fechaInicio: string = null;
+  fechaFin: string = null;
+
+  ver() {
+    const fechaInicio = this.miDatePipe.transform(this.fechaInicio, 'yyyy-MM-dd');
+    const fechaFin = this.miDatePipe.transform(this.fechaFin, 'yyyy-MM-dd');
+    console.log(fechaInicio);
+    console.log(fechaFin);
+
+    
+  }
+
 
 }

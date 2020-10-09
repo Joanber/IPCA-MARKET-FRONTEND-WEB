@@ -3,46 +3,74 @@
     <h2 class="display-4">Ventas</h2>
 </div>
 <hr class="separador-pri w-100 ">
+
 <div class="row">
-  <div class="col-sm-2">
-    <label for="fecha">Inicio:</label>
-    <input [matDatepicker]="myDatepicker" class="form-control" style="display: inline;" name="fechaInicio"/>
-    <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
-    <mat-datepicker color="dark" #myDatepicker></mat-datepicker>
-    <!-- <div class="text-center">
-        <p class="field-error" *ngIf="fecha.hasError('required') && fecha.touched">
-            Fecha requerido!
-        </p>
-    </div> -->
-  </div>
-  <div class="col-sm-2">
-    <label for="fecha">Fin:</label>
-    <input [matDatepicker]="myDatepicker2" class="form-control" style="display: inline;" name="fechaFin"/>
-    <mat-datepicker-toggle [for]="myDatepicker2"></mat-datepicker-toggle>
-    <mat-datepicker color="dark" #myDatepicker2></mat-datepicker>
-    <!-- <div class="text-center">
-        <p class="field-error" *ngIf="fecha.hasError('required') && fecha.touched">
-            Fecha requerido!
-        </p>
-    </div> -->
-  </div>
-  <div class="col-sm-2">
-    <button class="btn btn-danger white mr-3" (click)="reportePDF()">PDF</button>
-  </div>
+<div class="col-sm-4">
+  <form class="border shadow rounded mx-5 " #MyForm="ngForm">
+    <div class="col-sm-12">
+      <label for="fecha">Inicio:</label>
+      <input [matDatepicker]="myDatepicker" [(ngModel)]='fechaInicio' class="form-control" style="display: inline;" name="fechaInicio"/>
+      <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker color="dark" #myDatepicker></mat-datepicker>
+      <!-- <div class="text-center">
+          <p class="field-error" *ngIf="fecha.hasError('required') && fecha.touched">
+              Fecha requerido!
+          </p>
+      </div> -->
+    </div>
+    <div class="col-sm-12">
+      <label for="fecha">Fin:</label>
+      <input [matDatepicker]="myDatepicker2" [(ngModel)]='fechaFin'  class="form-control" style="display: inline;" name="fechaFin"/>
+      <mat-datepicker-toggle [for]="myDatepicker2"></mat-datepicker-toggle>
+      <mat-datepicker color="dark" #myDatepicker2></mat-datepicker>
+      <!-- <div class="text-center">
+          <p class="field-error" *ngIf="fecha.hasError('required') && fecha.touched">
+              Fecha requerido!
+          </p>
+      </div> -->
+    </div>
+
+    <div class="form-row mb-3 ">
+
+      <div class="col-md-5 mx-auto ">
+        <button class="btn bg-pri btn-block text-white " (click)="ver()" >
+          Ver
+        </button>
+      </div>
+    </div>
+  </form>
+
+
+
 </div>
 
-<div class="" id="reportes">
-  <div class="alert alert-info text-center" *ngIf="listRegistros?.length==0">
-      No hay ventas registradas
+<div class="col-sm-8" id="reportes">
+  <div class="row">
+    <div class="col-sm-2">
+      <button class="btn btn-danger white mr-3" (click)="reportePDF()">PDF</button>
+    </div>
   </div>
-  <table class="table table-bordered table-striped table-responsive-md text-center" *ngIf="listRegistros?.length>0">
-    <thead class="bg-pri white">
-        <tr>
-            <th>Foto</th>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Categoría</th>
-        </tr>
-    </thead>
-  </table>
+  <br/>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="alert alert-info text-center" *ngIf="listRegistros?.length==0">
+          No hay ventas registradas
+      </div>
+      <table class="table table-bordered table-striped table-responsive-md text-center" *ngIf="listRegistros?.length>0">
+        <thead class="bg-pri white">
+            <tr>
+                <th>Cantidad</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Codigo de barras</th>
+                <th>Categoría</th>
+            </tr>
+        </thead>
+      </table>
+    </div>
+
+  </div>
+
+  </div>
+
 </div>

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { FacturaService } from "src/app/services/factura.service";
+import { PdfMakeWrapper } from 'pdfmake-wrapper';
+import { Txt, Columns, Rect, Canvas} from 'pdfmake-wrapper';
 
 @Component({
   selector: 'app-reportes',
@@ -9,11 +12,39 @@ import { DatePipe } from '@angular/common';
 })
 export class ReportesComponent implements OnInit {
 
-  constructor(private miDatePipe: DatePipe) { }
+  constructor(private miDatePipe: DatePipe,
+    private fs: FacturaService) { }
 
-  listRegistros = [];
+  listRegistros :any[];
 
   ngOnInit() {
+  }
+
+  reportePDF() {
+    const pdf = new PdfMakeWrapper();
+    pdf.info({
+      title: 'Reportes',
+      author: 'IPCA',
+      subject: 'Productos reporte',
+    });
+    pdf.add(
+      pdf.ln(1)
+    );
+    pdf.add(
+       new Txt('Ventas').alignment('center').bold().italics().end
+    );
+
+    pdf.add(
+      new Columns([ 'Cantidad','Nombre','Precio', 'Codigo de Barras', 'Categoria' ]).columnGap(3).end
+    );
+    this.listRegistros.forEach( registro => {
+      pdf.add(
+        new Columns([ registro.cantidad,registro.nombre,registro.precio, registro.codigo_barras, registro.nombre_categoria ]).columnGap(3).end
+      );
+    });
+    pdf.footer(`${ new Date() }`);
+    pdf.watermark('IPCA');
+    pdf.create().open()
   }
 
   fechaInicio: string = null;
@@ -22,10 +53,7 @@ export class ReportesComponent implements OnInit {
   ver() {
     const fechaInicio = this.miDatePipe.transform(this.fechaInicio, 'yyyy-MM-dd');
     const fechaFin = this.miDatePipe.transform(this.fechaFin, 'yyyy-MM-dd');
-    console.log(fechaInicio);
-    console.log(fechaFin);
-
-    
+    this.fs.getVentas(fechaInicio, fechaFin).subscribe(data => this.listRegistros = data);
   }
 
 

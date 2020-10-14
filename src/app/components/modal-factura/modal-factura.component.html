@@ -1,0 +1,61 @@
+<div class="abrir-modal animacion fadeIn" *ngIf="srvMF.modal">
+  <div class="modal" tabindex="-1" role="dialog" style="display: block">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Venta de Productos: Cobrar</h5>
+          <button
+            (click)="cerrarModal()"
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row text-center">
+              <div class="col-sm">
+                <h4>Total a Cobrar</h4>
+                <h1 class="display-1" style="color: blue">
+                  ${{ factura.calcularGranTotal() }}
+                </h1>
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="col-md-3 mb-3 mx-auto">
+                <label for="username">Pagó con:</label>
+                <input
+                  class="form-control"
+                  style="color: red; font-size: 30px"
+                  type="number"
+                  min="1"
+                  (keyup)="actualizarPagoCon($event, this.factura)"
+                  (change)="actualizarPagoCon($event, this.factura)"
+                  value="{{ factura.calcularGranTotal() }}"
+                />
+              </div>
+            </div>
+            <div class="text-center">
+              <div class="col-md-3 mb-3 mx-auto">
+                <label for="username">Su Cambio:</label>
+                <h3 style="color: red">${{ cambio }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn bg-pri text-white float-right"
+            type="button"
+            (click)="guardarVentaFactura()"
+          >
+            <i class="fas fa-cart-arrow-down mr-2"></i>Registrar Venta
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

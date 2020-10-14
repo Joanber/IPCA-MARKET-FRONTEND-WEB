@@ -48,7 +48,7 @@ export class ProductoComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       const reader = new FileReader();
-      reader.onload = (e) => this.imageSrc = reader.result;
+      reader.onload = (e) => (this.imageSrc = reader.result);
       reader.readAsDataURL(file);
       console.log(this.producto);
     }
@@ -74,7 +74,6 @@ export class ProductoComponent implements OnInit {
   }
 
   crear() {
-    this.producto.codigo_barras = "12345678";
     if (!this.fotoSeleccionada) {
       this.prodService.crearSinFoto(this.producto).subscribe((producto) => {
         this.irProductos();
@@ -110,12 +109,11 @@ export class ProductoComponent implements OnInit {
         );
       });
     } else if (!this.fotoSeleccionada && this.producto.fotoHashCode != null) {
-
-
       const hashcode: number = this.producto.fotoHashCode;
       this.producto.fotoHashCode = hashcode;
-      this.prodService.editarConFoto(this.producto, this.fotoSeleccionada).subscribe(
-        producto => {
+      this.prodService
+        .editarConFoto(this.producto, this.fotoSeleccionada)
+        .subscribe((producto) => {
           console.log("producto con foto", producto);
           Swal.fire(
             "Actualizar Producto",
@@ -125,7 +123,9 @@ export class ProductoComponent implements OnInit {
           this.irProductos();
         });
     } else {
-      this.prodService.editarConFoto(this.producto, this.fotoSeleccionada).subscribe(producto => {
+      this.prodService
+        .editarConFoto(this.producto, this.fotoSeleccionada)
+        .subscribe((producto) => {
           console.log("producto con foto", producto);
           Swal.fire(
             "Actualizar Producto",

@@ -53,7 +53,7 @@ export class PersonasListComponent implements OnInit {
   buscarPersona(termino: string) {
     if (termino.length > 0) {
       this.personaService
-        .getPersonasFiltradas(termino)
+        .getPersonasFiltradas(termino.toUpperCase())
         .subscribe((personas) => (this.personas = personas));
     } else {
       this.getPersonasPage();
@@ -91,5 +91,11 @@ export class PersonasListComponent implements OnInit {
           });
         }
       });
+  }
+  public cargarPersonasDefault(event: any) {
+    let termino: string = event.target.value as string;
+    if (termino.length == 0) {
+      this.getPersonasPage();
+    }
   }
 }

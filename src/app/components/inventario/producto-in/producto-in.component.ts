@@ -36,8 +36,10 @@ export class ProductoInComponent implements OnInit {
       Object.values(form.controls).forEach((control) => {
         control.markAsTouched();
       });
+
       return;
     }
+    console.log(this.producto);
     this.srvP.editarCantidad(this.producto).subscribe((producto) => {
       Swal.fire(
         "Inventario Producto",

@@ -2,63 +2,60 @@
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .bg-pri {
-    background-color: #042331 !important;
+  background-color: #042331 !important;
 }
 
 .bg-sec {
-    background-color: white !important
+  background-color: white !important;
 }
 
 html,
 body {
-    height: 100%;
+  min-height: 100%;
 }
 
 .white {
-    color: white !important;
+  color: white !important;
 }
 
 body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 60px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
-
 
 /* .fa {
     color: white !important;
 } */
-
 
 /* .fas {
     color: white !important;
 } */
 
 .separador-pri {
-    background-color: #042331;
-    height: 3.5px;
-    border-radius: 5px;
+  background-color: #042331;
+  height: 3.5px;
+  border-radius: 5px;
 }
 
 .field-error {
-    color: red;
+  color: red;
 }
 
 .mayusculas {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .capitalize {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 .btn {
-    font-weight: bold !important;
+  font-weight: bold !important;
 }
 
 .btn:hover {
-    color: #D68910 !important;
+  color: #d68910 !important;
 }
-
 
 /* .fa:hover {
     color: #D68910 !important;

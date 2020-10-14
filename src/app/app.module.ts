@@ -36,7 +36,10 @@ import { CategoriaAddComponent } from "./components/categoria/categoria-add/cate
 import { PdfMakeWrapper } from "pdfmake-wrapper";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { ValidatorPasswordDirective } from "./components/validators/validator-password.directive";
-import { ReportesComponent } from './components/inventario/reportes/reportes.component'; // fonts provided for pdfmake
+import { ReportesComponent } from "./components/inventario/reportes/reportes.component";
+import { ModalFacturaComponent } from "./components/modal-factura/modal-factura.component";
+import { FacturasVentasComponent } from "./components/facturas-ventas/facturas-ventas.component";
+import { ProdBajoInvComponent } from "./components/inventario/prod-bajo-inv/prod-bajo-inv.component"; // fonts provided for pdfmake
 
 // Set the fonts to use
 PdfMakeWrapper.setFonts(pdfFonts);
@@ -65,6 +68,9 @@ PdfMakeWrapper.setFonts(pdfFonts);
     CategoriaAddComponent,
     ValidatorPasswordDirective,
     ReportesComponent,
+    ModalFacturaComponent,
+    FacturasVentasComponent,
+    ProdBajoInvComponent,
   ],
   imports: [
     BrowserModule,

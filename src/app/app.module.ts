@@ -39,7 +39,8 @@ import { ValidatorPasswordDirective } from "./components/validators/validator-pa
 import { ReportesComponent } from "./components/inventario/reportes/reportes.component";
 import { ModalFacturaComponent } from "./components/modal-factura/modal-factura.component";
 import { FacturasVentasComponent } from "./components/facturas-ventas/facturas-ventas.component";
-import { ProdBajoInvComponent } from "./components/inventario/prod-bajo-inv/prod-bajo-inv.component"; // fonts provided for pdfmake
+import { ProdBajoInvComponent } from "./components/inventario/prod-bajo-inv/prod-bajo-inv.component";
+import { RepInventarioComponent } from './components/inventario/rep-inventario/rep-inventario.component'; // fonts provided for pdfmake
 
 // Set the fonts to use
 PdfMakeWrapper.setFonts(pdfFonts);
@@ -71,6 +72,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     ModalFacturaComponent,
     FacturasVentasComponent,
     ProdBajoInvComponent,
+    RepInventarioComponent,
   ],
   imports: [
     BrowserModule,

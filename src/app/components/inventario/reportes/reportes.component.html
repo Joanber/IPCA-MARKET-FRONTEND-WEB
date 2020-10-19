@@ -62,7 +62,6 @@
                 <th>Cantidad</th>
                 <th>Nombre</th>
                 <th>Precio</th>
-                <th>Codigo de barras</th>
                 <th>Categoría</th>
             </tr>
         </thead>
@@ -71,15 +70,21 @@
             <td>{{ registro.cantidad }}</td>
             <td>{{ registro.nombre }}</td>
             <td>{{ registro.precio }}</td>
-            <td>{{ registro.codigo_barras }}</td>
             <td>{{ registro.nombre_categoria }}</td>
           </tr>
         </tbody>
       </table>
     </div>
 
+    <div class="row justify-content-end">
+      <div class="col-sm-4">
+        <h3 style="color: blue">$ {{ cont}}</h3>
+      </div>
+    </div>
+
   </div>
 
   </div>
+  
 
 </div>

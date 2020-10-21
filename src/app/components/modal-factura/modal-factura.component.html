@@ -20,7 +20,7 @@
               <div class="col-sm">
                 <h4>Total a Cobrar</h4>
                 <h1 class="display-1" style="color: blue">
-                  ${{ factura.calcularGranTotal() }}
+                  ${{ factura.calcularGranTotal() | number: ".2-2" }}
                 </h1>
               </div>
             </div>
@@ -41,7 +41,7 @@
             <div class="text-center">
               <div class="col-md-3 mb-3 mx-auto">
                 <label for="username">Su Cambio:</label>
-                <h3 style="color: red">${{ cambio }}</h3>
+                <h3 style="color: red">${{ cambio | number: ".2-2" }}</h3>
               </div>
             </div>
           </div>

@@ -56,7 +56,9 @@ body {
 .btn:hover {
   color: #d68910 !important;
 }
-
+.bg-tomate {
+  background-color: #d68910 !important;
+}
 /* .fa:hover {
     color: #D68910 !important;
 }

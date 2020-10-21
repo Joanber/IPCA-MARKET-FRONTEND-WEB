@@ -1,4 +1,34 @@
 <div class="text-center">
   <hr class="separador-pri w-100" />
   <h2 class="display-5">Productos bajos en Inventario</h2>
+  <hr class="separador-pri w-100" />
+</div>
+
+<table class="table table-bordered table-responsive-md text-center">
+  <thead class="bg-pri white">
+    <tr>
+      <th>Código</th>
+      <th>Nombre</th>
+      <th>Precio</th>
+      <th>Inventario</th>
+      <th>Inv. Mínimo</th>
+      <th>Categoría</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let prodbi of productosBajosInventario">
+      <td>{{ prodbi.codigo_barras }}</td>
+      <td>{{ prodbi.nombre }}</td>
+      <td>${{ prodbi.precio | number: ".2-2" }}</td>
+      <td>{{ prodbi.cantidad_maxima }}</td>
+      <td>{{ prodbi.cantidad_minima }}</td>
+      <td>{{ prodbi.nombre_categoria }}</td>
+    </tr>
+  </tbody>
+</table>
+<div
+  class="text-center alert alert-info my-6"
+  *ngIf="productosBajosInventario == null"
+>
+  !NO HAY PRODUCTOS BAJOS EN INVENTARIO!
 </div>

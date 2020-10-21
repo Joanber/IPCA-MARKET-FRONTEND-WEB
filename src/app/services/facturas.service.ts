@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { BASE_ENDPOINT } from "../DB_CONFIG/bdConig";
 import { Factura } from "../models/factura";
 import { Producto } from "../models/producto";
+import { ProductoBajoInventario } from "../models/ProductoBajoInventario";
 
 @Injectable({
   providedIn: "root",
@@ -28,6 +29,11 @@ export class FacturasService {
         Swal.fire("Error al crear factura", e.error.mensaje, "error");
         return throwError(e);
       })
+    );
+  }
+  getProductosBajosEnInventario(): Observable<ProductoBajoInventario[]> {
+    return this.http.get<ProductoBajoInventario[]>(
+      `${this.baseEndpoint}/filtrar-productos-bajos-inventario`
     );
   }
 }

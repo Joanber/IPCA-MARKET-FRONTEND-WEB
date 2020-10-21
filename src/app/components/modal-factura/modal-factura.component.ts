@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Factura } from "src/app/models/factura";
 import { FacturasService } from "src/app/services/facturas.service";
@@ -12,7 +12,6 @@ import { FacturaModalService } from "./factura-modal.service";
 })
 export class ModalFacturaComponent implements OnInit {
   @Input() factura: Factura;
-  @Output() resetFactura: boolean = false;
   public pagoCon: number = 0;
   public cambio: number = 0;
   constructor(

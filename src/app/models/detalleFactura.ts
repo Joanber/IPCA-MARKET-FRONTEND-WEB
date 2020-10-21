@@ -8,4 +8,7 @@ export class DetalleFactura {
   public calcularImporte(): number {
     return (this.total = this.cantidad * this.producto.precio);
   }
+  public calcularExistencia(): number {
+    return this.producto.cantidad_maxima - this.cantidad;
+  }
 }

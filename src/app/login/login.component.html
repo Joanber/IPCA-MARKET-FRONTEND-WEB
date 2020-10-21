@@ -1,53 +1,89 @@
 <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="h-75 border m-auto rounded-lg shadow px-8 ">
-
-            <form #loginForm="ngForm" class="form-horizontal d-block mx-5 mt-4">
-
-                <h1 class="text-center mt-4 mb-2">Login</h1>
-                <div>
-                    <img src="../../../assets/img/logo1.PNG" width="300" height="300" class="img-fluid" alt="no exists">
-                </div>
-
-                <div class="form-group">
-                    <label for="" class="control-label">Usuario:</label>
-                    <input required class="form-control" type="text" name="user" placeholder="Nombre de Usuario" #user="ngModel" [(ngModel)]="username">
-
-                    <p class="field-error text-center" *ngIf="user.hasError('required') && user.touched">
-                        El usuario es un campo requerido!
-                    </p>
-
-                </div>
-                <!--INPUT USERNAME-->
-
-                <div class="form-group ">
-                    <label for="">Password:</label>
-                    <input required class="form-control" type="password" name="psswrd" placeholder="Contraseña" #psswrd="ngModel" [(ngModel)]="password">
-
-                    <p class="field-error text-center" *ngIf="psswrd.hasError('required') && psswrd.touched">
-                        El password es un campo requerido!
-                    </p>
-                </div>
-                <!--INPUT PASSWORD-->
-                <div class="form-group mt-4">
-
-                    <button type="submit" [disabled]="loginForm.invalid" class="btn btn-block  btn bg-pri white" (click)="login()">Ingresar</button>
-                </div>
-
-            </form>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="!esValido">
-                Usuario o contraseña incorrectos.
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="cerrarError()">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+  <div class="row justify-content-center">
+    <div class="h-75 border m-auto rounded-lg shadow px-8">
+      <form #loginForm="ngForm" class="form-horizontal d-block mx-5 mt-4">
+        <h1 class="text-center mt-4 mb-2">Login</h1>
+        <div>
+          <img
+            src="../../../assets/img/logo1.PNG"
+            width="300"
+            height="300"
+            class="img-fluid"
+            alt="no exists"
+          />
         </div>
 
+        <div class="form-group">
+          <label for="" class="control-label">Usuario:</label>
+          <input
+            required
+            class="form-control"
+            type="text"
+            name="user"
+            placeholder="Nombre de Usuario"
+            #user="ngModel"
+            [(ngModel)]="username"
+          />
 
+          <p
+            class="field-error text-center"
+            *ngIf="user.hasError('required') && user.touched"
+          >
+            El usuario es un campo requerido!
+          </p>
+        </div>
+        <!--INPUT USERNAME-->
 
-        <!--COL-8-->
+        <div class="form-group">
+          <label for="">Password:</label>
+          <input
+            required
+            class="form-control"
+            type="password"
+            name="psswrd"
+            placeholder="Contraseña"
+            #psswrd="ngModel"
+            [(ngModel)]="password"
+          />
 
+          <p
+            class="field-error text-center"
+            *ngIf="psswrd.hasError('required') && psswrd.touched"
+          >
+            El password es un campo requerido!
+          </p>
+        </div>
+        <!--INPUT PASSWORD-->
+        <div class="form-group mt-4">
+          <button
+            type="submit"
+            [disabled]="loginForm.invalid"
+            class="btn btn-block btn bg-pri white"
+            (click)="login()"
+          >
+            Ingresar
+          </button>
+        </div>
+      </form>
+      <div
+        class="alert alert-danger alert-dismissible fade show"
+        role="alert"
+        *ngIf="!esValido"
+      >
+        Usuario o contraseña incorrectos.
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+          (click)="cerrarError()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
     </div>
-    <!--ROW-->
 
+    <!--COL-8-->
+  </div>
+  <!--ROW-->
 </div>

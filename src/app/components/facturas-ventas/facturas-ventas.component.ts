@@ -7,6 +7,7 @@ import { DetalleFactura } from "src/app/models/detalleFactura";
 import { Factura } from "src/app/models/factura";
 import { Producto } from "src/app/models/producto";
 import { FacturasService } from "src/app/services/facturas.service";
+import Swal from "sweetalert2";
 
 import { FacturaModalService } from "../modal-factura/factura-modal.service";
 
@@ -41,7 +42,19 @@ export class FacturasVentasComponent implements OnInit {
   }
   seleccionarProducto(event: MatAutocompleteSelectedEvent): void {
     let producto = event.option.value as Producto;
-
+    if (producto.cantidad_maxima == 0) {
+      Swal.fire({
+        title: ` ! INVENTARIO INSUFICIENTE DE ${producto.nombre}, HAY 0 DISPONIBLES ! `,
+        icon: "error",
+        showConfirmButton: false,
+        onOpen: function () {
+          setTimeout(function () {
+            Swal.close();
+          }, 2800);
+        },
+      });
+      return;
+    }
     if (this.existeItem(producto.id)) {
       this.incrementaCantidad(producto.id);
     } else {
@@ -82,11 +95,30 @@ export class FacturasVentasComponent implements OnInit {
     if (cantidad == 0) {
       return this.eliminarItemFactura(id);
     }
+
     this.factura.detalles_facturas = this.factura.detalles_facturas.map(
       (detalle: DetalleFactura) => {
+        if (cantidad > detalle.producto.cantidad_maxima) {
+          Swal.fire({
+            title: ` ! INVENTARIO INSUFICIENTE DE ${detalle.producto.nombre}, HAY ${detalle.producto.cantidad_maxima} DISPONIBLES ! `,
+            icon: "error",
+            showConfirmButton: false,
+            onOpen: function () {
+              setTimeout(function () {
+                Swal.close();
+              }, 2800);
+            },
+          });
+          let cantidadNueva: number = 1;
+          detalle.cantidad = cantidadNueva;
+          console.log(detalle);
+          return detalle;
+        }
+
         if (id === detalle.producto.id) {
           detalle.cantidad = cantidad;
         }
+        console.log(detalle.cantidad);
         return detalle;
       }
     );

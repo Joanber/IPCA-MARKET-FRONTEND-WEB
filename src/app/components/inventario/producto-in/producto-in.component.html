@@ -1,8 +1,9 @@
 <hr class="separador-pri w-100" />
 <div class="row justify-content-center">
-  <div class="col-sm-6 col-md-7 col-lg-4 mt-2">
+  <div class="col-sm-6 col-md-7 col-lg-4">
     <div class="card text-center">
-      <h5 class="font-weight-bold mt-1">{{ nombre_producto }}</h5>
+      <div class="card-header mt-1 font-weight-bold">{{ nombre_producto }}</div>
+
       <img
         class="card-img-top"
         *ngIf="producto.fotoHashCode"
@@ -19,7 +20,7 @@
         *ngIf="!producto.fotoHashCode"
         src="../../../../../assets/img/notproducto.jpg"
       />
-      <div class="card-block mt-2">
+      <div class="card-body">
         <form
           autocomplete="off"
           class="form-horizontal"

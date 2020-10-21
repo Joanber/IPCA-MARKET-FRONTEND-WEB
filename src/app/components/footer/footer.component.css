@@ -1,0 +1,14 @@
+a {
+  cursor: pointer;
+}
+
+hr {
+  background-color: #34495e;
+  width: 60px;
+}
+
+p,
+a {
+  color: #34495e;
+  font-weight: bold;
+}

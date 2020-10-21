@@ -41,6 +41,7 @@ import { ModalFacturaComponent } from "./components/modal-factura/modal-factura.
 import { FacturasVentasComponent } from "./components/facturas-ventas/facturas-ventas.component";
 import { ProdBajoInvComponent } from "./components/inventario/prod-bajo-inv/prod-bajo-inv.component";
 import { FooterComponent } from "./components/footer/footer.component";
+import { RepInventarioComponent } from "./components/inventario/rep-inventario/rep-inventario.component";
 
 // Set the fonts to use
 PdfMakeWrapper.setFonts(pdfFonts);
@@ -73,6 +74,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     FacturasVentasComponent,
     ProdBajoInvComponent,
     FooterComponent,
+    RepInventarioComponent,
   ],
   imports: [
     BrowserModule,

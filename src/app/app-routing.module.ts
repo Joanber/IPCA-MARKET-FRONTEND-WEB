@@ -18,6 +18,7 @@ import { CategoriaListComponent } from "./components/categoria/categoria-list/ca
 import { CategoriaAddComponent } from "./components/categoria/categoria-add/categoria-add.component";
 import { FacturasVentasComponent } from "./components/facturas-ventas/facturas-ventas.component";
 import { ProdBajoInvComponent } from "./components/inventario/prod-bajo-inv/prod-bajo-inv.component";
+import { RepInventarioComponent } from './components/inventario/rep-inventario/rep-inventario.component';
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -64,6 +65,7 @@ const routes: Routes = [
           { path: "producto", component: ProductoInComponent },
           { path: "reporte", component: ReportesComponent },
           { path: "productos/bajos", component: ProdBajoInvComponent },
+          { path: "reporte_inventario", component: RepInventarioComponent },
           { path: "**", pathMatch: "full", redirectTo: "producto" },
         ],
       },

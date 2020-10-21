@@ -12,12 +12,29 @@ import { Txt, Columns, Rect, Canvas} from 'pdfmake-wrapper';
 })
 export class ReportesComponent implements OnInit {
 
-  constructor(private miDatePipe: DatePipe,
-    private fs: FacturaService) { }
+  listRegistros :any[] = [];
 
-  listRegistros :any[];
+  cont: Number = 0;
+
+  fechaInicio: string = null;
+  fechaFin: string = null;
+
+  constructor(private miDatePipe: DatePipe,
+    private fs: FacturaService) { 
+      this.fechaInicio = this.miDatePipe.transform(new Date(), 'yyyy-MM-dd');
+      this.fechaFin = this.miDatePipe.transform(new Date(), 'yyyy-MM-dd');
+
+      this.fs.getVentas(this.fechaInicio, this.fechaFin).subscribe(data => {
+        this.listRegistros = data;
+        this.total();
+      });
+      
+    }
+
+  
 
   ngOnInit() {
+    
   }
 
   reportePDF() {
@@ -47,13 +64,23 @@ export class ReportesComponent implements OnInit {
     pdf.create().open()
   }
 
-  fechaInicio: string = null;
-  fechaFin: string = null;
+
+  
+  
 
   ver() {
     const fechaInicio = this.miDatePipe.transform(this.fechaInicio, 'yyyy-MM-dd');
     const fechaFin = this.miDatePipe.transform(this.fechaFin, 'yyyy-MM-dd');
     this.fs.getVentas(fechaInicio, fechaFin).subscribe(data => this.listRegistros = data);
+  }
+
+  total() {
+    
+    for (const prod of this.listRegistros) {
+      this.cont += prod.precio;
+    }
+
+    console.log(this.cont);
   }
 
 

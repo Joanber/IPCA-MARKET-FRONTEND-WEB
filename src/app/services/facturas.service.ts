@@ -36,4 +36,13 @@ export class FacturasService {
       `${this.baseEndpoint}/filtrar-productos-bajos-inventario`
     );
   }
+
+  getVentas(fechaInicio: string, fechaFin: string): Observable<any[]>{
+    return this.http.get<any[]>(`${this.baseEndpoint}/filtrar-ventasProducto/${fechaInicio}/${fechaFin}`);
+  }
+  getProductosInventario() {
+    return this.http.get<any[]>(`${this.baseEndpoint}/filtrar-productos-inventario`);
+  }
+
+
 }

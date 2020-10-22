@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { FacturaService } from "src/app/services/factura.service";
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import { Txt, Columns, Rect, Canvas} from 'pdfmake-wrapper';
+import { FacturasService } from '../../../services/facturas.service';
 
 @Component({
   selector: 'app-reportes',
@@ -14,13 +14,14 @@ export class ReportesComponent implements OnInit {
 
   listRegistros :any[] = [];
 
-  cont: Number = 0;
+  cont: number = 0;
+  totalVentas: number = 0;
 
   fechaInicio: string = null;
   fechaFin: string = null;
 
   constructor(private miDatePipe: DatePipe,
-    private fs: FacturaService) { 
+    private fs: FacturasService) { 
       this.fechaInicio = this.miDatePipe.transform(new Date(), 'yyyy-MM-dd');
       this.fechaFin = this.miDatePipe.transform(new Date(), 'yyyy-MM-dd');
 
@@ -72,15 +73,15 @@ export class ReportesComponent implements OnInit {
     const fechaInicio = this.miDatePipe.transform(this.fechaInicio, 'yyyy-MM-dd');
     const fechaFin = this.miDatePipe.transform(this.fechaFin, 'yyyy-MM-dd');
     this.fs.getVentas(fechaInicio, fechaFin).subscribe(data => this.listRegistros = data);
+    this.total();
   }
 
   total() {
     
     for (const prod of this.listRegistros) {
-      this.cont += prod.precio;
+      this.totalVentas = prod.precio * prod.cantidad;
+      this.cont += this.totalVentas;
     }
-
-    console.log(this.cont);
   }
 
 

@@ -43,6 +43,9 @@ export class FacturasService {
   getProductosInventario() {
     return this.http.get<any[]>(`${this.baseEndpoint}/filtrar-productos-inventario`);
   }
+  getProductosByCategoria(categoria: string) {
+    return this.http.get<any[]>(`${this.baseEndpoint}/filtrar-productos-inventario-categoria/${categoria}`);
+  }
 
 
 }

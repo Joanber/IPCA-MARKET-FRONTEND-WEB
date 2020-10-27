@@ -6,10 +6,45 @@
 <div class="row">
     <div class="class col-md-6">
         <h3>Costo total del inventario</h3>
-        <h3 > $ {{ total }}</h3>
+        <h3 class="text-center"> $ {{ total }}</h3>
     </div>
     <div class="class col-md-6">
         <h3>Cantidad de productos en el inventario</h3>
         <h3 class="text-center">{{ facturaLista.length }}</h3>
     </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-3">
+        <strong>Categoria:</strong> 
+        <select [(ngModel)]='categoria' (change)="filtrarCategoria()">
+            <option [ngValue]="undefined" >--TODOS--</option>
+            <option *ngFor="let categoria of lista" [ngValue]="categoria.nombre" >{{categoria.nombre}}</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <button class="btn btn-danger white mr-3" (click)="reportePDF()">PDF</button>
+    </div>
+</div>
+<div class="row">
+    <table class="table table-bordered table-striped table-responsive-md text-center">
+        <thead class="bg-pri white">
+            <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Existencia</th>
+                <th>Inn Minimo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let producto of facturaLista">
+                <td>{{ producto.codigo_barras }}</td>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.precio }}</td>
+                <td>{{ producto.cantidad_maxima }}</td>
+                <td>{{ producto.cantidad_minima }}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

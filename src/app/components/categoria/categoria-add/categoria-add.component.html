@@ -17,6 +17,20 @@
             </p>
         </div>
     </div>
+
+    <div class="col-md-5 mb-3 mx-auto">
+      <label class="mt-3" for="foto">Foto:</label>
+      <div class="custom-file">
+          <input type="file" (change)="seleccionarFoto($event)">
+      </div>
+
+      <img [src]="imageSrc" *ngIf="imageSrc else elseblockImg" class="img-fluid mt-2 text-center" style=" width:auto; " />
+      <ng-template #elseblockImg>
+          <img class="img-fluid " *ngIf="categoria.fotoHashCode" [src]="baseEndpoint + '/img/' + categoria.id + '?fotoHashCode=' +categoria.fotoHashCode " style=" width:auto;">
+      </ng-template>
+    </div>
+
+
     <div class="form-row mt-3 ">
         <div class="col-md-5 mx-auto " *ngIf="MyForm.form.valid">
             <button class="btn bg-pri btn-block text-white " *ngIf="!categoria.id else elseBlock" (click)="crear()" >

@@ -33,6 +33,42 @@ export class CategoriasService {
     );
   }
 
+  crearConFoto(categoria: Categoria, archivo: File): Observable<Categoria> {
+    const formData = new FormData();
+    formData.append("archivo", archivo);
+    formData.append("nombre", categoria.nombre);
+    return this.http
+      .post<Categoria>(`${this.baseEndpoint}` + "/crear-con-foto", formData)
+      .pipe(
+        map((response: any) => response.producto as Categoria),
+        catchError((e) => {
+          if (e.status == 400) {
+            return throwError(e);
+          }
+          Swal.fire("Error al crear categoria", e.error.mensaje, "error");
+          return throwError(e);
+        })
+      );
+  }
+
+  editarConFoto(categoria: Categoria, archivo: File): Observable<Categoria> {
+    const formData = new FormData();
+    formData.append("archivo", archivo);
+    formData.append("nombre", categoria.nombre);
+    return this.http
+      .put<Categoria>(`${this.baseEndpoint}` + `/editar-con-foto/${categoria.id}`, formData)
+      .pipe(
+        map((response: any) => response.producto as Categoria),
+        catchError((e) => {
+          if (e.status == 400) {
+            return throwError(e);
+          }
+          Swal.fire("Error al editar categoria", e.error.mensaje, "error");
+          return throwError(e);
+        })
+      );
+  }
+
   editarCategoria(categoria: Categoria): Observable<Categoria> {
     return this.http.put<Categoria>(`${this.baseEndpoint}/${categoria.id}`, categoria).pipe(
       map((response:any)=> response.categoria as Categoria),

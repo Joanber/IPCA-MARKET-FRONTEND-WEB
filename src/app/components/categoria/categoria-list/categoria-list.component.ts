@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import { Txt, Columns, Rect, Canvas} from 'pdfmake-wrapper';
-
+import { BASE_ENDPOINT } from "src/app/DB_CONFIG/bdConig";
 
 @Component({
   selector: 'app-categoria-list',
@@ -16,6 +16,7 @@ export class CategoriaListComponent implements OnInit {
 
   constructor( private categoriaSer: CategoriasService ) { }
   categoriaList: Categoria[];
+  baseEndpoint = BASE_ENDPOINT + "/categorias";
   paginator:any;
   ngOnInit() {
     this.getCategorias();
@@ -48,6 +49,7 @@ export class CategoriaListComponent implements OnInit {
   getCategorias(): void {
     this.categoriaSer.getCategorias().subscribe( categoria => {
       this.categoriaList = categoria;
+      console.log(this.categoriaList);
     });
   }
 

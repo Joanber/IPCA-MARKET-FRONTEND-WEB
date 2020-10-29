@@ -5,10 +5,10 @@
 <hr class="separador-pri w-100 ">
 <div class="row">
 
-    <div class="col-sm-2">
-        <button class="btn bg-pri white" routerLink="/dashprod/categoria/form"><i class="fas fa-grip-horizontal mr-1"></i> Agregar</button>
+    <div class="col-sm-3">
+        <button class="btn bg-pri white" routerLink="/dashprod/categoria/form"><i class="fas fa-grip-horizontal mr-1"></i> Nueva Categoria</button>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <button class="btn btn-danger white mr-3" (click)="reportePDF()">PDF</button>
     </div>
 
@@ -31,19 +31,37 @@
     <table class="table table-bordered table-striped table-responsive-md text-center" *ngIf="categoriaList?.length>0 ">
         <thead class="bg-pri white">
             <tr>
-                <th>#</th>
+                <th>Foto</th>
                 <th>Nombre</th>
-                <th>Acción</th>
+                <th>Editar-Eliminar</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor=" let categoria of categoriaList">
                 <td>
-                  <div class="row justify-content-center">
-                      <div class="col-sm-6 mt-4">
-                          {{categoria.id}}
+                    <div class="row justify-content-center">
+                        <div class="col-sm-12 col-md-12 mt-3">
+                          <img
+                            class="img-fluid rounded"
+                            *ngIf="categoria.fotoHashCode"
+                            alt="Imagen Producto"
+                            [src]="
+                              baseEndpoint +
+                              '/img/' +
+                              categoria.id +
+                              '?fotoHashCode=' +
+                              categoria.fotoHashCode
+                            "
+                            style="width: 125px; height: 100px"
+                          />
+                          <img
+                            class="img-fluid rounded"
+                            *ngIf="!categoria.fotoHashCode"
+                            src="../../../../../assets/img/notproducto.jpg"
+                            style="width: 70px"
+                          />
+                        </div>
                       </div>
-                  </div>
                 </td>
                 <td>
                     <div class="row justify-content-center">

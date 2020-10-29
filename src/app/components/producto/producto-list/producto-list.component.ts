@@ -22,6 +22,7 @@ export class ProductoListComponent implements OnInit {
   prodLista: Producto[];
   paginator: any;
   ngOnInit() {
+    this.getProductoPage();
     this.getProductos();
   }
 
@@ -40,7 +41,26 @@ export class ProductoListComponent implements OnInit {
       this.getProductos();
     }
   }
-
+  
+  getProductoPage(): void {
+    this.route.paramMap.subscribe((params) => {
+      let page: number = +params.get("page");
+      if (!page) {
+        page = 0;
+      }
+      this.prodService
+        .getProductosPage(page)
+        .pipe(
+          tap((response) => {
+            (response.content as Producto[]).forEach((producto) => {});
+          })
+        )
+        .subscribe((response) => {
+          this.prodLista = response.content as Producto[];
+          this.paginator = response;
+        });
+    });
+  }
   reportePDF() {
     const pdf = new PdfMakeWrapper();
     pdf.info({

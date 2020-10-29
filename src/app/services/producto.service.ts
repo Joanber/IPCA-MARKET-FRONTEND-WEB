@@ -3,7 +3,7 @@ import { BASE_ENDPOINT } from "../DB_CONFIG/bdConig";
 import { HttpClient } from "@angular/common/http";
 import { Producto } from "../models/producto";
 import { Observable, throwError } from "rxjs";
-import { map, catchError } from "rxjs/operators";
+import { map, catchError, tap } from 'rxjs/operators';
 import Swal from "sweetalert2";
 
 @Injectable({
@@ -44,23 +44,23 @@ export class ProductoService {
     return this.http.get<Producto[]>(`${this.baseEndpoint}/filtrar/${termino}`);
   }
 
-  // getProductosPage(page: number): Observable<any>{
-  //   return this.http.get(this.baseEndpoint+'/page/'+page).pipe(
-  //     tap((response:any) => {
-  //       (response.content  as Producto[]).forEach(producto => {
-  //         console.log(producto.nombre);
-  //       })
-  //     }),
-  //     map((response:any) => {
-  //       (response.content as Producto[]).map(producto => {
-  //
-  //         return producto;
-  //       })
-  //       return response
-  //     })
-  //
-  //   )
-  // }
+  getProductosPage(page: number): Observable<any>{
+    return this.http.get(this.baseEndpoint+'/page/'+page).pipe(
+      tap((response:any) => {
+        (response.content  as Producto[]).forEach(producto => {
+          console.log(producto.nombre);
+        })
+      }),
+      map((response:any) => {
+        (response.content as Producto[]).map(producto => {
+  
+          return producto;
+        })
+        return response
+      })
+  
+    )
+  }
 
   editarSinFoto(producto: Producto): Observable<Producto> {
     return this.http

@@ -1,3 +1,4 @@
+<hr class="separador-pri w-100" />
 <div class="container my-3">
   <div class="row justify-content-center">
     <h1>{{ titulo }}</h1>
@@ -18,14 +19,22 @@
           name="username"
           #username="ngModel"
           [(ngModel)]="usuario.username"
+          #termino
+          (keyup)="existeUsernameUsuario(termino.value)"
+          minlength="4"
         />
-        <div class="text-center">
-          <p
-            class="field-error"
-            *ngIf="username.hasError('required') && username.touched"
-          >
-            Username es requerido!
-          </p>
+        <div
+          class="text-center field-error"
+          *ngIf="username.hasError('required') && username.touched"
+        >
+          !Username es requerido¡
+        </div>
+        <div class="text-center field-error" *ngIf="existeUsername">
+          {{ mensaje }}
+        </div>
+        <div class="text-center field-error" *ngIf="username.errors?.minlength">
+          !Por lo menos
+          {{ username.errors.minlength.requiredLength }} caracteres¡
         </div>
       </div>
       <div class="col-md-5 mx-auto">
@@ -38,6 +47,7 @@
             name="password"
             #password="ngModel"
             [(ngModel)]="usuario.password"
+            minlength="8"
           />
           <div class="input-group-append">
             <span class="input-group-text">
@@ -53,13 +63,15 @@
           </div>
         </div>
 
-        <div class="text-center">
-          <p
-            class="field-error"
-            *ngIf="password.hasError('required') && password.touched"
-          >
-            Contraseña es requerido!
-          </p>
+        <div
+          class="text-center field-error"
+          *ngIf="password.hasError('required') && password.touched"
+        >
+          !Contraseña es requerido¡
+        </div>
+        <div class="text-center field-error" *ngIf="password.errors?.minlength">
+          !Por lo menos
+          {{ password.errors.minlength.requiredLength }} caracteres¡
         </div>
       </div>
     </div>
@@ -77,16 +89,14 @@
         >
           <option [ngValue]="undefined">--- Seleccione una persona ---</option>
           <option *ngFor="let persona of personas" [ngValue]="persona">
-            {{ persona.nombre | uppercase }} {{ persona.apellido | uppercase }}
+            {{ persona.nombre }} {{ persona.apellido }}
           </option>
         </select>
-        <div class="text-center">
-          <p
-            class="field-error"
-            *ngIf="persona.hasError('required') && persona.touched"
-          >
-            Persona es requerido!
-          </p>
+        <div
+          class="text-center field-error"
+          *ngIf="persona.hasError('required') && persona.touched"
+        >
+          !Persona es requerido¡
         </div>
       </div>
       <div class="col-md-5 mx-auto">
@@ -115,22 +125,21 @@
           </div>
         </div>
 
-        <div class="text-center">
-          <p class="field-error" *ngIf="password.invalid && password.touched">
-            Contraseña es requerido!
-          </p>
+        <div
+          class="text-center field-error"
+          *ngIf="password.invalid && password.touched"
+        >
+          !Contraseña es requerido¡
         </div>
-        <div class="text-center">
-          <p
-            class="field-error"
-            *ngIf="
-              confirmpassword.touched &&
-              confirmpassword.errors?.notEqual &&
-              !confirmpassword.errors?.required
-            "
-          >
-            Las contraseñas no coinciden!
-          </p>
+        <div
+          class="text-center field-error"
+          *ngIf="
+            confirmpassword.touched &&
+            confirmpassword.errors?.notEqual &&
+            !confirmpassword.errors?.required
+          "
+        >
+          !Las contraseñas no coinciden¡
         </div>
       </div>
     </div>
@@ -160,8 +169,8 @@
             </tr>
           </tbody>
         </table>
-        <div class="text-center">
-          <p class="field-error" *ngIf="isError">Rol es requerido!</p>
+        <div class="text-center field-error" *ngIf="isError">
+          !Rol es requerido¡
         </div>
       </div>
 

@@ -1,34 +1,57 @@
 <div class="text-center">
   <hr class="separador-pri w-100" />
-  <h2 class="display-5">Productos bajos en Inventario</h2>
-  <hr class="separador-pri w-100" />
+  <h2>Productos bajos en Inventario</h2>
 </div>
-
-<table class="table table-bordered table-responsive-md text-center">
-  <thead class="bg-pri white">
-    <tr>
-      <th>Código</th>
-      <th>Nombre</th>
-      <th>Precio</th>
-      <th>Inventario</th>
-      <th>Inv. Mínimo</th>
-      <th>Categoría</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let prodbi of productosBajosInventario">
-      <td>{{ prodbi.codigo_barras }}</td>
-      <td>{{ prodbi.nombre }}</td>
-      <td>${{ prodbi.precio | number: ".2-2" }}</td>
-      <td>{{ prodbi.cantidad_maxima }}</td>
-      <td>{{ prodbi.cantidad_minima }}</td>
-      <td>{{ prodbi.nombre_categoria }}</td>
-    </tr>
-  </tbody>
-</table>
 <div
-  class="text-center alert alert-info my-6"
-  *ngIf="productosBajosInventario == null"
+  class="text-center alert alert-info small p-1 my-1"
+  *ngIf="this.productosBajosInventario.length == 0"
 >
   !NO HAY PRODUCTOS BAJOS EN INVENTARIO!
+</div>
+<div
+  class="row justify-content-end"
+  *ngIf="this.productosBajosInventario.length > 0"
+>
+  <button
+    type="button"
+    class="btn btn-light btn-sm mr-3 mb-1"
+    (click)="imprimirPDF()"
+  >
+    <i class="fas fa-print mr-1"></i>Imprimir
+  </button>
+</div>
+<div class="table-scroll">
+  <table class="table table-bordered table-responsive-sm table-sm text-center">
+    <thead class="bg-pri white">
+      <tr>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Inventario</th>
+        <th>Inv. Mínimo</th>
+        <th>Categoría</th>
+        <th>Editar Producto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prodbi of productosBajosInventario">
+        <td>{{ prodbi.codigo_barras }}</td>
+        <td>{{ prodbi.nombre }}</td>
+        <td>${{ prodbi.precio | number: ".2-2" }}</td>
+        <td>
+          <span class="badge badge-danger">{{ prodbi.cantidad_maxima }}</span>
+        </td>
+        <td>{{ prodbi.cantidad_minima }}</td>
+        <td>{{ prodbi.nombre_categoria }}</td>
+        <td>
+          <button
+            class="btn btn-warning btn-sm"
+            [routerLink]="['/dashprod/producto/form/', prodbi.id]"
+          >
+            <i class="fa fa-edit"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

@@ -1,3 +1,14 @@
 ::ng-deep .mat-input {
   width: 400px !important;
 }
+.table-scroll {
+  height: 310px;
+  overflow-y: auto;
+}
+
+thead tr:nth-child(1) th {
+  background: #042331;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}

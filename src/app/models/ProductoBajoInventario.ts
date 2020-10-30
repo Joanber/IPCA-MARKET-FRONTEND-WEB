@@ -1,4 +1,5 @@
 export class ProductoBajoInventario {
+  id: number;
   cantidad_maxima: number;
   cantidad_minima: number;
   nombre: string;

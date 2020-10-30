@@ -1,52 +1,38 @@
 a {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 #main .navbar-nav li.nav-item a.nav-link {
-    color: #fff;
-    font-weight: bold;
+  color: #fff;
+  font-weight: bold;
 }
 
 #main .navbar-nav li.nav-item a.nav-link:hover {
-    color: #D68910;
+  color: #d68910;
 }
 
 .navbar ul a {
-    /* display: block; */
-    height: 100%;
-    width: 100%;
-    line-height: 65px;
-    font-size: 20px;
-    /* color: white; */
-    padding-left: 40px;
-    /* box-sizing: border-box; */
-    /* border-bottom: 1px solid black; */
-    /* transition: .4s; */
+  /* display: block; */
+  height: 100%;
+  width: 100%;
+  font-size: 18px;
+  /* color: white; */
+  padding-left: 40px;
+  /* box-sizing: border-box; */
+  /* border-bottom: 1px solid black; */
+  /* transition: .4s; */
 }
 
 #main .navbar-nav li.nav-item a.nav-link.active {
-    color: #D68910;
+  color: #d68910;
 }
 
 #main .navbar-nav li.nav-item a.nav-link.active i.fas {
-    color: #D68910;
-}
-
-.dropdown-menu {
-    background-color: #042331;
-    border-top: 1px solid white;
-    border-right: 1px solid white;
-    border-left: 1px solid white;
-    border-bottom: 1px solid white;
-    font-weight: bold;
-}
-
-.dropdown-item:hover {
-    background-color: #D68910;
+  color: #d68910;
 }
 
 .dropdown-toggle:active,
 .open .dropdown-toggle,
 .dropdown-toggle:focus {
-    color: #D68910 !important;
+  color: #d68910 !important;
 }

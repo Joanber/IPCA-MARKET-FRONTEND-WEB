@@ -23,17 +23,9 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-/* .fa {
-    color: white !important;
-} */
-
-/* .fas {
-    color: white !important;
-} */
-
 .separador-pri {
   background-color: #042331;
-  height: 3.5px;
+  height: 1.5px;
   border-radius: 5px;
 }
 
@@ -59,10 +51,3 @@ body {
 .bg-tomate {
   background-color: #d68910 !important;
 }
-/* .fa:hover {
-    color: #D68910 !important;
-}
-
-.fas:hover {
-    color: #D68910 !important;
-} */

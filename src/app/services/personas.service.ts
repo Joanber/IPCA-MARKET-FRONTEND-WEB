@@ -52,7 +52,7 @@ export class PersonasService {
           if (e.status == 400) {
             return throwError(e);
           }
-          Swal.fire("Error al crear persona", e.error.mensaje, "error");
+          Swal.fire("Error al guardar persona", e.error.mensaje, "error");
           return throwError(e);
         })
       );
@@ -61,6 +61,11 @@ export class PersonasService {
   getPersona(id: number): Observable<Persona> {
     return this.http.get<Persona>(`${this.baseEndpoint}/${id}`);
   }
+  getCedulaPersonaExiste(cedula: string): Observable<Persona> {
+    return this.http.get<Persona>(
+      `${this.baseEndpoint}/existe-cedula-persona/${cedula}`
+    );
+  }
   crearSinFoto(persona: Persona): Observable<Persona> {
     return this.http.post<Persona>(`${this.baseEndpoint}/`, persona).pipe(
       map((response: any) => response.persona as Persona),
@@ -68,7 +73,7 @@ export class PersonasService {
         if (e.status == 400) {
           return throwError(e);
         }
-        Swal.fire("Error al crear persona", e.error.mensaje, "error");
+        Swal.fire("Error al guardar persona", e.error.mensaje, "error");
         return throwError(e);
       })
     );
@@ -83,7 +88,7 @@ export class PersonasService {
           if (e.status == 400) {
             return throwError(e);
           }
-          Swal.fire("Error al editar persona", e.error.mensaje, "error");
+          Swal.fire("Error al actualizar persona", e.error.mensaje, "error");
           return throwError(e);
         })
       );
@@ -109,7 +114,7 @@ export class PersonasService {
           if (e.status == 400) {
             return throwError(e);
           }
-          Swal.fire("Error al editar persona", e.error.mensaje, "error");
+          Swal.fire("Error al actualizar persona", e.error.mensaje, "error");
           return throwError(e);
         })
       );

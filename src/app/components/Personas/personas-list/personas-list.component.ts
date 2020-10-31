@@ -1,10 +1,12 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { PersonasService } from "../../../services/personas.service";
 import { Persona } from "src/app/models/persona";
 import { BASE_ENDPOINT } from "src/app/DB_CONFIG/bdConig";
 import Swal from "sweetalert2";
 import { ActivatedRoute } from "@angular/router";
-import { tap } from "rxjs/operators";
+import { MatPaginator, PageEvent } from "@angular/material";
+import { UtilsReportService } from "src/app/services/utils-report.service";
+import { Cell, Columns, PdfMakeWrapper, Table, Txt } from "pdfmake-wrapper";
 
 @Component({
   selector: "app-personas-list",
@@ -13,41 +15,40 @@ import { tap } from "rxjs/operators";
 })
 export class PersonasListComponent implements OnInit {
   baseEndpoint = BASE_ENDPOINT + "/personas";
-  paginator: any;
-
+  totalRegistros = 0;
+  paginaActual = 0;
+  totalPorPagina = 5;
+  personas: Persona[];
+  todaspersonas: Persona[];
+  @ViewChild(MatPaginator, { static: false }) paginador: MatPaginator;
+  busqueda = true;
   constructor(
     private personaService: PersonasService,
+    private srvUr: UtilsReportService,
     private route: ActivatedRoute
   ) {}
 
-  personas: Persona[];
-
   async ngOnInit() {
     this.getPersonasPage();
+    this.getPersonasImprimir();
   }
-  getPersonasPage(): void {
-    this.route.paramMap.subscribe((params) => {
-      let page: number = +params.get("page");
-      if (!page) {
-        page = 0;
-      }
-      this.personaService
-        .getPersonasPage(page)
-        .pipe(
-          tap((response) => {
-            (response.content as Persona[]).forEach((persona) => {});
-          })
-        )
-        .subscribe((response) => {
-          this.personas = response.content as Persona[];
-          this.paginator = response;
-        });
-    });
+  paginar(event: PageEvent): void {
+    this.paginaActual = event.pageIndex;
+    this.totalPorPagina = event.pageSize;
+    this.getPersonasPage();
   }
-  getPersonas(): void {
+  private getPersonasPage() {
     this.personaService
-      .getPersonas()
-      .subscribe((personas) => (this.personas = personas));
+      .getPersonasPage(this.paginaActual.toString())
+      .subscribe((p) => {
+        this.personas = p.content as Persona[];
+        this.totalRegistros = p.totalElements as number;
+        this.paginador._intl.itemsPerPageLabel = "Registros por página:";
+        this.paginador._intl.nextPageLabel = "Siguiente";
+        this.paginador._intl.previousPageLabel = "Previa";
+        this.paginador._intl.firstPageLabel = "Primera Página";
+        this.paginador._intl.lastPageLabel = "Última Página";
+      });
   }
 
   buscarPersona(termino: string) {
@@ -55,6 +56,7 @@ export class PersonasListComponent implements OnInit {
       this.personaService
         .getPersonasFiltradas(termino.toUpperCase())
         .subscribe((personas) => (this.personas = personas));
+      this.busqueda = false;
     } else {
       this.getPersonasPage();
     }
@@ -82,7 +84,8 @@ export class PersonasListComponent implements OnInit {
       .then((result) => {
         if (result.value) {
           this.personaService.delete(persona.id).subscribe((response) => {
-            this.personas = this.personas.filter((per) => per !== persona);
+            this.getPersonasPage();
+            this.getPersonasImprimir();
             swalWithBootstrapButtons.fire(
               "Eliminado!",
               `Persona ${persona.nombre} eliminada correctamente!`,
@@ -96,6 +99,46 @@ export class PersonasListComponent implements OnInit {
     let termino: string = event.target.value as string;
     if (termino.length == 0) {
       this.getPersonasPage();
+      this.busqueda = true;
     }
+  }
+  getPersonasImprimir() {
+    return this.personaService.getPersonas().subscribe((personas) => {
+      this.todaspersonas = personas;
+    });
+  }
+  imprimirPDF() {
+    const pdf = new PdfMakeWrapper();
+    this.getPersonasImprimir();
+    pdf.pageMargins([40, 60, 40, 60]);
+    pdf.pageSize("A4");
+    pdf.info({
+      title: "Reporte de Personas",
+      author: "IPCA",
+      subject: "Personas reporte",
+    });
+    pdf.add(pdf.ln(1));
+    pdf.add(
+      new Txt("Instituto de Parálisis Cerebral del Azuay-IPCA")
+        .alignment("left")
+        .bold()
+        .italics().end
+    );
+    pdf.add(new Txt(`${this.srvUr.fecha()}`).alignment("right").italics().end);
+    pdf.add(pdf.ln(1));
+    pdf.add(
+      new Txt("Reporte de Personas").alignment("center").bold().italics().end
+    );
+    pdf.add(pdf.ln(1));
+
+    pdf.add(
+      new Columns(["Cédula", "Nombre", "Email", "telefono"]).columnGap(3).bold()
+        .end
+    );
+    this.todaspersonas.forEach((p) => {
+      pdf.add(new Columns([p.email]).columnGap(3).end);
+    });
+
+    pdf.create().open();
   }
 }

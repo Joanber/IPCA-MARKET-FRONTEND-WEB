@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ProductoBajoInventario } from "src/app/models/ProductoBajoInventario";
 import { FacturasService } from "src/app/services/facturas.service";
 import { Txt, Columns, PdfMakeWrapper, Img } from "pdfmake-wrapper";
+import { UtilsReportService } from "src/app/services/utils-report.service";
 
 @Component({
   selector: "app-prod-bajo-inv",
@@ -10,31 +11,12 @@ import { Txt, Columns, PdfMakeWrapper, Img } from "pdfmake-wrapper";
 })
 export class ProdBajoInvComponent implements OnInit {
   productosBajosInventario: ProductoBajoInventario[] = [];
-  dias = [
-    "Lunes",
-    "Martes",
-    "Miercoles",
-    "Jueves",
-    "Viernes",
-    "Sabado",
-    "Domingo",
-  ];
-  meses = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-  ];
+
   fechaAc: string;
-  constructor(private srvF: FacturasService) {}
+  constructor(
+    private srvF: FacturasService,
+    private srvUR: UtilsReportService
+  ) {}
 
   ngOnInit() {
     this.getProdcutosBajosInventario();
@@ -48,7 +30,6 @@ export class ProdBajoInvComponent implements OnInit {
       });
   }
   imprimirPDF() {
-    this.fecha();
     const pdf = new PdfMakeWrapper();
     pdf.pageSize("A4");
     pdf.info({
@@ -63,7 +44,7 @@ export class ProdBajoInvComponent implements OnInit {
         .bold()
         .italics().end
     );
-    pdf.add(new Txt(`${this.fechaAc}`).alignment("right").italics().end);
+    pdf.add(new Txt(`${this.srvUR.fecha()}`).alignment("right").italics().end);
     pdf.add(pdf.ln(1));
     pdf.add(
       new Txt("Reporte de Productos Bajos en Inventario")
@@ -92,19 +73,7 @@ export class ProdBajoInvComponent implements OnInit {
 
     pdf.create().open();
   }
-  fecha() {
-    let date = new Date();
-    var fechaNum = date.getDate();
-    var mes_name = date.getMonth();
-    this.fechaAc =
-      this.dias[date.getDay() - 1] +
-      " " +
-      fechaNum +
-      " de " +
-      this.meses[mes_name] +
-      " de " +
-      date.getFullYear();
-  }
+
   formateaValor(valor) {
     return isNaN(valor) ? valor : parseFloat(valor).toFixed(2);
   }

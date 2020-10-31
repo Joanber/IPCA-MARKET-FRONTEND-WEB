@@ -21,7 +21,7 @@ export class PersonasService {
   getPersonasFiltradas(termino: string): Observable<Persona[]> {
     return this.http.get<Persona[]>(`${this.baseEndpoint}/filtrar/${termino}`);
   }
-  getPersonasPage(page: number): Observable<any> {
+  getPersonasPage(page: string): Observable<any> {
     return this.http.get(this.baseEndpoint + "/page/" + page).pipe(
       tap((response: any) => {
         (response.content as Persona[]).forEach((persona) => {});

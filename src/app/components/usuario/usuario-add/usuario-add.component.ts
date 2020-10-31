@@ -14,7 +14,7 @@ import { NgForm } from "@angular/forms";
   styleUrls: ["./usuario-add.component.css"],
 })
 export class UsuarioAddComponent implements OnInit {
-  public titulo: string = "Crear Usuario";
+  public titulo: string = "Nuevo Usuario";
   public usuario = new Usuario();
   public personas: Persona[];
   public roles: Rol[] = [];

@@ -42,6 +42,7 @@ import { FacturasVentasComponent } from "./components/facturas-ventas/facturas-v
 import { ProdBajoInvComponent } from "./components/inventario/prod-bajo-inv/prod-bajo-inv.component";
 import { FooterComponent } from "./components/footer/footer.component";
 import { RepInventarioComponent } from "./components/inventario/rep-inventario/rep-inventario.component";
+import { MatPaginatorModule } from "@angular/material/paginator";
 
 // Set the fonts to use
 PdfMakeWrapper.setFonts(pdfFonts);
@@ -89,6 +90,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     MatAutocompleteModule,
     MatInputModule,
     MatFormFieldModule,
+    MatPaginatorModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: "en-US" }],
   bootstrap: [AppComponent],

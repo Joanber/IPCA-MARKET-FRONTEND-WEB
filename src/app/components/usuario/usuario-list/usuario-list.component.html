@@ -15,12 +15,17 @@
         class="form-control"
         #termino
         placeholder="Buscar"
-        (keyup)="buscarUsuario(termino.value)"
+        (keyup)="cargarUsuariosDefault($event)"
         aria-label="Recipient's username"
         aria-describedby="button-addon2"
       />
       <div class="input-group-append">
-        <button class="btn bg-pri text-white" type="button" id="button-addon2">
+        <button
+          class="btn bg-pri text-white"
+          (click)="buscarUsuario(termino.value)"
+          type="button"
+          id="button-addon2"
+        >
           Buscar
         </button>
       </div>
@@ -32,60 +37,71 @@
   <div class="alert alert-info text-center" *ngIf="usuarios?.length == 0">
     No hay Registros
   </div>
-  <table
-    class="table table-bordered table-striped table-responsive-sm table-sm text-center"
-    *ngIf="usuarios?.length > 0"
+  <div class="table-scroll">
+    <table
+      class="table table-bordered table-striped table-responsive-sm table-sm text-center"
+      *ngIf="usuarios?.length > 0"
+    >
+      <thead class="bg-pri white">
+        <tr>
+          <th>Username</th>
+          <th>Persona</th>
+          <th>Roles</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuarios">
+          <td>
+            <div class="row justify-content-center">
+              <div class="col-sm-6 mt-2">
+                {{ usuario.username }}
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="row justify-content-center">
+              <div class="col-sm-12 mt-2">
+                {{ usuario.persona.nombre }}
+                {{ usuario.persona.apellido }}
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="row justify-content-center">
+              <div class="col-sm-12 mt-2">
+                {{ usuario.roles | arraypipe: "nombre" }}
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="row justify-content-center">
+              <div class="col-sm-3 mt-2 mb-1">
+                <button
+                  class="btn btn-warning btn-sm"
+                  [routerLink]="['/dashper/usuarios/form/', usuario.id]"
+                >
+                  <i class="fa fa-edit"></i>
+                </button>
+              </div>
+              <div class="col-sm-3 mt-2">
+                <button class="btn btn-danger btn-sm" (click)="delete(usuario)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <mat-paginator
+    *ngIf="busqueda"
+    [length]="totalRegistros"
+    [pageSize]="totalPorPagina"
+    [pageIndex]="paginaActual"
+    (page)="paginar($event)"
+    showFirstLastButtons
   >
-    <thead class="bg-pri white">
-      <tr>
-        <th>Username</th>
-        <th>Persona</th>
-        <th>Roles</th>
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let usuario of usuarios">
-        <td>
-          <div class="row justify-content-center">
-            <div class="col-sm-6 mt-2">
-              {{ usuario.username }}
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="row justify-content-center">
-            <div class="col-sm-12 mt-2">
-              {{ usuario.persona.nombre }}
-              {{ usuario.persona.apellido }}
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="row justify-content-center">
-            <div class="col-sm-12 mt-2">
-              {{ usuario.roles | arraypipe: "nombre" }}
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="row justify-content-center">
-            <div class="col-sm-3 mt-2 mb-1">
-              <button
-                class="btn btn-warning btn-sm"
-                [routerLink]="['/dashper/usuarios/form/', usuario.id]"
-              >
-                <i class="fa fa-edit"></i>
-              </button>
-            </div>
-            <div class="col-sm-3 mt-2">
-              <button class="btn btn-danger btn-sm" (click)="delete(usuario)">
-                <i class="fa fa-trash"></i>
-              </button>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  </mat-paginator>
 </div>

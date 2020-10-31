@@ -1,3 +1,20 @@
 .fa:hover {
-    color: #042331 !important
+  color: #042331 !important;
+}
+.table-scroll {
+  height: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+thead tr:nth-child(1) th {
+  background: #042331;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.mat-paginator {
+  color: #042331;
+  display: flex;
+  justify-content: center;
 }

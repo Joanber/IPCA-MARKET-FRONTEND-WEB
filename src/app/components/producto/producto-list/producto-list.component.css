@@ -4,3 +4,12 @@
         overflow-x: auto;
     }
 }
+
+.fa:hover {
+    color: #042331 !important;
+  }
+  .mat-paginator {
+    color: #042331;
+    display: flex;
+    justify-content: center;
+  }

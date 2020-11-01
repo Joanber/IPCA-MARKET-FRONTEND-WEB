@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProductoService } from "../../../services/producto.service";
 import { Producto } from "src/app/models/producto";
 import Swal from "sweetalert2";
@@ -6,6 +6,7 @@ import { ActivatedRoute } from "@angular/router";
 import { tap } from "rxjs/operators";
 import { BASE_ENDPOINT } from "src/app/DB_CONFIG/bdConig";
 import { PdfMakeWrapper } from "pdfmake-wrapper";
+import { MatPaginator, PageEvent } from '@angular/material';
 import { Txt, Columns, Rect, Canvas } from "pdfmake-wrapper";
 
 @Component({
@@ -14,6 +15,11 @@ import { Txt, Columns, Rect, Canvas } from "pdfmake-wrapper";
   styleUrls: ["./producto-list.component.css"],
 })
 export class ProductoListComponent implements OnInit {
+  totalRegistros = 0;
+  paginaActual = 0;
+  totalPorPagina = 5;
+  @ViewChild(MatPaginator, { static: false }) paginador: MatPaginator;
+  busqueda = true;
   constructor(
     private prodService: ProductoService,
     private route: ActivatedRoute
@@ -24,6 +30,12 @@ export class ProductoListComponent implements OnInit {
   ngOnInit() {
     this.getProductoPage();
     this.getProductos();
+  }
+
+  paginar(event: PageEvent): void {
+    this.paginaActual = event.pageIndex;
+    this.totalPorPagina = event.pageSize;
+    this.getProductoPage();
   }
 
   getProductos(): void {
@@ -43,23 +55,17 @@ export class ProductoListComponent implements OnInit {
   }
   
   getProductoPage(): void {
-    this.route.paramMap.subscribe((params) => {
-      let page: number = +params.get("page");
-      if (!page) {
-        page = 0;
-      }
-      this.prodService
-        .getProductosPage(page)
-        .pipe(
-          tap((response) => {
-            (response.content as Producto[]).forEach((producto) => {});
-          })
-        )
-        .subscribe((response) => {
-          this.prodLista = response.content as Producto[];
-          this.paginator = response;
+    this.prodService
+        .getProductosPage(this.paginaActual.toString())
+        .subscribe((p) => {
+          this.prodLista = p.content as Producto[];
+          this.totalRegistros = p.totalElements as number;
+          this.paginador._intl.itemsPerPageLabel = "Registros por página:";
+          this.paginador._intl.nextPageLabel = "Siguiente";
+          this.paginador._intl.previousPageLabel = "Previa";
+          this.paginador._intl.firstPageLabel = "Primera Página";
+          this.paginador._intl.lastPageLabel = "Última Página";
         });
-    });
   }
   reportePDF() {
     const pdf = new PdfMakeWrapper();

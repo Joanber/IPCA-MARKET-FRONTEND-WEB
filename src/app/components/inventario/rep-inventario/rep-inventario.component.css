@@ -1,4 +1,4 @@
-tbody {
+/* tbody {
     display: block;
     overflow: auto;
     height: 300px;
@@ -19,4 +19,20 @@ thead, tbody tr {
   
 thead {
     width: calc( 100% - 1em )
+} */
+
+.fa:hover {
+    color: #042331 !important;
+}
+.table-scroll {
+    height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+thead tr:nth-child(1) th {
+    background: #042331;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }

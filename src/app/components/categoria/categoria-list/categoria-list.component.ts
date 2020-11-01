@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Categoria } from 'src/app/models/categoria';
 import { CategoriasService } from '../../../services/categorias.service'
 import Swal from 'sweetalert2';
@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import { Txt, Columns, Rect, Canvas} from 'pdfmake-wrapper';
 import { BASE_ENDPOINT } from "src/app/DB_CONFIG/bdConig";
+import { MatPaginator, PageEvent } from '@angular/material';
 
 @Component({
   selector: 'app-categoria-list',
@@ -14,12 +15,48 @@ import { BASE_ENDPOINT } from "src/app/DB_CONFIG/bdConig";
 })
 export class CategoriaListComponent implements OnInit {
 
+  totalRegistros = 0;
+  paginaActual = 0;
+  totalPorPagina = 5;
+  @ViewChild(MatPaginator, { static: false }) paginador: MatPaginator;
+  busqueda = true;
+
   constructor( private categoriaSer: CategoriasService ) { }
   categoriaList: Categoria[];
   baseEndpoint = BASE_ENDPOINT + "/categorias";
   paginator:any;
   ngOnInit() {
     this.getCategorias();
+  }
+
+  paginar(event: PageEvent): void {
+    this.paginaActual = event.pageIndex;
+    this.totalPorPagina = event.pageSize;
+    this.getCategoriaPage();
+  }
+
+  getCategoriaPage(): void {
+    this.categoriaSer
+        .getProductosPage(this.paginaActual.toString())
+        .subscribe((p) => {
+          this.categoriaList = p.content as Categoria[];
+          this.totalRegistros = p.totalElements as number;
+          this.paginador._intl.itemsPerPageLabel = "Registros por página:";
+          this.paginador._intl.nextPageLabel = "Siguiente";
+          this.paginador._intl.previousPageLabel = "Previa";
+          this.paginador._intl.firstPageLabel = "Primera Página";
+          this.paginador._intl.lastPageLabel = "Última Página";
+        });
+  }
+
+  buscarCategoria(termino: string) {
+    if (termino.length > 0) {
+      this.categoriaSer
+        .getCategoriasFiltro(termino.toUpperCase())
+        .subscribe((categorias) => (this.categoriaList = categorias));
+    } else {
+      this.getCategorias();
+    }
   }
 
   reportePDF() {

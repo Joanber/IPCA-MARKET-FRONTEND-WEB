@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BASE_ENDPOINT } from '../DB_CONFIG/bdConig';
 import { Categoria } from '../models/categoria';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 @Injectable({
@@ -16,9 +16,9 @@ export class CategoriasService {
     return this.http.get<Categoria[]>(`${this.baseEndpoint}/`);
   }
 
-  // getCategoriasFiltro(termino: string): Observable<Categoria[]>{
-  //   return this.http.get<Categoria[]>(`${this.baseEndpoint}/filtrar/${termino}`);
-  // }
+  getCategoriasFiltro(termino: string): Observable<Categoria[]>{
+    return this.http.get<Categoria[]>(`${this.baseEndpoint}/filtrar/${termino}`);
+  }
 
   crearCategoria(categoria: Categoria): Observable<Categoria> {
     return this.http.post<Categoria>(`${this.baseEndpoint}/`, categoria).pipe(
@@ -49,6 +49,24 @@ export class CategoriasService {
           return throwError(e);
         })
       );
+  }
+
+  getProductosPage(page: string): Observable<any>{
+    return this.http.get(this.baseEndpoint+'/page/'+page).pipe(
+      tap((response:any) => {
+        (response.content  as Categoria[]).forEach(categoria => {
+          console.log(categoria.nombre);
+        })
+      }),
+      map((response:any) => {
+        (response.content as Categoria[]).map(producto => {
+  
+          return producto;
+        })
+        return response
+      })
+  
+    )
   }
 
   editarConFoto(categoria: Categoria, archivo: File): Observable<Categoria> {

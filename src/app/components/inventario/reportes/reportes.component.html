@@ -2,7 +2,6 @@
 <div class="text-center">
     <h2 class="display-4">Ventas</h2>
 </div>
-<hr class="separador-pri w-100 ">
 
 <div class="row">
 <div class="col-sm-4">
@@ -37,6 +36,7 @@
           Ver
         </button>
       </div>
+      
     </div>
   </form>
 
@@ -46,39 +46,49 @@
 
 <div class="col-sm-8" id="reportes">
   <div class="row">
-    <div class="col-sm-2">
-      <button class="btn btn-danger white mr-3" (click)="reportePDF()">PDF</button>
+    <div class="col-sm-9 text-left">
+      <div class="row justify-content">
+        <div class="col-sm-4">
+          <h3 style="color: blue">Total: {{ cont | currency}}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3 text-right">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm mr-3 mb-1"
+        (click)="reportePDF()"
+      >
+        <i class="fas fa-print mr-1"></i>Imprimir
+      </button>
     </div>
   </div>
   <br/>
   <div class="row">
     <div class="col-sm-12">
-      <div class="row justify-content-end">
-        <div class="col-sm-4">
-          <h3 style="color: blue">Total: ${{ cont | number: ".2-2"}}</h3>
-        </div>
-      </div>
       <div class="alert alert-info text-center" *ngIf="!listRegistros">
           No hay ventas registradas
       </div>
-      <table class="table table-bordered table-striped table-responsive-md text-center" *ngIf="listRegistros">
-        <thead class="bg-pri white">
-            <tr>
-                <th>Cantidad</th>
-                <th>Nombre</th>
-                <th>Precio</th>
-                <th>Categoría</th>
+      <div class="table-scroll">
+        <table class="table table-bordered table-striped table-responsive-sm table-sm text-center" *ngIf="listRegistros">
+          <thead class="bg-pri white">
+              <tr>
+                  <th>Cantidad</th>
+                  <th>Nombre</th>
+                  <th>Precio</th>
+                  <th>Categoría</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let registro of listRegistros">
+              <td>{{ registro.cantidad }}</td>
+              <td>{{ registro.nombre }}</td>
+              <td>{{ registro.precio | currency }}</td>
+              <td>{{ registro.nombre_categoria }}</td>
             </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let registro of listRegistros">
-            <td>{{ registro.cantidad }}</td>
-            <td>{{ registro.nombre }}</td>
-            <td>${{ registro.precio | number: ".2-2" }}</td>
-            <td>{{ registro.nombre_categoria }}</td>
-          </tr>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
 
       
     </div>

@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import { Txt, Columns, Rect, Canvas} from 'pdfmake-wrapper';
 import { FacturasService } from '../../../services/facturas.service';
+import { UtilsReportService } from '../../../services/utils-report.service';
 
 @Component({
   selector: 'app-reportes',
@@ -14,13 +15,14 @@ export class ReportesComponent implements OnInit {
 
   listRegistros :any[] = [];
 
-  cont: number = 0;
-  totalVentas: number = 0;
+  cont: number;
+  totalVentas: number;
 
   fechaInicio: string = null;
   fechaFin: string = null;
 
   constructor(private miDatePipe: DatePipe,
+    private srvUr: UtilsReportService,
     private fs: FacturasService) { 
       this.fechaInicio = this.miDatePipe.transform(new Date(), 'yyyy-MM-dd');
       this.fechaFin = this.miDatePipe.transform(new Date(), 'yyyy-MM-dd');
@@ -40,28 +42,35 @@ export class ReportesComponent implements OnInit {
 
   reportePDF() {
     const pdf = new PdfMakeWrapper();
+    pdf.pageMargins([40, 60, 40, 60]);
+    pdf.pageSize("A4");
     pdf.info({
-      title: 'Reportes',
-      author: 'IPCA',
-      subject: 'Productos reporte',
+      title: "Reporte de Ventas",
+      author: "IPCA",
+      subject: "Venstas reporte",
     });
+    pdf.add(pdf.ln(1));
     pdf.add(
-      pdf.ln(1)
+      new Txt("Instituto de Parálisis Cerebral del Azuay-IPCA")
+        .alignment("left")
+        .bold()
+        .italics().end
     );
+    pdf.add(new Txt(`${this.srvUr.fecha()}`).alignment("right").italics().end);
+    pdf.add(pdf.ln(1));
     pdf.add(
-       new Txt('Ventas').alignment('center').bold().italics().end
+      new Txt("Reporte de Ventas").alignment("center").bold().italics().end
     );
+    pdf.add(pdf.ln(1));
 
     pdf.add(
-      new Columns([ 'Cantidad','Nombre','Precio', 'Codigo de Barras', 'Categoria' ]).columnGap(3).end
+      new Columns([ 'Cantidad','Nombre','Precio', 'Codigo de Barras', 'Categoria' ]).columnGap(3).bold().end
     );
     this.listRegistros.forEach( registro => {
       pdf.add(
         new Columns([ registro.cantidad,registro.nombre,registro.precio, registro.codigo_barras, registro.nombre_categoria ]).columnGap(3).end
       );
     });
-    pdf.footer(`${ new Date() }`);
-    pdf.watermark('IPCA');
     pdf.create().open()
   }
 
@@ -72,12 +81,16 @@ export class ReportesComponent implements OnInit {
   ver() {
     const fechaInicio = this.miDatePipe.transform(this.fechaInicio, 'yyyy-MM-dd');
     const fechaFin = this.miDatePipe.transform(this.fechaFin, 'yyyy-MM-dd');
-    this.fs.getVentas(fechaInicio, fechaFin).subscribe(data => this.listRegistros = data);
-    this.total();
+    this.fs.getVentas(fechaInicio, fechaFin).subscribe(data => { 
+      this.listRegistros = data;
+      this.total();
+    });
+    
   }
 
   total() {
-    
+    this.totalVentas = 0;
+    this.cont = 0;
     for (const prod of this.listRegistros) {
       this.totalVentas = prod.precio * prod.cantidad;
       this.cont += this.totalVentas;

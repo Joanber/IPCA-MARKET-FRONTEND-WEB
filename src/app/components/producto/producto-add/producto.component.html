@@ -25,12 +25,26 @@
             <div class="col-md-5 mb-3 mx-auto">
                 <label for="apellido">Codigo de barras:</label>
                 <input required class="form-control mayusculas"
-                  type="text" name="codigo_barras" [(ngModel)]="producto.codigo_barras" #codigo_barras="ngModel"/>
+                  type="text" 
+                  name="codigo_barras"
+                  #codigo_barras="ngModel"
+                  #termino
+                  [(ngModel)]="producto.codigo_barras"
+                  (keyup)="existeCodigoProducto(termino.value)" 
+                  #codigo_barras="ngModel"
+                  minlength="10"
+                />
                 <div class="text-center">
                     <p class="field-error" *ngIf="precio.hasError('required') && precio.touched">
                         Codigo de barras es requerido!
                     </p>
                 </div>
+                <div class="text-center field-error" *ngIf="existe">
+                    {{ mensaje }}
+                  </div>
+                  <div class="text-center field-error" *ngIf="codigo_barras.errors?.minlength">
+                    !Por lo menos {{ codigo_barras.errors.minlength.requiredLength }} caracteres¡
+                  </div>
             </div>
         </div>
 

@@ -4,6 +4,7 @@ import { FacturasService } from '../../../services/facturas.service';
 import { CategoriasService } from "src/app/services/categorias.service";
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import { Txt, Columns, Rect, Canvas} from 'pdfmake-wrapper';
+import { UtilsReportService } from '../../../services/utils-report.service';
 
 
 
@@ -20,6 +21,7 @@ export class RepInventarioComponent implements OnInit {
   lista: Categoria[];
   categoria: string;
   constructor( private fs: FacturasService,
+    private srvUr: UtilsReportService,
     private catService: CategoriasService) {
     this.fs.getProductosInventario().subscribe( data => { 
       this.facturaLista = data;
@@ -38,28 +40,35 @@ export class RepInventarioComponent implements OnInit {
 
   reportePDF() {
     const pdf = new PdfMakeWrapper();
+    pdf.pageMargins([40, 60, 40, 60]);
+    pdf.pageSize("A4");
     pdf.info({
-      title: 'Inventario',
-      author: 'IPCA',
-      subject: 'Productos reporte',
+      title: "Reporte de Inventario",
+      author: "IPCA",
+      subject: "Inventario reporte",
     });
+    pdf.add(pdf.ln(1));
     pdf.add(
-      pdf.ln(1)
+      new Txt("Instituto de Parálisis Cerebral del Azuay-IPCA")
+        .alignment("left")
+        .bold()
+        .italics().end
     );
+    pdf.add(new Txt(`${this.srvUr.fecha()}`).alignment("right").italics().end);
+    pdf.add(pdf.ln(1));
     pdf.add(
-       new Txt('Inventario').alignment('center').bold().italics().end
+      new Txt("Reporte de Inventario").alignment("center").bold().italics().end
     );
+    pdf.add(pdf.ln(1));
 
     pdf.add(
       new Columns([ 'Codigo de barras','Nombre','Precio', 'Existencia', 'Inv Minimo' ]).columnGap(3).end
     );
     this.facturaLista.forEach( registro => {
       pdf.add(
-        new Columns([ registro.codigo_barras,registro.nombre,registro.precio,  registro.cantidad_maximo, registro.cantidad_minima ]).columnGap(3).end
+        new Columns([ registro.codigo_barras,registro.nombre,registro.precio,  registro.cantidad_maxima, registro.cantidad_minima ]).columnGap(3).end
       );
     });
-    pdf.footer(`${ new Date() }`);
-    pdf.watermark('IPCA');
     pdf.create().open()
   }
 

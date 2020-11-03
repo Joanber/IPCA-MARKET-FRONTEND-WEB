@@ -8,6 +8,9 @@ import { BASE_ENDPOINT } from "src/app/DB_CONFIG/bdConig";
 import { PdfMakeWrapper } from "pdfmake-wrapper";
 import { MatPaginator, PageEvent } from '@angular/material';
 import { Txt, Columns, Rect, Canvas } from "pdfmake-wrapper";
+import { UtilsReportService } from '../../../services/utils-report.service';
+
+
 
 @Component({
   selector: "app-producto-list",
@@ -22,6 +25,7 @@ export class ProductoListComponent implements OnInit {
   busqueda = true;
   constructor(
     private prodService: ProductoService,
+    private srvUr: UtilsReportService,
     private route: ActivatedRoute
   ) {}
   baseEndpoint = BASE_ENDPOINT + "/productos";
@@ -69,13 +73,26 @@ export class ProductoListComponent implements OnInit {
   }
   reportePDF() {
     const pdf = new PdfMakeWrapper();
+    pdf.pageMargins([40, 60, 40, 60]);
+    pdf.pageSize("A4");
     pdf.info({
-      title: "Productos",
+      title: "Reporte de Productos",
       author: "IPCA",
       subject: "Productos reporte",
     });
     pdf.add(pdf.ln(1));
-    pdf.add(new Txt("Productos").alignment("center").bold().italics().end);
+    pdf.add(
+      new Txt("Instituto de Parálisis Cerebral del Azuay-IPCA")
+        .alignment("left")
+        .bold()
+        .italics().end
+    );
+    pdf.add(new Txt(`${this.srvUr.fecha()}`).alignment("right").italics().end);
+    pdf.add(pdf.ln(1));
+    pdf.add(
+      new Txt("Productos").alignment("center").bold().italics().end
+    );
+    pdf.add(pdf.ln(1));
 
     pdf.add(
       new Columns([
@@ -97,8 +114,6 @@ export class ProductoListComponent implements OnInit {
         ]).columnGap(3).end
       );
     });
-    pdf.footer(`${new Date()}`);
-    pdf.watermark("IPCA");
     pdf.create().open();
   }
 

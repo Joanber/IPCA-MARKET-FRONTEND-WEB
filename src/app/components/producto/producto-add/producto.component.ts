@@ -17,6 +17,9 @@ export class ProductoComponent implements OnInit {
   public imageSrc;
   baseEndpoint = BASE_ENDPOINT + "/productos";
   titulo: string = "Crear Producto";
+  public mensaje: string;
+  public existe: boolean = false;
+  public existeCodigo: boolean = false;
   constructor(
     private catService: CategoriasService,
     private prodService: ProductoService,
@@ -32,6 +35,22 @@ export class ProductoComponent implements OnInit {
     });
 
     this.cargarProducto();
+  }
+
+  existeCodigoProducto(codigo: string): void {
+    console.log(codigo.length);
+    if (codigo.length == 10) {
+      this.prodService.getCodigoBarrasExiste(codigo).subscribe((producto) => {
+        if (producto != null) {
+          this.mensaje = "!Codigo de barras ya existente¡";
+          return (this.existe = true);
+        } else {
+          return (this.existe = false);
+        }
+      });
+    } else {
+      this.existe = false;
+    }
   }
 
   public seleccionarFoto(event): void {

@@ -51,7 +51,7 @@ export class CategoriasService {
       );
   }
 
-  getProductosPage(page: string): Observable<any>{
+  getCategoriasPage(page: string): Observable<any>{
     return this.http.get(this.baseEndpoint+'/page/'+page).pipe(
       tap((response:any) => {
         (response.content  as Categoria[]).forEach(categoria => {

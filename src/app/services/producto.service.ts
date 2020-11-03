@@ -43,7 +43,12 @@ export class ProductoService {
   getProductosFiltro(termino: string): Observable<Producto[]> {
     return this.http.get<Producto[]>(`${this.baseEndpoint}/filtrar/${termino}`);
   }
-
+  
+  getCodigoBarrasExiste(codigo: string): Observable<Producto> {
+    return this.http.get<Producto>(
+      `${this.baseEndpoint}/codigo/${codigo}`
+    );
+  }
   getProductosPage(page: string): Observable<any>{
     return this.http.get(this.baseEndpoint+'/page/'+page).pipe(
       tap((response:any) => {

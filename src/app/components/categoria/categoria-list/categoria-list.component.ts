@@ -7,6 +7,11 @@ import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import { Txt, Columns, Rect, Canvas} from 'pdfmake-wrapper';
 import { BASE_ENDPOINT } from "src/app/DB_CONFIG/bdConig";
 import { MatPaginator, PageEvent } from '@angular/material';
+import { UtilsReportService } from '../../../services/utils-report.service';
+
+
+
+
 
 @Component({
   selector: 'app-categoria-list',
@@ -21,12 +26,15 @@ export class CategoriaListComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginador: MatPaginator;
   busqueda = true;
 
-  constructor( private categoriaSer: CategoriasService ) { }
+  constructor( private categoriaSer: CategoriasService,
+    private srvUr: UtilsReportService
+   ) { }
   categoriaList: Categoria[];
   baseEndpoint = BASE_ENDPOINT + "/categorias";
   paginator:any;
   ngOnInit() {
     this.getCategorias();
+    this.getCategoriaPage();
   }
 
   paginar(event: PageEvent): void {
@@ -37,7 +45,7 @@ export class CategoriaListComponent implements OnInit {
 
   getCategoriaPage(): void {
     this.categoriaSer
-        .getProductosPage(this.paginaActual.toString())
+        .getCategoriasPage(this.paginaActual.toString())
         .subscribe((p) => {
           this.categoriaList = p.content as Categoria[];
           this.totalRegistros = p.totalElements as number;
@@ -61,14 +69,26 @@ export class CategoriaListComponent implements OnInit {
 
   reportePDF() {
     const pdf = new PdfMakeWrapper();
+    pdf.pageMargins([40, 60, 40, 60]);
+    pdf.pageSize("A4");
     pdf.info({
-      title: 'Categorias',
-      author: 'IPCA',
-      subject: 'Categorias reporte',
+      title: "Reporte de Categorias",
+      author: "IPCA",
+      subject: "Categorias reporte",
     });
-    pdf.header(
-       new Txt('Categorias').alignment('center').bold().italics().end
+    pdf.add(pdf.ln(1));
+    pdf.add(
+      new Txt("Instituto de Parálisis Cerebral del Azuay-IPCA")
+        .alignment("left")
+        .bold()
+        .italics().end
     );
+    pdf.add(new Txt(`${this.srvUr.fecha()}`).alignment("right").italics().end);
+    pdf.add(pdf.ln(1));
+    pdf.add(
+      new Txt("Categorias").alignment("center").bold().italics().end
+    );
+    pdf.add(pdf.ln(1));
     pdf.add(
       new Columns([ '#','Nombre' ]).columnGap(3).end
     );
@@ -77,8 +97,6 @@ export class CategoriaListComponent implements OnInit {
         new Columns([ categoria.id,categoria.nombre ]).columnGap(3).end
       );
     });
-    pdf.footer(`${ new Date() }`);
-    pdf.watermark('IPCA');
     pdf.create().open()
   }
 
@@ -86,7 +104,6 @@ export class CategoriaListComponent implements OnInit {
   getCategorias(): void {
     this.categoriaSer.getCategorias().subscribe( categoria => {
       this.categoriaList = categoria;
-      console.log(this.categoriaList);
     });
   }
 

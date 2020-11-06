@@ -110,8 +110,6 @@ export class PersonasListComponent implements OnInit {
   imprimirPDF() {
     const pdf = new PdfMakeWrapper();
     this.getPersonasImprimir();
-    pdf.pageMargins([40, 60, 40, 60]);
-    pdf.pageSize("A4");
     pdf.info({
       title: "Reporte de Personas",
       author: "IPCA",
@@ -132,11 +130,13 @@ export class PersonasListComponent implements OnInit {
     pdf.add(pdf.ln(1));
 
     pdf.add(
-      new Columns(["Cédula", "Nombre", "Email", "telefono"]).columnGap(3).bold()
+      new Columns(["Cédula", "Nombre", "Email", "Telefono"]).columnGap(3).bold()
         .end
     );
     this.todaspersonas.forEach((p) => {
-      pdf.add(new Columns([p.email]).columnGap(3).end);
+      pdf.add(
+        new Columns([p.cedula, p.nombre, p.email, p.telefono]).columnGap(3).end
+      );
     });
 
     pdf.create().open();

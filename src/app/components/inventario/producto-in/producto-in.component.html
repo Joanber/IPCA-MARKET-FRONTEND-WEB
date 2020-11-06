@@ -1,111 +1,107 @@
 <hr class="separador-pri w-100" />
 <div class="row justify-content-center">
-  <div class="col-sm-6 col-md-7 col-lg-4">
-    <div class="card text-center">
-      <div class="card-header mt-1 font-weight-bold">{{ nombre_producto }}</div>
+  <div class="h-75 border m-auto rounded-lg shadow px-8">
+    <form
+      #form="ngForm"
+      (ngSubmit)="guardar(form)"
+      class="form-horizontal d-block mx-4 mt-1"
+    >
+      <h5 class="text-center">{{ nombre_producto }}</h5>
+      <div class="text-center pb-3">
+        <img
+          width="300"
+          height="300"
+          class="img-fluid"
+          *ngIf="producto.fotoHashCode"
+          [src]="
+            baseEndpoint +
+            '/img/' +
+            producto.id +
+            '?fotoHashCode=' +
+            producto.fotoHashCode
+          "
+        />
+        <img
+          width="180"
+          height="180"
+          class="img-fluid"
+          *ngIf="!producto.fotoHashCode"
+          src="../../../../../assets/img/notproducto.jpg"
+        />
+      </div>
+      <div class="form-group">
+        <label for="town" class="control-label">Código del Producto:</label>
 
-      <img
-        class="card-img-top"
-        *ngIf="producto.fotoHashCode"
-        [src]="
-          baseEndpoint +
-          '/img/' +
-          producto.id +
-          '?fotoHashCode=' +
-          producto.fotoHashCode
-        "
-      />
-      <img
-        class="card-img-top img-fluid"
-        *ngIf="!producto.fotoHashCode"
-        src="../../../../../assets/img/notproducto.jpg"
-      />
-      <div class="card-body">
-        <form
-          autocomplete="off"
-          class="form-horizontal"
-          #form="ngForm"
-          (ngSubmit)="guardar(form)"
-        >
-          <div class="form-group">
-            <label for="town" class="col-xs-12 col-sm-10 control-label"
-              >Código del Producto</label
+        <div class="input-group">
+          <input
+            type="text"
+            name="town"
+            class="form-control"
+            placeholder="Codigo"
+            #termino
+            [(ngModel)]="producto.codigo_barras"
+            #codigoBarras="ngModel"
+            (keyup)="resetearForm(termino.value)"
+            required
+            [class.is-invalid]="codigoBarras.touched && codigoBarras.invalid"
+          />
+          <div class="input-group-append">
+            <button
+              class="btn bg-pri btn-block text-white"
+              type="button"
+              (click)="obtenerProducto(termino.value)"
             >
-            <div class="col-xs-12 col-sm-12">
-              <div class="input-group">
-                <input
-                  type="text"
-                  name="town"
-                  class="form-control"
-                  placeholder="Codigo"
-                  #termino
-                  [(ngModel)]="producto.codigo_barras"
-                  #codigoBarras="ngModel"
-                  required
-                  [class.is-invalid]="
-                    codigoBarras.touched && codigoBarras.invalid
-                  "
-                />
-                <div class="input-group-append">
-                  <button
-                    class="btn bg-pri btn-block text-white"
-                    type="button"
-                    (click)="obtenerProducto(termino.value)"
-                  >
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </div>
-              <small
-                *ngIf="codigoBarras.invalid && codigoBarras.touched"
-                class="form-text text-danger"
-                >Codigo es requerido!</small
-              >
-            </div>
-          </div>
-          <div class="form-group">
-            <label
-              for="cantidadactual"
-              class="col-xs-12 col-sm-10 control-label"
-              >Cantidad Actual</label
-            >
-            <div class="col-xs-12 col-sm-12">
-              <label for="cantidadactual">{{ cantidad_producto }}</label>
-            </div>
-          </div>
-          <div class="form-group">
-            <label
-              for="cantidadAgregar"
-              class="col-xs-12 col-sm-10 control-label"
-              >Agregar Cantidad</label
-            >
-            <div class="col-xs-12 col-sm-12">
-              <input
-                type="number"
-                name="cantidadAgregar"
-                class="form-control"
-                min="1"
-                [(ngModel)]="producto.cantidad_maxima"
-                #cantidadAgregar="ngModel"
-                required
-                [class.is-invalid]="
-                  cantidadAgregar.touched && cantidadAgregar.invalid
-                "
-              />
-              <small
-                *ngIf="cantidadAgregar.invalid && cantidadAgregar.touched"
-                class="form-text text-danger"
-                >Cantidad es requerido!</small
-              >
-            </div>
-          </div>
-          <div class="form-group">
-            <button class="btn bg-pri btn-block text-white" type="submit">
-              Guardar
+              <i class="fas fa-search"></i>
             </button>
           </div>
-        </form>
+        </div>
+        <small
+          *ngIf="codigoBarras.invalid && codigoBarras.touched"
+          class="form-text text-danger"
+          >Código es requerido!</small
+        >
+        <small *ngIf="codIncorrecto" class="form-text text-danger"
+          >Código es incorrecto!</small
+        >
       </div>
-    </div>
+
+      <div class="form-group">
+        <label for="cantidadactual" class="control-label mr-3"
+          >Cantidad Actual:</label
+        >
+        <label for="cantidadactual">{{ cantidad_producto }}</label>
+      </div>
+      <div class="form-group">
+        <label for="cantidadAgregar" class="control-label"
+          >Agregar Cantidad:</label
+        >
+        <input
+          type="number"
+          name="cantidadAgregar"
+          class="form-control"
+          min="1"
+          [(ngModel)]="producto.cantidad_maxima"
+          #cantidadAgregar="ngModel"
+          required
+          [class.is-invalid]="
+            cantidadAgregar.touched && cantidadAgregar.invalid
+          "
+        />
+        <small
+          *ngIf="cantidadAgregar.invalid && cantidadAgregar.touched"
+          class="form-text text-danger"
+          >Cantidad es requerido!</small
+        >
+      </div>
+      <div class="form-group">
+        <button
+          class="btn bg-pri btn-block text-white"
+          [disabled]="!form.form.valid"
+          (click)="guardar(form)"
+        >
+          Guardar
+        </button>
+      </div>
+    </form>
   </div>
 </div>

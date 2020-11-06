@@ -15,6 +15,8 @@ export class ProductoInComponent implements OnInit {
   public nombre_producto: string = "Nombre del Producto";
   cantidad_producto: number = 0;
   public producto = new Producto();
+  codBarras: string = "";
+  codIncorrecto: boolean = false;
   constructor(private srvP: ProductoService) {}
 
   ngOnInit() {}
@@ -26,33 +28,47 @@ export class ProductoInComponent implements OnInit {
         this.nombre_producto = this.producto.nombre;
         this.cantidad_producto = this.producto.cantidad_maxima;
         this.producto.cantidad_maxima = 0;
+        this.codBarras = this.producto.codigo_barras;
         console.log(this.producto);
       });
     }
   }
 
   public guardar(form: NgForm) {
-    if (form.invalid) {
-      Object.values(form.controls).forEach((control) => {
-        control.markAsTouched();
-      });
-
-      return;
+    if (form.valid) {
+      if (this.codBarras == this.producto.codigo_barras) {
+        this.srvP.editarCantidad(this.producto).subscribe((producto) => {
+          Swal.fire(
+            "Inventario Producto",
+            `Se agregó mas cantidad del producto  de ${producto.nombre} !`,
+            "success"
+          );
+          this.formReset(form);
+        });
+      } else {
+        this.onIsError();
+      }
     }
-    console.log(this.producto);
-    this.srvP.editarCantidad(this.producto).subscribe((producto) => {
-      Swal.fire(
-        "Inventario Producto",
-        `Se agregó mas cantidad del producto  de ${producto.nombre} !`,
-        "success"
-      );
-    });
-    this.formReset(form);
   }
   formReset(form: NgForm) {
     form.reset();
     this.producto = new Producto();
     this.cantidad_producto = 0;
     this.nombre_producto = "Nombre del Producto";
+    this.codBarras = "";
+  }
+  resetearForm(termino: string) {
+    if (termino.length < 1) {
+      this.producto = new Producto();
+      this.cantidad_producto = 0;
+      this.nombre_producto = "Nombre del Producto";
+      this.codBarras = "";
+    }
+  }
+  onIsError(): void {
+    this.codIncorrecto = true;
+    setTimeout(() => {
+      this.codIncorrecto = false;
+    }, 1000);
   }
 }

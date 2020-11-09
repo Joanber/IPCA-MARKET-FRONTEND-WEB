@@ -20,35 +20,23 @@
   ¡
 </div>
 <form #form="ngForm">
-  <div class="row justify-content-center">
-    <div class="col-sm-10">
-      <label for="buscar" class="col-form-label mr-2 font-weight-bold"
+  <div class="form-row justify-content-center">
+    <div class="col-7 my-1">
+      <label for="buscar" class="col-form-label font-weight-bold"
         >Código del Producto:</label
       >
-      <mat-form-field style="width: 400px !important">
-        <input
-          type="text"
-          placeholder=""
-          class="form-control mayusculas"
-          matInput
-          [formControl]="autocompleteControl"
-          [matAutocomplete]="auto"
-        />
-        <mat-autocomplete
-          #auto="matAutocomplete"
-          [displayWith]="mostrarNombre"
-          (optionSelected)="seleccionarProducto($event)"
-        >
-          <mat-option
-            *ngFor="let producto of productosFiltrados | async"
-            [value]="producto"
-          >
-            {{ producto.nombre }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
+      <input
+        type="text"
+        autofocus
+        placeholder="Escanea el código o escríbelo y presiona enter "
+        class="form-control mayusculas"
+        #termino
+        (keydown)="productoEscaneadoDigitado(termino.value, $event)"
+      />
+      {{ termino.focus() }}
     </div>
   </div>
+
   <div
     class="text-center alert alert-info small p-1 my-1"
     *ngIf="factura.detalles_facturas.length == 0"
@@ -67,7 +55,7 @@
           <th>Precio</th>
           <th>Subtotal</th>
           <th>Existencia</th>
-          <th>Acción</th>
+          <th>Eliminar Item</th>
         </tr>
       </thead>
       <tbody>

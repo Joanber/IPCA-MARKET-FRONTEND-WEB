@@ -39,7 +39,7 @@ export class ProductoComponent implements OnInit {
 
   existeCodigoProducto(codigo: string): void {
     console.log(codigo.length);
-    if (codigo.length == 10) {
+    if (codigo.length > 9) {
       this.prodService.getCodigoBarrasExiste(codigo).subscribe((producto) => {
         if (producto != null) {
           this.mensaje = "!Codigo de barras ya existente¡";

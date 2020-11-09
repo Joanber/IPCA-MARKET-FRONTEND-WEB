@@ -8,7 +8,6 @@ import { RepInventarioComponent } from "./components/inventario/rep-inventario/r
 
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { LoginComponent } from "./login/login.component";
 import { HomeComponent } from "./components/home/home.component";
 import { PrincipalComponent } from "./components/principal.component";
 import { ProductoListComponent } from "./components/producto/producto-list/producto-list.component";
@@ -22,9 +21,10 @@ import { DashboardPersonasComponent } from "./components/Personas/dashboard-pers
 import { ProductoInComponent } from "./components/inventario/producto-in/producto-in.component";
 import { AuthGuard } from "./services/guards/auth.guard";
 import { RoleGuard } from "./services/guards/role.guard";
+import { LoginComponen } from "./components/login/login.component";
 
 const routes: Routes = [
-  { path: "login", component: LoginComponent },
+  { path: "login", component: LoginComponen },
   {
     path: "",
     component: PrincipalComponent,
@@ -57,7 +57,6 @@ const routes: Routes = [
             canActivate: [AuthGuard, RoleGuard],
             data: { role: "ROLE_ADMIN" },
           },
-          { path: "personas/page/:page", component: PersonasListComponent },
           { path: "usuarios", component: UsuarioListComponent },
           { path: "usuarios/form", component: UsuarioAddComponent },
           { path: "usuarios/form/:id", component: UsuarioAddComponent },

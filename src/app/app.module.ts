@@ -5,7 +5,6 @@ import { AppRoutingModule } from "./app-routing.module";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { ChartsModule } from "ng2-charts";
 import { AppComponent } from "./app.component";
-import { LoginComponent } from "./login/login.component";
 import { ProductoComponent } from "./components/producto/producto-add/producto.component";
 import { HomeComponent } from "./components/home/home.component";
 import { NavbarComponent } from "./components/navbar/navbar.component";
@@ -44,14 +43,14 @@ import { ArraypipePipe } from "./pipes/arraypipe.pipe";
 import { ProductoInComponent } from "./components/inventario/producto-in/producto-in.component";
 import { InventarioComponent } from "./components/inventario/inventario/inventario.component";
 import { DashboardPersonasComponent } from "./components/Personas/dashboard-personas/dashboard-personas.component";
-import { PaginadorComponent } from "./components/paginador/paginador.component";
 import { TokenInterceptor } from "./services/Interceptores/token.interceptor";
 import { AuthInterceptor } from "./services/Interceptores/AuthInterceptor";
+import { LoginComponen } from "./components/login/login.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
+    LoginComponen,
     ProductoComponent,
     HomeComponent,
     NavbarComponent,
@@ -66,7 +65,6 @@ import { AuthInterceptor } from "./services/Interceptores/AuthInterceptor";
     ArraypipePipe,
     ProductoInComponent,
     DashboardPersonasComponent,
-    PaginadorComponent,
     DashbordProductosComponent,
     CategoriaListComponent,
     CategoriaAddComponent,

@@ -42,5 +42,9 @@ export class UtilsReportService {
       date.getFullYear());
   }
 
+  formateaValor(valor) {
+    return isNaN(valor) ? valor : parseFloat(valor).toFixed(2);
+  }
+
   constructor() {}
 }

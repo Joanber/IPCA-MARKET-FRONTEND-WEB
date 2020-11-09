@@ -110,12 +110,13 @@ export class ProductoListComponent implements OnInit {
           prod.nombre,
           prod.categoria.nombre,
           prod.descripcion,
-          prod.precio,
+          `$${this.srvUr.formateaValor(prod.precio)}`,
         ]).columnGap(3).end
       );
     });
     pdf.create().open();
   }
+
 
   delete(producto: Producto): void {
     const swalWithBootstrapButtons = Swal.mixin({

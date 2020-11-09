@@ -68,15 +68,11 @@ export class ReportesComponent implements OnInit {
     );
     this.listRegistros.forEach( registro => {
       pdf.add(
-        new Columns([ registro.cantidad,registro.nombre,registro.precio, registro.codigo_barras, registro.nombre_categoria ]).columnGap(3).end
+        new Columns([ registro.cantidad,registro.nombre,`$${this.srvUr.formateaValor(registro.precio)}`, registro.codigo_barras, registro.nombre_categoria ]).columnGap(3).end
       );
     });
     pdf.create().open()
   }
-
-
-  
-  
 
   ver() {
     const fechaInicio = this.miDatePipe.transform(this.fechaInicio, 'yyyy-MM-dd');

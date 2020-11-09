@@ -1,6 +1,6 @@
 <hr class="separador-pri w-100 ">
 <div class="text-center">
-    <h2 class="display-4">Reporte de Inventario</h2>
+    <h2>Reporte de Inventario</h2>
 </div>
 
 <div class="row">
@@ -48,9 +48,11 @@
             <tr *ngFor="let producto of facturaLista">
                 <td>{{ producto.codigo_barras }}</td>
                 <td>{{ producto.nombre }}</td>
-                <td>${{ producto.precio | number: ".2-2" }}</td>
-                <td [ngStyle]="{'color': producto.cantidad_maxima <= producto.cantidad_minima ? 'red' : 'black'}" >
-                    {{ producto.cantidad_maxima }}
+                <td>${{ producto.precio | currency }}</td>
+                <td  >
+                    <span [ngClass]="{'badge badge-danger': producto.cantidad_maxima <= producto.cantidad_minima }">
+                        {{ producto.cantidad_maxima }}
+                    </span>
                 </td>
                 <td>{{ producto.cantidad_minima }}</td>
             </tr>

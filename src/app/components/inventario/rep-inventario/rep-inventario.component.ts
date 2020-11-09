@@ -66,7 +66,7 @@ export class RepInventarioComponent implements OnInit {
     );
     this.facturaLista.forEach( registro => {
       pdf.add(
-        new Columns([ registro.codigo_barras,registro.nombre,registro.precio,  registro.cantidad_maxima, registro.cantidad_minima ]).columnGap(3).end
+        new Columns([ registro.codigo_barras,registro.nombre,`$${this.srvUr.formateaValor(registro.precio)}`,  registro.cantidad_maxima, registro.cantidad_minima ]).columnGap(3).end
       );
     });
     pdf.create().open()

@@ -1,6 +1,6 @@
 <hr class="separador-pri w-100" />
 <div class="text-center">
-  <h2 class="display-4">Productos</h2>
+  <h2>Productos</h2>
 </div>
 <div class="row">
   <div class="col-sm-3">
@@ -16,12 +16,11 @@
         class="form-control mayusculas"
         #termino
         placeholder="Buscar"
-        (keyup)="buscarProducto(termino.value)"
         aria-label="Recipient's username"
         aria-describedby="button-addon2"
       />
       <div class="input-group-append">
-        <button class="btn bg-pri text-white" type="button" id="button-addon2">
+        <button class="btn bg-pri text-white" (click)="buscarProducto(termino.value)" type="button" id="button-addon2">
           Buscar
         </button>
       </div>

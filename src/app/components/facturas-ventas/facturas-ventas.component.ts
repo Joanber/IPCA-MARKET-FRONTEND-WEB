@@ -8,6 +8,7 @@ import { Factura } from "src/app/models/factura";
 import { Producto } from "src/app/models/producto";
 import { ProductoBajoInventario } from "src/app/models/ProductoBajoInventario";
 import { FacturasService } from "src/app/services/facturas.service";
+import { ProductoService } from "src/app/services/producto.service";
 import Swal from "sweetalert2";
 
 import { FacturaModalService } from "../modal-factura/factura-modal.service";
@@ -20,33 +21,38 @@ import { FacturaModalService } from "../modal-factura/factura-modal.service";
 export class FacturasVentasComponent implements OnInit {
   factura: Factura = new Factura();
   autocompleteControl = new FormControl();
-  productosFiltrados: Observable<Producto[]>;
+  productoFiltrado: Producto;
   public facturaModal: Factura;
   productosBajosInventario: ProductoBajoInventario[] = [];
   public proBajos: boolean = false;
   public mensaje: string;
 
   constructor(
+    private srvP: ProductoService,
     private srvF: FacturasService,
     private srMF: FacturaModalService
   ) {}
 
   ngOnInit() {
     this.getProductosBajosInventario();
-    this.productosFiltrados = this.autocompleteControl.valueChanges.pipe(
-      map((value) => (typeof value === "string" ? value : value.nombre)),
-      flatMap((value) => (value ? this._filter(value) : []))
-    );
   }
-  mostrarNombre(producto?: Producto): string | undefined {
-    return producto ? producto.nombre : undefined;
+
+  productoEscaneadoDigitado(termino: string, event) {
+    if (termino.length > 9) {
+      this.srvP.getCodigoBarrasExiste(termino.toUpperCase()).subscribe((p) => {
+        if (p == null) {
+          console.log("no exitse");
+        } else {
+          this.productoFiltrado = p;
+          console.log(this.productoFiltrado);
+          this.seleccionarProducto(this.productoFiltrado);
+          event.target.value = "";
+          event.target.focus;
+        }
+      });
+    }
   }
-  private _filter(value: string): Observable<Producto[]> {
-    const filterValue = value;
-    return this.srvF.getproductoByCodigoBarras(filterValue.toUpperCase());
-  }
-  seleccionarProducto(event: MatAutocompleteSelectedEvent): void {
-    let producto = event.option.value as Producto;
+  seleccionarProducto(producto: Producto): void {
     if (producto.cantidad_maxima == 0) {
       Swal.fire({
         title: ` ! INVENTARIO INSUFICIENTE DE ${producto.nombre}, HAY 0 DISPONIBLES ! `,
@@ -58,7 +64,6 @@ export class FacturasVentasComponent implements OnInit {
           }, 2800);
         },
       });
-      this.autocompleteControl.setValue("");
       return;
     }
     if (this.existeItem(producto.id)) {
@@ -69,9 +74,8 @@ export class FacturasVentasComponent implements OnInit {
       this.factura.detalles_facturas.push(nuevoDetalle);
     }
     this.autocompleteControl.setValue("");
-    event.option.focus();
-    event.option.deselect();
   }
+
   existeItem(id: number): boolean {
     let existe = false;
     this.factura.detalles_facturas.forEach((delalle: DetalleFactura) => {
@@ -161,10 +165,6 @@ export class FacturasVentasComponent implements OnInit {
           this.proBajos = true;
         } else {
           this.proBajos = false;
-          console.log(
-            this.productosBajosInventario,
-            "SIN PRODUCTOS BAJOS EN INVENTARIO"
-          );
         }
       });
   }

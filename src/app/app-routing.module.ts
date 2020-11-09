@@ -1,3 +1,11 @@
+import { ReportesComponent } from "./components/inventario/reportes/reportes.component";
+import { DashbordProductosComponent } from "./components/producto/dashbord-productos/dashbord-productos.component";
+import { CategoriaListComponent } from "./components/categoria/categoria-list/categoria-list.component";
+import { CategoriaAddComponent } from "./components/categoria/categoria-add/categoria-add.component";
+import { FacturasVentasComponent } from "./components/facturas-ventas/facturas-ventas.component";
+import { ProdBajoInvComponent } from "./components/inventario/prod-bajo-inv/prod-bajo-inv.component";
+import { RepInventarioComponent } from "./components/inventario/rep-inventario/rep-inventario.component";
+
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { LoginComponent } from "./login/login.component";
@@ -12,13 +20,8 @@ import { UsuarioListComponent } from "./components/usuario/usuario-list/usuario-
 import { UsuarioAddComponent } from "./components/usuario/usuario-add/usuario-add.component";
 import { DashboardPersonasComponent } from "./components/Personas/dashboard-personas/dashboard-personas.component";
 import { ProductoInComponent } from "./components/inventario/producto-in/producto-in.component";
-import { ReportesComponent } from "./components/inventario/reportes/reportes.component";
-import { DashbordProductosComponent } from "./components/producto/dashbord-productos/dashbord-productos.component";
-import { CategoriaListComponent } from "./components/categoria/categoria-list/categoria-list.component";
-import { CategoriaAddComponent } from "./components/categoria/categoria-add/categoria-add.component";
-import { FacturasVentasComponent } from "./components/facturas-ventas/facturas-ventas.component";
-import { ProdBajoInvComponent } from "./components/inventario/prod-bajo-inv/prod-bajo-inv.component";
-import { RepInventarioComponent } from './components/inventario/rep-inventario/rep-inventario.component';
+import { AuthGuard } from "./services/guards/auth.guard";
+import { RoleGuard } from "./services/guards/role.guard";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -48,7 +51,12 @@ const routes: Routes = [
         path: "dashper",
         component: DashboardPersonasComponent,
         children: [
-          { path: "personas", component: PersonasListComponent },
+          {
+            path: "personas",
+            component: PersonasListComponent,
+            canActivate: [AuthGuard, RoleGuard],
+            data: { role: "ROLE_ADMIN" },
+          },
           { path: "personas/page/:page", component: PersonasListComponent },
           { path: "usuarios", component: UsuarioListComponent },
           { path: "usuarios/form", component: UsuarioAddComponent },

@@ -1,7 +1,12 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="h-75 border m-auto rounded-lg shadow px-8">
-      <form #loginForm="ngForm" class="form-horizontal d-block mx-5 mt-4">
+      <form
+        #f="ngForm"
+        name="form"
+        class="form-horizontal d-block mx-5 mt-4"
+        method="POST"
+      >
         <h1 class="text-center mt-4 mb-2">Login</h1>
         <div>
           <img
@@ -14,23 +19,15 @@
         </div>
 
         <div class="form-group">
-          <label for="" class="control-label">Usuario:</label>
+          <label for="username" class="control-label">Usuario:</label>
           <input
-            required
             class="form-control"
             type="text"
-            name="user"
+            name="username"
             placeholder="Nombre de Usuario"
-            #user="ngModel"
-            [(ngModel)]="username"
+            [(ngModel)]="usuario.username"
+            required
           />
-
-          <p
-            class="field-error text-center"
-            *ngIf="user.hasError('required') && user.touched"
-          >
-            El usuario es un campo requerido!
-          </p>
         </div>
         <!--INPUT USERNAME-->
 
@@ -40,37 +37,29 @@
             required
             class="form-control"
             type="password"
-            name="psswrd"
+            name="password"
             placeholder="Contraseña"
-            #psswrd="ngModel"
-            [(ngModel)]="password"
+            [(ngModel)]="usuario.password"
+            required
           />
-
-          <p
-            class="field-error text-center"
-            *ngIf="psswrd.hasError('required') && psswrd.touched"
-          >
-            El password es un campo requerido!
-          </p>
         </div>
         <!--INPUT PASSWORD-->
         <div class="form-group mt-4">
           <button
             type="submit"
-            [disabled]="loginForm.invalid"
-            class="btn btn-block btn bg-pri white"
             (click)="login()"
+            class="btn btn-block bg-pri white"
           >
             Ingresar
           </button>
         </div>
       </form>
       <div
-        class="alert alert-danger alert-dismissible fade show"
+        class="alert alert-danger alert-dismissible fade show text-center"
         role="alert"
         *ngIf="!esValido"
       >
-        Usuario o contraseña incorrectos.
+        {{ invalido }}
         <button
           type="button"
           class="close"

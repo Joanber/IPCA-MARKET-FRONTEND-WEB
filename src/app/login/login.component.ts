@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario';
 import { Router } from '@angular/router';
-import { UsuarioService } from '../services/usuario/usuario.service';
+import { AuthService } from '../services/login_services/auth.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-login',
@@ -9,38 +11,51 @@ import { UsuarioService } from '../services/usuario/usuario.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  username: string = '';
-  password = '';
+  usuario: Usuario;
   esValido = true;
-  
-  constructor(
-    private  router: Router,
-    private usuarioService:UsuarioService
-  ) { }
+  invalido='';
 
-  ngOnInit() {
+  constructor(private authService: AuthService, private router: Router) {
+    this.usuario = new Usuario();
   }
 
-  login(){
-    let res=this.usuarioService.login(
-      this.username,this.password
-    )
 
-    res.subscribe(
-      user=>{
-        this.router.navigate(['home']);
-        console.log(user.token);
-      },
-      err=>{
-        console.log('Fallo al loguearse');
-        console.log(err);
-        this.esValido=false
-      }
-    )
+  ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      Swal.fire('Login', `Hola ${this.authService.usuario.username} ya estás autenticado!`, 'info');
+      this.router.navigate(['/home']);
+    }
   }
  
   cerrarError() {
     this.esValido = true;
   }
+ 
+ 
+  login(): void {
+     console.log(this.usuario);
+    if (this.usuario.username == null || this.usuario.password == null) {
+     this.esValido=false
+      this.invalido='Username y/o Password vacías';
+      return
+    }else{
 
+      this.authService.login(this.usuario).subscribe(response => {
+        console.log(response);
+        this.authService.guardarUsuario(response);
+        this.authService.guardarToken(response.accessToken);
+
+        this.router.navigate(['/home']);
+      }, err => {
+        if (err.status == 500) {
+          this.esValido=false
+          this.invalido='Username y/o Password incorectas!';
+          return
+        }
+      }
+      );
+    }
+
+    
+  }
 }

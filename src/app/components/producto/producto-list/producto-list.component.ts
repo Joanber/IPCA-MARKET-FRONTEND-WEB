@@ -36,6 +36,14 @@ export class ProductoListComponent implements OnInit {
     this.getProductos();
   }
 
+  public cargarProductoDefault(event: any) {
+    let termino: string = event.target.value as string;
+    if (termino.length == 0) {
+      this.getProductoPage();
+      this.busqueda = true;
+    }
+  }
+
   paginar(event: PageEvent): void {
     this.paginaActual = event.pageIndex;
     this.totalPorPagina = event.pageSize;
@@ -147,7 +155,7 @@ export class ProductoListComponent implements OnInit {
               );
               swalWithBootstrapButtons.fire(
                 "Eliminado!",
-                `Persona ${producto.nombre} eliminada correctamente!`,
+                `Producto ${producto.nombre} eliminada correctamente!`,
                 "success"
               );
             });

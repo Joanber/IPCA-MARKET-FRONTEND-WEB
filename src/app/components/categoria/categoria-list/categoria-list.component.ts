@@ -100,6 +100,14 @@ export class CategoriaListComponent implements OnInit {
     pdf.create().open()
   }
 
+  public cargarCategoriaDefault(event: any) {
+    let termino: string = event.target.value as string;
+    if (termino.length == 0) {
+      this.getCategoriaPage();
+      this.busqueda = true;
+    }
+  }
+
 
   getCategorias(): void {
     this.categoriaSer.getCategorias().subscribe( categoria => {
@@ -131,7 +139,7 @@ export class CategoriaListComponent implements OnInit {
             this.categoriaList = this.categoriaList.filter(cate => cate !== categoria)
             swalWithBootstrapButtons.fire(
               'Eliminado!',
-              `Persona ${categoria.nombre} eliminada correctamente!`,
+              `Categoria ${categoria.nombre} eliminada correctamente!`,
               'success'
             )
           }

@@ -60,7 +60,7 @@ export class CategoriaAddComponent implements OnInit {
           console.log(categoria);
           this.irCategorias();
           Swal.fire(
-            "Nuevo Producto",
+            "Nueva Categoria",
             `¡${this.categoria.nombre} creado con exito!`,
             "success"
           );
@@ -92,9 +92,9 @@ export class CategoriaAddComponent implements OnInit {
       this.categoriaS
         .editarConFoto(this.categoria, this.fotoSeleccionada)
         .subscribe((categoria) => {
-          console.log("producto con foto", categoria);
+          console.log("categoria con foto", categoria);
           Swal.fire(
-            "Actualizar Producto",
+            "Actualizar Categoria",
             `¡${this.categoria.nombre} actualizado con exito!`,
             "success"
           );
@@ -104,9 +104,9 @@ export class CategoriaAddComponent implements OnInit {
       this.categoriaS
         .editarConFoto(this.categoria, this.fotoSeleccionada)
         .subscribe((categoria) => {
-          console.log("producto con foto", categoria);
+          console.log("categoria con foto", categoria);
           Swal.fire(
-            "Actualizar Producto",
+            "Actualizar Categoria",
             `¡${this.categoria.nombre} actualizado con exito!`,
             "success"
           );

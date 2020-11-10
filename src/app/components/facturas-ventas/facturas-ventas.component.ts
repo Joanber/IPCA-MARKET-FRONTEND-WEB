@@ -1,14 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, NgForm } from "@angular/forms";
-import { MatAutocompleteSelectedEvent } from "@angular/material";
-import { Observable } from "rxjs";
-import { flatMap, map } from "rxjs/operators";
 import { DetalleFactura } from "src/app/models/detalleFactura";
 import { Factura } from "src/app/models/factura";
 import { Producto } from "src/app/models/producto";
 import { ProductoBajoInventario } from "src/app/models/ProductoBajoInventario";
 import { FacturasService } from "src/app/services/facturas.service";
+import { AuthService } from "src/app/services/login_services/auth.service";
 import { ProductoService } from "src/app/services/producto.service";
+import { UsuarioService } from "src/app/services/usuario.service";
 import Swal from "sweetalert2";
 
 import { FacturaModalService } from "../modal-factura/factura-modal.service";
@@ -30,7 +29,9 @@ export class FacturasVentasComponent implements OnInit {
   constructor(
     private srvP: ProductoService,
     private srvF: FacturasService,
-    private srMF: FacturaModalService
+    private srMF: FacturaModalService,
+    public authService: AuthService,
+    public usuService: UsuarioService
   ) {}
 
   ngOnInit() {
@@ -152,6 +153,9 @@ export class FacturasVentasComponent implements OnInit {
 
   public abrirModal(factura: Factura, form: NgForm) {
     if (this.factura.detalles_facturas.length > 0) {
+      this.usuService
+        .getUsuario(this.authService.usuario.id)
+        .subscribe((usuario) => (this.factura.usuario = usuario));
       this.facturaModal = factura;
       this.srMF.abrirModal();
     }

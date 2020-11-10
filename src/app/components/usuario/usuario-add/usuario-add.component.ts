@@ -79,6 +79,7 @@ export class UsuarioAddComponent implements OnInit {
   public create(form: NgForm): void {
     if (form.valid && this.usuario.roles.length > 0) {
       if (this.existe == false) {
+        console.log(this.usuario);
         this.srvU.crear(this.usuario).subscribe((usuario) => {
           console.log(this.usuario);
           this.irUsuarios();

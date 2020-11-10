@@ -1,4 +1,5 @@
 import { DetalleFactura } from "./detalleFactura";
+import { Usuario } from "./usuario";
 
 export class Factura {
   id: number;
@@ -6,6 +7,7 @@ export class Factura {
   observacion: string;
   detalles_facturas: Array<DetalleFactura> = [];
   total: number;
+  usuario: Usuario;
   calcularGranTotal(): number {
     this.total = 0;
     this.detalles_facturas.forEach((item: DetalleFactura) => {

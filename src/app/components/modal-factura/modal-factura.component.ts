@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Factura } from "src/app/models/factura";
+import { Usuario } from "src/app/models/usuario";
 import { FacturasService } from "src/app/services/facturas.service";
 import Swal from "sweetalert2";
 import { FacturaModalService } from "./factura-modal.service";

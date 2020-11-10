@@ -47,7 +47,7 @@
           <th>Username</th>
           <th>Persona</th>
           <th>Roles</th>
-          <th>Acción</th>
+          <th>Editar-Eliminar</th>
         </tr>
       </thead>
       <tbody>
@@ -87,6 +87,14 @@
               <div class="col-sm-3 mt-2">
                 <button class="btn btn-danger btn-sm" (click)="delete(usuario)">
                   <i class="fa fa-trash"></i>
+                </button>
+              </div>
+              <div class="col-sm-3 mt-2 mb-1">
+                <button
+                  class="btn btn-warning btn-sm"
+                  [routerLink]="['/dashper/usuarios/changepass/', usuario.id]"
+                >
+                  <i class="fas fa-key"></i>
                 </button>
               </div>
             </div>

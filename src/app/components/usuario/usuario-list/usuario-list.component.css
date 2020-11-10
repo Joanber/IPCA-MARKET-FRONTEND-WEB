@@ -1,6 +1,9 @@
 .fa:hover {
   color: #042331 !important;
 }
+.fas:hover {
+  color: #042331 !important;
+}
 .table-scroll {
   height: 320px;
   overflow-y: auto;

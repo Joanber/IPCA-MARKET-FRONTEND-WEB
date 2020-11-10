@@ -29,7 +29,6 @@ export class ModalFacturaComponent implements OnInit {
     }
     if (cantidad < 0) {
       return (this.cambio = 0);
-      console.log(cantidad);
     }
     this.pagoCon = factura.calcularGranTotal();
     let cambio = cantidad - factura.calcularGranTotal();

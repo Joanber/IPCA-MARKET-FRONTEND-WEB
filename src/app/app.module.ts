@@ -46,6 +46,7 @@ import { DashboardPersonasComponent } from "./components/Personas/dashboard-pers
 import { TokenInterceptor } from "./services/Interceptores/token.interceptor";
 import { AuthInterceptor } from "./services/Interceptores/AuthInterceptor";
 import { LoginComponen } from "./components/login/login.component";
+import { CambiarPassComponent } from './components/cambiar-pass/cambiar-pass.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { LoginComponen } from "./components/login/login.component";
     ProdBajoInvComponent,
     FooterComponent,
     RepInventarioComponent,
+    CambiarPassComponent,
   ],
   imports: [
     BrowserModule,

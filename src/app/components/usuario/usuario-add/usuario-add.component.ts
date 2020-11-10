@@ -24,6 +24,7 @@ export class UsuarioAddComponent implements OnInit {
   public existe = false;
   public existeUsername = false;
   public mensaje: string;
+  public mostrarInputPass = true;
 
   constructor(
     private srvU: UsuarioService,
@@ -32,18 +33,21 @@ export class UsuarioAddComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this.srvU.getRoles().subscribe((roles) => {
       this.roles = roles;
     });
     this.cargarUsuario();
     this.srvP.getPersonas().subscribe((personas) => (this.personas = personas));
+    console.log(this.mostrarInputPass, "ultimo");
   }
 
   public cargarUsuario(): void {
     this.route.paramMap.subscribe((params) => {
       const id: number = +params.get("id");
+      console.log(this.mostrarInputPass, "sin id");
       if (id) {
+        this.mostrarInputPass = false;
         this.titulo = "Actualizar Usuario";
         this.srvU.getUsuario(id).subscribe((usuario) => {
           this.usuario = usuario;
@@ -56,6 +60,8 @@ export class UsuarioAddComponent implements OnInit {
             });
           });
         });
+      } else {
+        this.mostrarInputPass = true;
       }
     });
   }
@@ -63,12 +69,10 @@ export class UsuarioAddComponent implements OnInit {
     const checked = event.target.checked;
     if (checked) {
       this.usuario.roles.push(rol);
-      console.log(this.usuario, "->>>>>>>> CON NUEVOS ROLES", rol);
     } else {
       this.usuario.roles = this.usuario.roles.filter(
         (r) => r.nombre !== rol.nombre
       );
-      console.log(this.usuario, "->>>>>>>> CON ROLES ELIMINADOS", rol);
     }
   }
 
@@ -94,6 +98,7 @@ export class UsuarioAddComponent implements OnInit {
   public editar(form: NgForm): void {
     if (form.valid && this.usuario.roles.length > 0) {
       this.srvU.editar(this.usuario).subscribe((usuario) => {
+        this.usuario.password = null;
         this.irUsuarios();
         Swal.fire(
           "Actualizar Usuario",

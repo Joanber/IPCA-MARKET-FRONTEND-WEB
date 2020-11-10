@@ -22,6 +22,7 @@ import { ProductoInComponent } from "./components/inventario/producto-in/product
 import { AuthGuard } from "./services/guards/auth.guard";
 import { RoleGuard } from "./services/guards/role.guard";
 import { LoginComponen } from "./components/login/login.component";
+import { CambiarPassComponent } from "./components/cambiar-pass/cambiar-pass.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponen },
@@ -60,6 +61,7 @@ const routes: Routes = [
           { path: "usuarios", component: UsuarioListComponent },
           { path: "usuarios/form", component: UsuarioAddComponent },
           { path: "usuarios/form/:id", component: UsuarioAddComponent },
+          { path: "usuarios/changepass/:id", component: CambiarPassComponent },
           { path: "personas/form", component: PersonasAddComponent },
           { path: "personas/form/:id", component: PersonasAddComponent },
           { path: "**", pathMatch: "full", redirectTo: "personas" },

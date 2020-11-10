@@ -37,15 +37,19 @@ export class FacturasService {
     );
   }
 
-  getVentas(fechaInicio: string, fechaFin: string): Observable<any[]>{
-    return this.http.get<any[]>(`${this.baseEndpoint}/filtrar-ventasProducto/${fechaInicio}/${fechaFin}`);
+  getVentas(fechaInicio: string, fechaFin: string): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.baseEndpoint}/filtrar-ventasProducto?desde=${fechaInicio}&hasta=${fechaFin}&user=`
+    );
   }
   getProductosInventario() {
-    return this.http.get<any[]>(`${this.baseEndpoint}/filtrar-productos-inventario`);
+    return this.http.get<any[]>(
+      `${this.baseEndpoint}/filtrar-productos-inventario`
+    );
   }
   getProductosByCategoria(categoria: string) {
-    return this.http.get<any[]>(`${this.baseEndpoint}/filtrar-productos-inventario-categoria/${categoria}`);
+    return this.http.get<any[]>(
+      `${this.baseEndpoint}/filtrar-productos-inventario-categoria/${categoria}`
+    );
   }
-
-
 }

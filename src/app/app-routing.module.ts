@@ -22,7 +22,7 @@ import { ProductoInComponent } from "./components/inventario/producto-in/product
 import { AuthGuard } from "./services/guards/auth.guard";
 import { RoleGuard } from "./services/guards/role.guard";
 import { LoginComponen } from "./components/login/login.component";
-import { CambiarPassComponent } from "./components/cambiar-pass/cambiar-pass.component";
+import { CambiarPassComponent } from "./components/usuario/cambiar-pass/cambiar-pass.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponen },

@@ -1,1 +1,130 @@
-<p>cambiar-pass works!</p>
+<hr class="separador-pri w-100" />
+<div class="container my-3">
+  <div class="row justify-content-center">
+    <h2>Cambiar Contraseña</h2>
+    <button class="btn btn-danger mb-2 mx-3" (click)="irUsuarios()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <form class="border shadow rounded mx-5" #MyForm="ngForm">
+    <div class="form-row mt-2 text-center">
+      <div class="col-md-5 mb-3 mx-auto">
+        <label for="username"
+          >Usuario: <strong>{{ username }}</strong></label
+        >
+      </div>
+    </div>
+    <div class="form-row mt-1 text-center">
+      <div class="col-md-5 mb-3 mx-auto">
+        <label for="password">Contraseña actual:</label>
+        <input
+          required
+          class="form-control"
+          type="password"
+          name="passactual"
+          #passactual
+          (keyup)="filtrarPassword(passactual.value)"
+        />
+        <div class="text-center field-error" *ngIf="existePass">
+          !Contraseña actual incorrecta¡
+        </div>
+      </div>
+    </div>
+    <div class="form-row mt-1 text-center">
+      <div class="col-md-5 mb-3 mx-auto">
+        <label for="password">Nueva Contraseña:</label>
+        <div class="input-group">
+          <input
+            required
+            class="form-control"
+            [type]="fieldTextType ? 'text' : 'password'"
+            name="password"
+            #password="ngModel"
+            [(ngModel)]="usuario.password"
+            minlength="8"
+          />
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <i
+                class="fa"
+                [ngClass]="{
+                  'fa-eye-slash': !fieldTextType,
+                  'fa-eye': fieldTextType
+                }"
+                (click)="toggleFieldTextType()"
+              ></i>
+            </span>
+          </div>
+        </div>
+
+        <div
+          class="text-center field-error"
+          *ngIf="password.hasError('required') && password.touched"
+        >
+          !Contraseña es requerido¡
+        </div>
+        <div class="text-center field-error" *ngIf="password.errors?.minlength">
+          !Por lo menos
+          {{ password.errors.minlength.requiredLength }} caracteres¡
+        </div>
+      </div>
+    </div>
+    <div class="form-row mt-3 text-center">
+      <div class="col-md-5 mx-auto">
+        <label for="confirmpassword">Confirmar Contraseña:</label>
+        <div class="input-group">
+          <input
+            required
+            class="form-control"
+            [type]="repeatFieldTextType ? 'text' : 'password'"
+            name="confirmpassword"
+            #confirmpassword="ngModel"
+            [(ngModel)]="usuario.confirmPassword"
+            appValidatorPassword="password"
+          />
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <i
+                class="fa"
+                [ngClass]="{
+                  'fa-eye-slash': !repeatFieldTextType,
+                  'fa-eye': repeatFieldTextType
+                }"
+                (click)="toggleRepeatFieldTextType()"
+              ></i>
+            </span>
+          </div>
+        </div>
+
+        <div
+          class="text-center field-error"
+          *ngIf="password.invalid && password.touched"
+        >
+          !Contraseña es requerido¡
+        </div>
+        <div
+          class="text-center field-error"
+          *ngIf="
+            confirmpassword.touched &&
+            confirmpassword.errors?.notEqual &&
+            !confirmpassword.errors?.required
+          "
+        >
+          !Las contraseñas no coinciden¡
+        </div>
+      </div>
+    </div>
+    <div class="form-row mt-3 text-center">
+      <div class="col-md-5 mb-3 mx-auto">
+        <button
+          class="btn bg-pri btn-block text-white"
+          [disabled]="!MyForm.form.valid"
+          (click)="create(MyForm)"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<hr class="separador-pri w-100" />

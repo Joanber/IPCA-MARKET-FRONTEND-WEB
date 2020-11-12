@@ -99,7 +99,7 @@
         </div>
       </div>
       <div class="col-md-5 mx-auto">
-        <label for="confirmpassword">Repetir Contraseña:</label>
+        <label for="confirmpassword">Confirmar Contraseña:</label>
         <div class="input-group">
           <input
             required
@@ -126,9 +126,11 @@
 
         <div
           class="text-center field-error"
-          *ngIf="password.invalid && password.touched"
+          *ngIf="
+            confirmpassword.hasError('required') && confirmpassword.touched
+          "
         >
-          !Contraseña es requerido¡
+          !Confirmar contraseña es requerido¡
         </div>
         <div
           class="text-center field-error"

@@ -75,9 +75,9 @@ export class CambiarPassComponent implements OnInit {
         this.srvU.getBooleanPassword(id, passactual).subscribe((pass) => {
           this.existePassword = pass;
           if (this.existePassword) {
-            console.log(this.existePassword);
+            return (this.existe = true);
           } else {
-            console.log(this.existePassword);
+            return (this.existe = false);
           }
         });
       } else {

@@ -49,7 +49,6 @@ export class UsuarioAddComponent implements OnInit {
         this.titulo = "Actualizar Usuario";
         this.srvU.getUsuario(id).subscribe((usuario) => {
           this.usuario = usuario;
-          this.usuario.confirmPassword = this.usuario.password;
           this.usuario.roles.forEach((rol1) => {
             this.roles.forEach((rol2) => {
               if (rol1.id === rol2.id) {
@@ -78,7 +77,6 @@ export class UsuarioAddComponent implements OnInit {
     if (form.valid && this.usuario.roles.length > 0) {
       if (this.existe == false) {
         this.srvU.crear(this.usuario).subscribe((usuario) => {
-          console.log(this.usuario);
           this.irUsuarios();
           Swal.fire(
             "Nuevo Usuario",

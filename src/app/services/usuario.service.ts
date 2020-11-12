@@ -27,6 +27,11 @@ export class UsuarioService {
   getUsuario(id: number): Observable<Usuario> {
     return this.http.get<Usuario>(`${this.baseEndpoint}/${id}`);
   }
+  getBooleanPassword(id: number, passactual: string): Observable<any> {
+    return this.http.get<Usuario>(
+      `${this.baseEndpoint}/truef/${id}/${passactual}`
+    );
+  }
 
   editar(usuario: Usuario): Observable<Usuario> {
     return this.http
@@ -38,6 +43,27 @@ export class UsuarioService {
             return throwError(e);
           }
           Swal.fire("Error al editar usuario", e.error.mensaje, "error");
+          return throwError(e);
+        })
+      );
+  }
+  editarWithPassword(usuario: Usuario): Observable<Usuario> {
+    return this.http
+      .put<Usuario>(
+        `${this.baseEndpoint}/withpass/${usuario.password}/${usuario.id}`,
+        usuario
+      )
+      .pipe(
+        map((response: any) => response.usuario as Usuario),
+        catchError((e) => {
+          if (e.status == 400) {
+            return throwError(e);
+          }
+          Swal.fire(
+            "Error al actualizar la contraseña",
+            e.error.mensaje,
+            "error"
+          );
           return throwError(e);
         })
       );

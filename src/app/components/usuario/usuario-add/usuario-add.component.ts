@@ -39,19 +39,16 @@ export class UsuarioAddComponent implements OnInit {
     });
     this.cargarUsuario();
     this.srvP.getPersonas().subscribe((personas) => (this.personas = personas));
-    console.log(this.mostrarInputPass, "ultimo");
   }
 
   public cargarUsuario(): void {
     this.route.paramMap.subscribe((params) => {
       const id: number = +params.get("id");
-      console.log(this.mostrarInputPass, "sin id");
       if (id) {
         this.mostrarInputPass = false;
         this.titulo = "Actualizar Usuario";
         this.srvU.getUsuario(id).subscribe((usuario) => {
           this.usuario = usuario;
-          this.usuario.confirmPassword = this.usuario.password;
           this.usuario.roles.forEach((rol1) => {
             this.roles.forEach((rol2) => {
               if (rol1.id === rol2.id) {
@@ -79,9 +76,7 @@ export class UsuarioAddComponent implements OnInit {
   public create(form: NgForm): void {
     if (form.valid && this.usuario.roles.length > 0) {
       if (this.existe == false) {
-        console.log(this.usuario);
         this.srvU.crear(this.usuario).subscribe((usuario) => {
-          console.log(this.usuario);
           this.irUsuarios();
           Swal.fire(
             "Nuevo Usuario",
@@ -99,7 +94,6 @@ export class UsuarioAddComponent implements OnInit {
   public editar(form: NgForm): void {
     if (form.valid && this.usuario.roles.length > 0) {
       this.srvU.editar(this.usuario).subscribe((usuario) => {
-        this.usuario.password = null;
         this.irUsuarios();
         Swal.fire(
           "Actualizar Usuario",
@@ -142,7 +136,7 @@ export class UsuarioAddComponent implements OnInit {
     }, 1000);
   }
   existeUsernameUsuario(username: string): void {
-    if (username.length > 0) {
+    if (username.length > 3) {
       this.srvU.getUsernameExiste(username).subscribe((usuario) => {
         if (usuario != null) {
           this.mensaje = "!Username ya existente¡";

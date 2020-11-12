@@ -9,4 +9,5 @@ export class Usuario {
   persona: Persona;
   roles: Rol[] = [];
   check: boolean = false;
+  passactual: string;
 }

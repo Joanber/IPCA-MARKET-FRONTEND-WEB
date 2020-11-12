@@ -62,11 +62,16 @@ export class RepInventarioComponent implements OnInit {
     pdf.add(pdf.ln(1));
 
     pdf.add(
-      new Columns([ 'Codigo de barras','Nombre','Precio', 'Existencia', 'Inv Minimo' ]).columnGap(3).end
+      new Columns([ 'Codigo de barras','Nombre','Precio', 'Existencia', 'Inv Minimo' ]).columnGap(3).style("text-center").bold().end
     );
     this.facturaLista.forEach( registro => {
       pdf.add(
-        new Columns([ registro.codigo_barras,registro.nombre,`$${this.srvUr.formateaValor(registro.precio)}`,  registro.cantidad_maxima, registro.cantidad_minima ]).columnGap(3).end
+        new Columns([ registro.codigo_barras,
+          registro.nombre,
+          `$${this.srvUr.formateaValor(registro.precio)}`,
+          registro.cantidad_maxima,
+          registro.cantidad_minima 
+        ]).columnGap(3).end
       );
     });
     pdf.create().open()

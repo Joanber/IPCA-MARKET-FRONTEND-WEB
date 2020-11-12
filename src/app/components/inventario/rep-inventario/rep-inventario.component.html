@@ -48,7 +48,7 @@
             <tr *ngFor="let producto of facturaLista">
                 <td>{{ producto.codigo_barras }}</td>
                 <td>{{ producto.nombre }}</td>
-                <td>${{ producto.precio | currency }}</td>
+                <td>{{ producto.precio | currency }}</td>
                 <td  >
                     <span [ngClass]="{'badge badge-danger': producto.cantidad_maxima <= producto.cantidad_minima }">
                         {{ producto.cantidad_maxima }}

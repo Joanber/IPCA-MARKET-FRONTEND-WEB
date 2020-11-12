@@ -37,9 +37,9 @@ export class FacturasService {
     );
   }
 
-  getVentas(fechaInicio: string, fechaFin: string): Observable<any[]> {
+  getVentas(fechaInicio: string, fechaFin: string, usuario: string): Observable<any[]> {
     return this.http.get<any[]>(
-      `${this.baseEndpoint}/filtrar-ventasProducto?desde=${fechaInicio}&hasta=${fechaFin}&user=`
+      `${this.baseEndpoint}/filtrar-ventasProducto?desde=${fechaInicio}&hasta=${fechaFin}&user=${usuario || ''}`
     );
   }
   getProductosInventario() {

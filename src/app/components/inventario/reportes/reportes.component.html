@@ -28,7 +28,20 @@
           </p>
       </div> -->
     </div>
-
+    <div class="col-sm-12 mb-3 mx-auto">
+      <label for="persona">Usuario: <small>(Opcional)</small></label>
+      <select
+        name="persona"
+        class="form-control"
+        [(ngModel)]="user"
+      >
+        <option [ngValue]="undefined">-Seleccione un usuario-</option>
+        <option *ngFor="let usuario of usuarios" [ngValue]="usuario.username">
+          {{ usuario.username }}
+        </option>
+      </select>
+      
+    </div>
     <div class="form-row mb-3 ">
 
       <div class="col-md-5 mx-auto " *ngIf="fechaInicio && fechaFin">

@@ -4,6 +4,8 @@ import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import { Txt, Columns, Rect, Canvas} from 'pdfmake-wrapper';
 import { FacturasService } from '../../../services/facturas.service';
 import { UtilsReportService } from '../../../services/utils-report.service';
+import { Usuario } from '../../../models/usuario';
+import { UsuarioService } from "src/app/services/usuario.service";
 
 @Component({
   selector: 'app-reportes',
@@ -20,21 +22,32 @@ export class ReportesComponent implements OnInit {
 
   fechaInicio: string = null;
   fechaFin: string = null;
+  user: string = undefined;
+
+  usuarios: Usuario[];
 
   constructor(private miDatePipe: DatePipe,
     private srvUr: UtilsReportService,
-    private fs: FacturasService) { 
+    private usuarioService: UsuarioService,
+    private fs: FacturasService) {
+      this.getUsuarios();
+      
       this.fechaInicio = this.miDatePipe.transform(new Date(), 'yyyy-MM-dd');
       this.fechaFin = this.miDatePipe.transform(new Date(), 'yyyy-MM-dd');
-
-      this.fs.getVentas(this.fechaInicio, this.fechaFin).subscribe(data => {
+      
+      this.fs.getVentas(this.fechaInicio, this.fechaFin, this.user).subscribe(data => { 
         this.listRegistros = data;
+        console.log(this.listRegistros);
         this.total();
       });
       
     }
 
-  
+  getUsuarios(): void {
+    this.usuarioService
+      .getUsuarios()
+      .subscribe((usuarios) => (this.usuarios = usuarios));
+  }
 
   ngOnInit() {
     
@@ -77,10 +90,11 @@ export class ReportesComponent implements OnInit {
   ver() {
     const fechaInicio = this.miDatePipe.transform(this.fechaInicio, 'yyyy-MM-dd');
     const fechaFin = this.miDatePipe.transform(this.fechaFin, 'yyyy-MM-dd');
-    this.fs.getVentas(fechaInicio, fechaFin).subscribe(data => { 
+    this.fs.getVentas(fechaInicio, fechaFin, this.user).subscribe(data => { 
       this.listRegistros = data;
       this.total();
     });
+    
     
   }
 

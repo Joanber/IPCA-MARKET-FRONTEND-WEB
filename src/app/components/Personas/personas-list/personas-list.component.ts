@@ -5,8 +5,6 @@ import { BASE_ENDPOINT } from "src/app/DB_CONFIG/bdConig";
 import Swal from "sweetalert2";
 import { ActivatedRoute } from "@angular/router";
 import { MatPaginator, PageEvent } from "@angular/material";
-import { UtilsReportService } from "src/app/services/utils-report.service";
-import { Cell, Columns, PdfMakeWrapper, Table, Txt } from "pdfmake-wrapper";
 
 @Component({
   selector: "app-personas-list",
@@ -24,13 +22,11 @@ export class PersonasListComponent implements OnInit {
   busqueda = true;
   constructor(
     private personaService: PersonasService,
-    private srvUr: UtilsReportService,
     private route: ActivatedRoute
   ) {}
 
   async ngOnInit() {
     this.getPersonasPage();
-    this.getPersonasImprimir();
   }
   paginar(event: PageEvent): void {
     this.paginaActual = event.pageIndex;
@@ -85,7 +81,6 @@ export class PersonasListComponent implements OnInit {
         if (result.value) {
           this.personaService.delete(persona.id).subscribe((response) => {
             this.getPersonasPage();
-            this.getPersonasImprimir();
             swalWithBootstrapButtons.fire(
               "Eliminado!",
               `Persona ${persona.nombre} eliminada correctamente!`,
@@ -102,46 +97,5 @@ export class PersonasListComponent implements OnInit {
       this.busqueda = true;
     }
   }
-  getPersonasImprimir() {
-    return this.personaService.getPersonas().subscribe((personas) => {
-      this.todaspersonas = personas;
-    });
-  }
-  imprimirPDF() {
-    this.getPersonasImprimir();
-    const pdf = new PdfMakeWrapper();
-    pdf.info({
-      title: "Reporte de Personas",
-      author: "IPCA",
-      subject: "Personas reporte",
-    });
-    pdf.add(pdf.ln(1));
-    pdf.add(
-      new Txt("Instituto de Parálisis Cerebral del Azuay-IPCA")
-        .alignment("left")
-        .bold()
-        .italics().end
-    );
-    pdf.add(new Txt(`${this.srvUr.fecha()}`).alignment("right").italics().end);
-    pdf.add(pdf.ln(1));
-    pdf.add(
-      new Txt("Reporte de Personas").alignment("center").bold().italics().end
-    );
-    pdf.add(pdf.ln(1));
-
-    pdf.add(
-      new Columns([
-        "Cedula","Direccion","Email","Nombre","Apellido","Telefono"
-      ]).columnGap(3).end
-    );
-    this.todaspersonas.forEach((per) => {
-      pdf.add(
-        new Columns([
-          per.cedula,per.direccion,per.email,per.nombre,per.apellido,per.telefono
-        ]).columnGap(1).end
-      );
-    });
-
-    pdf.create().open();
-  }
+  
 }

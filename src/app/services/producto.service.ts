@@ -53,7 +53,7 @@ export class ProductoService {
     return this.http.get(this.baseEndpoint+'/page/'+page).pipe(
       tap((response:any) => {
         (response.content  as Producto[]).forEach(producto => {
-          console.log(producto.nombre);
+          return producto;
         })
       }),
       map((response:any) => {

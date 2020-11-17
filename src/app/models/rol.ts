@@ -1,6 +1,6 @@
-import { Usuario } from './usuario';
+import { Usuario } from "./usuario";
 export class Rol {
-    id: string;
-    nombre: string;
-    check:boolean= false;
+  id?: number;
+  nombre: string;
+  check?: boolean = false;
 }

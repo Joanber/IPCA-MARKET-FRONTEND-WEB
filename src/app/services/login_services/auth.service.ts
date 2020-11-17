@@ -54,17 +54,19 @@ export class AuthService {
   isAuthenticated(): boolean {
     if (this.token != null) {
       return true;
-      console.log(this._token);
-      console.log("token true");
     }
-    console.log("token false");
-    console.log(this._token);
     return false;
   }
 
-  hasRole(role: Rol): boolean {
-    if (this.usuario.roles.includes(role)) {
-      return true;
+  hasRole(rol: Rol) {
+    let roles = this.usuario.roles;
+    return roles.findIndex((a) => a === rol) > -1;
+  }
+  hasAnyRoles(roles: Rol[]): boolean {
+    for (let i = 0; i <= roles.length; i++) {
+      if (this.hasRole(roles[i])) {
+        return true;
+      }
     }
     return false;
   }

@@ -22,7 +22,7 @@ export class LoginComponen implements OnInit {
     if (this.authService.isAuthenticated()) {
       Swal.fire(
         "Login",
-        `Hola ${this.authService.usuario.username} ya estás autenticado!`,
+        `Hola ${this.authService.usuario.username} ya iniciaste sesión!`,
         "info"
       );
       this.router.navigate(["/home"]);
@@ -34,7 +34,6 @@ export class LoginComponen implements OnInit {
   }
 
   login(): void {
-    console.log(this.usuario);
     if (this.usuario.username == null || this.usuario.password == null) {
       this.esValido = false;
       this.invalido = "Username y/o Password vacías";
@@ -42,10 +41,8 @@ export class LoginComponen implements OnInit {
     } else {
       this.authService.login(this.usuario).subscribe(
         (response) => {
-          console.log(response);
           this.authService.guardarUsuario(response);
           this.authService.guardarToken(response.accessToken);
-
           this.router.navigate(["/home"]);
         },
         (err) => {

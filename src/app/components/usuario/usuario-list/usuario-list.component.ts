@@ -4,6 +4,8 @@ import { UsuarioService } from "src/app/services/usuario.service";
 import { PersonasService } from "src/app/services/personas.service";
 import Swal from "sweetalert2";
 import { MatPaginator, PageEvent } from "@angular/material";
+import { AuthService } from "src/app/services/login_services/auth.service";
+import { Rol } from "src/app/models/rol";
 
 @Component({
   selector: "app-usuario-list",
@@ -18,7 +20,10 @@ export class UsuarioListComponent implements OnInit {
   totalPorPagina = 5;
   @ViewChild(MatPaginator, { static: false }) paginador: MatPaginator;
   busqueda = true;
-  constructor(private usuarioService: UsuarioService) {}
+  constructor(
+    private usuarioService: UsuarioService,
+    public authService: AuthService
+  ) {}
 
   async ngOnInit() {
     this.getUsuariospage();

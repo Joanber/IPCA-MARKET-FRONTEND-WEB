@@ -20,7 +20,7 @@
               <div class="col-sm">
                 <h4>Total a Cobrar</h4>
                 <h1 class="display-1" style="color: blue">
-                  ${{ factura.calcularGranTotal() | number: ".2-2" }}
+                  {{ factura.calcularGranTotal() | currency }}
                 </h1>
               </div>
             </div>
@@ -32,10 +32,12 @@
                   style="color: red; font-size: 30px"
                   type="number"
                   min="1"
+                  #termino
                   (keyup)="actualizarPagoCon($event, this.factura)"
                   (change)="actualizarPagoCon($event, this.factura)"
                   value="{{ factura.calcularGranTotal() | number: '.2-2' }}"
                 />
+                {{ termino.focus() }}
               </div>
             </div>
             <div class="text-center">

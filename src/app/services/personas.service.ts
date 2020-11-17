@@ -61,6 +61,9 @@ export class PersonasService {
   getPersona(id: number): Observable<Persona> {
     return this.http.get<Persona>(`${this.baseEndpoint}/${id}`);
   }
+  getPersonaFoto(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseEndpoint}/img/${id}`);
+  }
   getCedulaPersonaExiste(cedula: string): Observable<Persona> {
     return this.http.get<Persona>(
       `${this.baseEndpoint}/existe-cedula-persona/${cedula}`

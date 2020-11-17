@@ -39,20 +39,20 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLinkActive="active" routerLink="/dashper"
-            ><i class="fas fa-user-shield mr-2"></i>Roles</a
+            ><i class="fas fa-user-friends mr-2"></i>Personal</a
           >
         </li>
       </ul>
-      <ul
-        class="navbar-nav mr-auto mt-2 mt-lg-0"
-        *ngIf="authService.isAuthenticated()"
-      >
+      <ul class="navbar-nav mt-lg-0" *ngIf="authService.isAuthenticated()">
         <li class="nav-item">
-          <a class="nav-link">{{ authService.usuario.username | titlecase }}</a>
+          <a class="nav-link"
+            ><i class="fas fa-user mr-2"></i>Usuario:
+            {{ authService.usuario.username | titlecase }}</a
+          >
         </li>
         <li class="nav-item">
           <a class="nav-link" (click)="logout()"
-            ><i class="fas fa-sign-out-alt mr-2"></i>Salir</a
+            ><i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión</a
           >
         </li>
       </ul>

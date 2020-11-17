@@ -1,3 +1,4 @@
+import { Factura } from "./factura";
 import { Persona } from "./persona";
 import { Rol } from "./rol";
 export class Usuario {
@@ -10,4 +11,5 @@ export class Usuario {
   roles: Rol[] = [];
   check: boolean = false;
   passactual: string;
+  facturas: Array<Factura> = [];
 }

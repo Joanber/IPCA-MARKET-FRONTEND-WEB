@@ -4,7 +4,11 @@
 </div>
 <div class="row">
   <div class="col-sm-3">
-    <button class="btn bg-pri white" routerLink="/dashper/usuarios/form">
+    <button
+      *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])"
+      class="btn bg-pri white"
+      routerLink="/dashper/usuarios/form"
+    >
       <i class="fa fa-user-plus mr-1"></i>Nuevo Usuario
     </button>
   </div>

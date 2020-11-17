@@ -45,7 +45,6 @@ export class FacturasVentasComponent implements OnInit {
           console.log("no exitse");
         } else {
           this.productoFiltrado = p;
-          console.log(this.productoFiltrado);
           this.seleccionarProducto(this.productoFiltrado);
           event.target.value = "";
           event.target.focus;

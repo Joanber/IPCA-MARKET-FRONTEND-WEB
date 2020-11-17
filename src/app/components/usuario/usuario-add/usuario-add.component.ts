@@ -93,6 +93,8 @@ export class UsuarioAddComponent implements OnInit {
   }
   public editar(form: NgForm): void {
     if (form.valid && this.usuario.roles.length > 0) {
+      this.usuario.facturas = null;
+      console.log(this.usuario);
       this.srvU.editar(this.usuario).subscribe((usuario) => {
         this.irUsuarios();
         Swal.fire(

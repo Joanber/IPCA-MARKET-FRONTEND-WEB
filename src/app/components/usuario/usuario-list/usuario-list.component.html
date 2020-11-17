@@ -60,7 +60,9 @@
           <th>Username</th>
           <th>Persona</th>
           <th>Roles</th>
-          <th>Editar-Eliminar</th>
+          <th *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])">
+            Editar-Eliminar
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -87,9 +89,12 @@
               </div>
             </div>
           </td>
-          <td>
+          <td *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])">
             <div class="row justify-content-center">
-              <div class="col-sm-3 mt-2 mb-1">
+              <div
+                class="col-sm-3 mt-2 mb-1"
+                *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])"
+              >
                 <button
                   class="btn btn-warning btn-sm"
                   [routerLink]="['/dashper/usuarios/form/', usuario.id]"
@@ -97,12 +102,18 @@
                   <i class="fa fa-edit"></i>
                 </button>
               </div>
-              <div class="col-sm-3 mt-2">
+              <div
+                class="col-sm-3 mt-2"
+                *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])"
+              >
                 <button class="btn btn-danger btn-sm" (click)="delete(usuario)">
                   <i class="fa fa-trash"></i>
                 </button>
               </div>
-              <div class="col-sm-3 mt-2 mb-1">
+              <div
+                class="col-sm-3 mt-2 mb-1"
+                *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])"
+              >
                 <button
                   class="btn btn-warning btn-sm"
                   [routerLink]="['/dashper/usuarios/changepass/', usuario.id]"

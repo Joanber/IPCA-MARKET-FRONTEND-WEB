@@ -30,7 +30,9 @@
         <th>Inventario</th>
         <th>Inv. Mínimo</th>
         <th>Categoría</th>
-        <th>Editar Producto</th>
+        <th *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])">
+          Editar Cantidad Producto
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -43,7 +45,7 @@
         </td>
         <td>{{ prodbi.cantidad_minima }}</td>
         <td>{{ prodbi.nombre_categoria }}</td>
-        <td>
+        <td *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])">
           <button
             class="btn btn-warning btn-sm"
             [routerLink]="['/dashprod/producto/form/', prodbi.id]"

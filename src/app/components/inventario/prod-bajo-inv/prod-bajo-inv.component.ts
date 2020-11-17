@@ -3,6 +3,7 @@ import { ProductoBajoInventario } from "src/app/models/ProductoBajoInventario";
 import { FacturasService } from "src/app/services/facturas.service";
 import { Txt, Columns, PdfMakeWrapper, Img } from "pdfmake-wrapper";
 import { UtilsReportService } from "src/app/services/utils-report.service";
+import { AuthService } from "src/app/services/login_services/auth.service";
 
 @Component({
   selector: "app-prod-bajo-inv",
@@ -15,7 +16,8 @@ export class ProdBajoInvComponent implements OnInit {
   fechaAc: string;
   constructor(
     private srvF: FacturasService,
-    private srvUR: UtilsReportService
+    private srvUR: UtilsReportService,
+    public authService: AuthService
   ) {}
 
   ngOnInit() {

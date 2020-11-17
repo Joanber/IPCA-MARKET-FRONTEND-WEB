@@ -4,7 +4,17 @@
 </div>
 <div class="row">
   <div class="col-sm-3">
-    <button class="btn bg-pri white" routerLink="/dashper/personas/form">
+    <button
+      class="btn bg-pri white"
+      routerLink="/dashper/personas/form"
+      *ngIf="
+        authService.hasAnyRoles([
+          'ROLE_ADMIN',
+          'ROLE_DOCENTE',
+          'ROLE_ESTUDIANTE'
+        ])
+      "
+    >
       <i class="fa fa-user-plus mr-1"></i>Nueva Persona
     </button>
   </div>
@@ -50,7 +60,17 @@
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Telefono</th>
-          <th>Editar-Eliminar</th>
+          <th
+            *ngIf="
+              authService.hasAnyRoles([
+                'ROLE_ADMIN',
+                'ROLE_DOCENTE',
+                'ROLE_ESTUDIANTE'
+              ])
+            "
+          >
+            Editar-Eliminar
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -108,7 +128,15 @@
               </div>
             </div>
           </td>
-          <td>
+          <td
+            *ngIf="
+              authService.hasAnyRoles([
+                'ROLE_ADMIN',
+                'ROLE_DOCENTE',
+                'ROLE_ESTUDIANTE'
+              ])
+            "
+          >
             <div class="row justify-content-center">
               <div class="col-sm-3 mt-3 mb-1">
                 <button

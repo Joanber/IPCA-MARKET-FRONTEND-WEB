@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { ProductoService } from "../../../services/producto.service";
 import { Producto } from "src/app/models/producto";
 import Swal from "sweetalert2";
@@ -6,11 +6,10 @@ import { ActivatedRoute } from "@angular/router";
 import { tap } from "rxjs/operators";
 import { BASE_ENDPOINT } from "src/app/DB_CONFIG/bdConig";
 import { PdfMakeWrapper } from "pdfmake-wrapper";
-import { MatPaginator, PageEvent } from '@angular/material';
+import { MatPaginator, PageEvent } from "@angular/material";
 import { Txt, Columns, Rect, Canvas } from "pdfmake-wrapper";
-import { UtilsReportService } from '../../../services/utils-report.service';
-
-
+import { UtilsReportService } from "../../../services/utils-report.service";
+import { AuthService } from "src/app/services/login_services/auth.service";
 
 @Component({
   selector: "app-producto-list",
@@ -26,7 +25,8 @@ export class ProductoListComponent implements OnInit {
   constructor(
     private prodService: ProductoService,
     private srvUr: UtilsReportService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public authService: AuthService
   ) {}
   baseEndpoint = BASE_ENDPOINT + "/productos";
   prodLista: Producto[];
@@ -65,19 +65,19 @@ export class ProductoListComponent implements OnInit {
       this.getProductos();
     }
   }
-  
+
   getProductoPage(): void {
     this.prodService
-        .getProductosPage(this.paginaActual.toString())
-        .subscribe((p) => {
-          this.prodLista = p.content as Producto[];
-          this.totalRegistros = p.totalElements as number;
-          this.paginador._intl.itemsPerPageLabel = "Registros por página:";
-          this.paginador._intl.nextPageLabel = "Siguiente";
-          this.paginador._intl.previousPageLabel = "Previa";
-          this.paginador._intl.firstPageLabel = "Primera Página";
-          this.paginador._intl.lastPageLabel = "Última Página";
-        });
+      .getProductosPage(this.paginaActual.toString())
+      .subscribe((p) => {
+        this.prodLista = p.content as Producto[];
+        this.totalRegistros = p.totalElements as number;
+        this.paginador._intl.itemsPerPageLabel = "Registros por página:";
+        this.paginador._intl.nextPageLabel = "Siguiente";
+        this.paginador._intl.previousPageLabel = "Previa";
+        this.paginador._intl.firstPageLabel = "Primera Página";
+        this.paginador._intl.lastPageLabel = "Última Página";
+      });
   }
   reportePDF() {
     const pdf = new PdfMakeWrapper();
@@ -97,9 +97,7 @@ export class ProductoListComponent implements OnInit {
     );
     pdf.add(new Txt(`${this.srvUr.fecha()}`).alignment("right").italics().end);
     pdf.add(pdf.ln(1));
-    pdf.add(
-      new Txt("Productos").alignment("center").bold().italics().end
-    );
+    pdf.add(new Txt("Productos").alignment("center").bold().italics().end);
     pdf.add(pdf.ln(1));
 
     pdf.add(
@@ -124,7 +122,6 @@ export class ProductoListComponent implements OnInit {
     });
     pdf.create().open();
   }
-
 
   delete(producto: Producto): void {
     const swalWithBootstrapButtons = Swal.mixin({

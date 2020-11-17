@@ -25,11 +25,7 @@ export class UsuarioListComponent implements OnInit {
   busqueda = true;
   constructor(
     private usuarioService: UsuarioService,
-    public authService: AuthService
-  ) {}
-
-  constructor(
-    private usuarioService: UsuarioService,
+    public authService: AuthService,
     private srvUr: UtilsReportService
   ) {}
 

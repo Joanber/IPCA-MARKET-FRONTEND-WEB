@@ -68,60 +68,39 @@
       <tbody>
         <tr *ngFor="let usuario of usuarios">
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-6 mt-2">
-                {{ usuario.username }}
-              </div>
-            </div>
+            {{ usuario.username }}
           </td>
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-12 mt-2">
-                {{ usuario.persona.nombre }}
-                {{ usuario.persona.apellido }}
-              </div>
-            </div>
+            {{ usuario.persona.nombre }}
+            {{ usuario.persona.apellido }}
           </td>
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-12 mt-2">
-                {{ usuario.roles | arraypipe: "nombre" }}
-              </div>
-            </div>
+            {{ usuario.roles | arraypipe: "nombre" }}
           </td>
           <td *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])">
-            <div class="row justify-content-center">
-              <div
-                class="col-sm-3 mt-2 mb-1"
-                *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])"
-              >
-                <button
-                  class="btn btn-warning btn-sm"
-                  [routerLink]="['/dashper/usuarios/form/', usuario.id]"
-                >
-                  <i class="fa fa-edit"></i>
-                </button>
-              </div>
-              <div
-                class="col-sm-3 mt-2"
-                *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])"
-              >
-                <button class="btn btn-danger btn-sm" (click)="delete(usuario)">
-                  <i class="fa fa-trash"></i>
-                </button>
-              </div>
-              <div
-                class="col-sm-3 mt-2 mb-1"
-                *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])"
-              >
-                <button
-                  class="btn btn-warning btn-sm"
-                  [routerLink]="['/dashper/usuarios/changepass/', usuario.id]"
-                >
-                  <i class="fas fa-key"></i>
-                </button>
-              </div>
-            </div>
+            <button
+              class="btn btn-warning btn-sm mr-2 mb-1"
+              *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])"
+              [routerLink]="['/dashper/usuarios/form/', usuario.id]"
+            >
+              <i class="fa fa-edit"></i>
+            </button>
+
+            <button
+              class="btn btn-danger btn-sm mr-2 mb-1"
+              *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])"
+              (click)="delete(usuario)"
+            >
+              <i class="fa fa-trash"></i>
+            </button>
+
+            <button
+              *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])"
+              class="btn btn-warning btn-sm mr-2 mb-1"
+              [routerLink]="['/dashper/usuarios/changepass/', usuario.id]"
+            >
+              <i class="fas fa-key"></i>
+            </button>
           </td>
         </tr>
       </tbody>

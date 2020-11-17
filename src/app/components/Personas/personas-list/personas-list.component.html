@@ -76,57 +76,37 @@
       <tbody>
         <tr *ngFor="let persona of personas">
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-12 col-md-12 mt-3">
-                <img
-                  class="img-fluid rounded"
-                  *ngIf="persona.fotoHashCode"
-                  alt="Imagen Persona"
-                  [src]="
-                    baseEndpoint +
-                    '/img/' +
-                    persona.id +
-                    '?fotoHashCode=' +
-                    persona.fotoHashCode
-                  "
-                  style="width: 125px; height: 100px"
-                />
-                <img
-                  class="img-fluid rounded"
-                  *ngIf="!persona.fotoHashCode"
-                  src="../../../../../assets/img/notuser.png"
-                  style="width: 70px"
-                />
-              </div>
-            </div>
+            <img
+              class="rounded-circle img-fluid"
+              *ngIf="persona.fotoHashCode"
+              alt="Imagen Persona"
+              [src]="
+                baseEndpoint +
+                '/img/' +
+                persona.id +
+                '?fotoHashCode=' +
+                persona.fotoHashCode
+              "
+              style="width: 125px; height: 100px"
+            />
+            <img
+              class="irounded-circle img-fluid"
+              *ngIf="!persona.fotoHashCode"
+              src="../../../../../assets/img/notuser.png"
+              style="width: 70px"
+            />
           </td>
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-6 mt-4">
-                {{ persona.cedula }}
-              </div>
-            </div>
+            {{ persona.cedula }}
           </td>
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-6 mt-4">
-                {{ persona.nombre }}
-              </div>
-            </div>
+            {{ persona.nombre }}
           </td>
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-6 mt-4">
-                {{ persona.apellido }}
-              </div>
-            </div>
+            {{ persona.apellido }}
           </td>
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-6 mt-4">
-                {{ persona.telefono }}
-              </div>
-            </div>
+            {{ persona.telefono }}
           </td>
           <td
             *ngIf="
@@ -137,21 +117,19 @@
               ])
             "
           >
-            <div class="row justify-content-center">
-              <div class="col-sm-3 mt-3 mb-1">
-                <button
-                  class="btn btn-warning btn-sm"
-                  [routerLink]="['/dashper/personas/form/', persona.id]"
-                >
-                  <i class="fa fa-edit"></i>
-                </button>
-              </div>
-              <div class="col-sm-3 mt-3">
-                <button class="btn btn-danger btn-sm" (click)="delete(persona)">
-                  <i class="fa fa-trash"></i>
-                </button>
-              </div>
-            </div>
+            <button
+              class="btn btn-warning btn-sm mr-2 mb-1"
+              [routerLink]="['/dashper/personas/form/', persona.id]"
+            >
+              <i class="fa fa-edit"></i>
+            </button>
+
+            <button
+              class="btn btn-danger btn-sm mr-2 mb-1"
+              (click)="delete(persona)"
+            >
+              <i class="fa fa-trash"></i>
+            </button>
           </td>
         </tr>
       </tbody>

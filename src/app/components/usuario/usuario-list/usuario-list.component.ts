@@ -3,6 +3,9 @@ import { Usuario } from "src/app/models/usuario";
 import { UsuarioService } from "src/app/services/usuario.service";
 import { PersonasService } from "src/app/services/personas.service";
 import Swal from "sweetalert2";
+import { Cell, Columns, PdfMakeWrapper, Table, Txt } from "pdfmake-wrapper";
+import { UtilsReportService } from "src/app/services/utils-report.service";
+
 import { MatPaginator, PageEvent } from "@angular/material";
 import { AuthService } from "src/app/services/login_services/auth.service";
 import { Rol } from "src/app/models/rol";
@@ -23,6 +26,11 @@ export class UsuarioListComponent implements OnInit {
   constructor(
     private usuarioService: UsuarioService,
     public authService: AuthService
+  ) {}
+
+  constructor(
+    private usuarioService: UsuarioService,
+    private srvUr: UtilsReportService
   ) {}
 
   async ngOnInit() {
@@ -50,6 +58,51 @@ export class UsuarioListComponent implements OnInit {
     this.usuarioService
       .getUsuarios()
       .subscribe((usuarios) => (this.usuarios = usuarios));
+  }
+
+  imprimirPDF() {
+    const pdf = new PdfMakeWrapper();
+    pdf.info({
+      title: "Reporte de Usuarios",
+      author: "IPCA",
+      subject: "Usuarios reporte",
+    });
+    pdf.add(pdf.ln(1));
+    pdf.add(
+      new Txt("Instituto de Parálisis Cerebral del Azuay-IPCA")
+        .alignment("left")
+        .bold()
+        .italics().end
+    );
+    pdf.add(new Txt(`${this.srvUr.fecha()}`).alignment("right").italics().end);
+    pdf.add(pdf.ln(1));
+    pdf.add(
+      new Txt("Reporte de Usuarios").alignment("center").bold().italics().end
+    );
+    pdf.add(pdf.ln(1));
+
+    pdf.add(
+      new Columns([
+        "Username",
+        "Cedula",
+        "Nombre - Apellido",
+        "Direccion",
+      ]).columnGap(3).end
+    );
+    this.usuarios.forEach((user) => {
+      user.roles.forEach((rol) => {
+        pdf.add(
+          new Columns([
+            user.username,
+            user.persona.cedula,
+            user.persona.nombre + " " + user.persona.apellido,
+            user.persona.direccion,
+          ]).columnGap(1).end
+        );
+      });
+    });
+
+    pdf.create().open();
   }
 
   buscarUsuario(termino: string) {

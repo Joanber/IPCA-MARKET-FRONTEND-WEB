@@ -32,8 +32,8 @@ export class ReportesComponent implements OnInit {
     private fs: FacturasService) {
       this.getUsuarios();
       
-      this.fechaInicio = this.miDatePipe.transform(new Date(), 'yyyy-MM-dd');
-      this.fechaFin = this.miDatePipe.transform(new Date(), 'yyyy-MM-dd');
+      this.fechaInicio = this.formatoFecha(new Date().toDateString());
+      this.fechaFin = this.formatoFecha(new Date().toDateString());
       
       this.fs.getVentas(this.fechaInicio, this.fechaFin, this.user).subscribe(data => { 
         this.listRegistros = data;
@@ -77,25 +77,46 @@ export class ReportesComponent implements OnInit {
     pdf.add(pdf.ln(1));
 
     pdf.add(
-      new Columns([ 'Cantidad','Nombre','Precio', 'Codigo de Barras', 'Categoria' ]).columnGap(3).bold().end
+      new Columns([
+        'Cantidad',
+        'Nombre',
+        'Precio',
+        'Codigo de Barras',
+        'Categoria',
+        'Hora' 
+      ]).columnGap(1).alignment("center").bold().end
     );
     this.listRegistros.forEach( registro => {
       pdf.add(
-        new Columns([ registro.cantidad,registro.nombre,`$${this.srvUr.formateaValor(registro.precio)}`, registro.codigo_barras, registro.nombre_categoria ]).columnGap(3).end
+        new Columns([ 
+          registro.cantidad,
+          registro.nombre,
+          `$${this.srvUr.formateaValor(registro.precio)}`,
+          registro.codigo_barras,
+          registro.nombre_categoria,
+          this.formatoHora(registro.fecha),
+        ]).columnGap(1).alignment("center").end
       );
     });
     pdf.create().open()
   }
 
   ver() {
-    const fechaInicio = this.miDatePipe.transform(this.fechaInicio, 'yyyy-MM-dd');
-    const fechaFin = this.miDatePipe.transform(this.fechaFin, 'yyyy-MM-dd');
+    const fechaInicio = this.formatoFecha(this.fechaInicio);
+    const fechaFin = this.formatoFecha(this.fechaFin);
     this.fs.getVentas(fechaInicio, fechaFin, this.user).subscribe(data => { 
       this.listRegistros = data;
       this.total();
     });
     
-    
+  }
+
+  formatoFecha(fecha: string) {
+    return this.miDatePipe.transform(fecha, 'yyyy-MM-dd');
+  }
+
+  formatoHora(hora: string) {
+    return this.miDatePipe.transform(hora, 'H:mm a');
   }
 
   total() {

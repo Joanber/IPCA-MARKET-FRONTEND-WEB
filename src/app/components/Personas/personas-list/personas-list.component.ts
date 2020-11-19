@@ -5,6 +5,7 @@ import { BASE_ENDPOINT } from "src/app/DB_CONFIG/bdConig";
 import Swal from "sweetalert2";
 import { ActivatedRoute } from "@angular/router";
 import { MatPaginator, PageEvent } from "@angular/material";
+import { AuthService } from "src/app/services/login_services/auth.service";
 
 @Component({
   selector: "app-personas-list",
@@ -22,7 +23,8 @@ export class PersonasListComponent implements OnInit {
   busqueda = true;
   constructor(
     private personaService: PersonasService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public authService: AuthService
   ) {}
 
   async ngOnInit() {
@@ -97,5 +99,4 @@ export class PersonasListComponent implements OnInit {
       this.busqueda = true;
     }
   }
-  
 }

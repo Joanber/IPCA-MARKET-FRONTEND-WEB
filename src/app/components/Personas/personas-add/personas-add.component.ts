@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { BASE_ENDPOINT } from "src/app/DB_CONFIG/bdConig";
 import { DatePipe } from "@angular/common";
 import { NgForm } from "@angular/forms";
+import { UtilsReportService } from "src/app/services/utils-report.service";
 
 @Component({
   selector: "app-personas-add",
@@ -21,6 +22,7 @@ export class PersonasAddComponent implements OnInit {
   public existeCedula: boolean = false;
   public existe: boolean = false;
   public mensaje: string;
+  public validador = true;
 
   public persona = new Persona();
   constructor(
@@ -170,5 +172,37 @@ export class PersonasAddComponent implements OnInit {
     setTimeout(() => {
       this.existeCedula = false;
     }, 1800);
+  }
+  validadorDeCedula(cedula: string) {
+    let cedulaCorrecta = false;
+    if (cedula.length == 10) {
+      let tercerDigito = parseInt(cedula.substring(2, 3));
+      if (tercerDigito < 6) {
+        let coefValCedula = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+        let verificador = parseInt(cedula.substring(9, 10));
+        let suma: number = 0;
+        let digito: number = 0;
+        for (let i = 0; i < cedula.length - 1; i++) {
+          digito = parseInt(cedula.substring(i, i + 1)) * coefValCedula[i];
+          suma += parseInt((digito % 10) + "") + parseInt(digito / 10 + "");
+        }
+        suma = Math.round(suma);
+        if (
+          Math.round(suma % 10) == 0 &&
+          Math.round(suma % 10) == verificador
+        ) {
+          cedulaCorrecta = true;
+        } else if (10 - Math.round(suma % 10) == verificador) {
+          cedulaCorrecta = true;
+        } else {
+          cedulaCorrecta = false;
+        }
+      } else {
+        cedulaCorrecta = false;
+      }
+    } else {
+      cedulaCorrecta = false;
+    }
+    this.validador = cedulaCorrecta;
   }
 }

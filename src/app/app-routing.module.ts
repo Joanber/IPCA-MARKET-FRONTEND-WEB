@@ -49,32 +49,50 @@ const routes: Routes = [
           {
             path: "producto",
             component: ProductoListComponent,
-            canActivate: [AuthGuard],
+            canActivate: [AuthGuard, RoleGuard],
+            data: {
+              role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
+            },
           },
           {
             path: "producto/form",
             component: ProductoComponent,
             canActivate: [AuthGuard],
+            data: {
+              role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
+            },
           },
           {
             path: "producto/form/:id",
             component: ProductoComponent,
-            canActivate: [AuthGuard],
+            canActivate: [AuthGuard, RoleGuard],
+            data: {
+              role: ["ROLE_ADMIN", "ROLE_DOCENTE"],
+            },
           },
           {
             path: "categoria",
             component: CategoriaListComponent,
-            canActivate: [AuthGuard],
+            canActivate: [AuthGuard, RoleGuard],
+            data: {
+              role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
+            },
           },
           {
             path: "categoria/form",
             component: CategoriaAddComponent,
-            canActivate: [AuthGuard],
+            canActivate: [AuthGuard, RoleGuard],
+            data: {
+              role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
+            },
           },
           {
             path: "categoria/form/:id",
             component: CategoriaAddComponent,
-            canActivate: [AuthGuard],
+            canActivate: [AuthGuard, RoleGuard],
+            data: {
+              role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
+            },
           },
           { path: "**", pathMatch: "full", redirectTo: "producto" },
         ],
@@ -95,32 +113,50 @@ const routes: Routes = [
           {
             path: "usuarios",
             component: UsuarioListComponent,
-            canActivate: [AuthGuard],
+            canActivate: [AuthGuard, RoleGuard],
+            data: {
+              role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
+            },
           },
           {
             path: "usuarios/form",
             component: UsuarioAddComponent,
-            canActivate: [AuthGuard],
+            canActivate: [AuthGuard, RoleGuard],
+            data: {
+              role: ["ROLE_ADMIN", "ROLE_DOCENTE"],
+            },
           },
           {
             path: "usuarios/form/:id",
             component: UsuarioAddComponent,
-            canActivate: [AuthGuard],
+            canActivate: [AuthGuard, RoleGuard],
+            data: {
+              role: ["ROLE_ADMIN", "ROLE_DOCENTE"],
+            },
           },
           {
             path: "usuarios/changepass/:id",
             component: CambiarPassComponent,
-            canActivate: [AuthGuard],
+            canActivate: [AuthGuard, RoleGuard],
+            data: {
+              role: ["ROLE_ADMIN", "ROLE_DOCENTE"],
+            },
           },
           {
             path: "personas/form",
             component: PersonasAddComponent,
-            canActivate: [AuthGuard],
+            canActivate: [AuthGuard, RoleGuard],
+            data: {
+              role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
+            },
           },
           {
             path: "personas/form/:id",
             component: PersonasAddComponent,
-            canActivate: [AuthGuard],
+            canActivate: [AuthGuard, RoleGuard],
+            data: {
+              role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
+            },
           },
           { path: "**", pathMatch: "full", redirectTo: "personas" },
         ],
@@ -133,22 +169,34 @@ const routes: Routes = [
           {
             path: "producto",
             component: ProductoInComponent,
-            canActivate: [AuthGuard],
+            canActivate: [AuthGuard, RoleGuard],
+            data: {
+              role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
+            },
           },
           {
             path: "reporte",
             component: ReportesComponent,
-            canActivate: [AuthGuard],
+            canActivate: [AuthGuard, RoleGuard],
+            data: {
+              role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
+            },
           },
           {
             path: "productos/bajos",
             component: ProdBajoInvComponent,
-            canActivate: [AuthGuard],
+            canActivate: [AuthGuard, RoleGuard],
+            data: {
+              role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
+            },
           },
           {
             path: "reporte_inventario",
             component: RepInventarioComponent,
-            canActivate: [AuthGuard],
+            canActivate: [AuthGuard, RoleGuard],
+            data: {
+              role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
+            },
           },
           { path: "**", pathMatch: "full", redirectTo: "producto" },
         ],

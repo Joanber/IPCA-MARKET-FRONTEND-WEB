@@ -21,3 +21,6 @@ thead tr:nth-child(1) th {
   display: flex;
   justify-content: center;
 }
+.table td {
+  vertical-align: middle;
+}

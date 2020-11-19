@@ -1,37 +1,35 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Categoria } from 'src/app/models/categoria';
-import { CategoriasService } from '../../../services/categorias.service'
-import Swal from 'sweetalert2';
-import { ActivatedRoute } from '@angular/router';
-import { PdfMakeWrapper } from 'pdfmake-wrapper';
-import { Txt, Columns, Rect, Canvas} from 'pdfmake-wrapper';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { Categoria } from "src/app/models/categoria";
+import { CategoriasService } from "../../../services/categorias.service";
+import Swal from "sweetalert2";
+import { ActivatedRoute } from "@angular/router";
+import { PdfMakeWrapper } from "pdfmake-wrapper";
+import { Txt, Columns, Rect, Canvas } from "pdfmake-wrapper";
 import { BASE_ENDPOINT } from "src/app/DB_CONFIG/bdConig";
-import { MatPaginator, PageEvent } from '@angular/material';
-import { UtilsReportService } from '../../../services/utils-report.service';
-
-
-
-
+import { MatPaginator, PageEvent } from "@angular/material";
+import { UtilsReportService } from "../../../services/utils-report.service";
+import { AuthService } from "src/app/services/login_services/auth.service";
 
 @Component({
-  selector: 'app-categoria-list',
-  templateUrl: './categoria-list.component.html',
-  styleUrls: ['./categoria-list.component.css']
+  selector: "app-categoria-list",
+  templateUrl: "./categoria-list.component.html",
+  styleUrls: ["./categoria-list.component.css"],
 })
 export class CategoriaListComponent implements OnInit {
-
   totalRegistros = 0;
   paginaActual = 0;
   totalPorPagina = 5;
   @ViewChild(MatPaginator, { static: false }) paginador: MatPaginator;
   busqueda = true;
 
-  constructor( private categoriaSer: CategoriasService,
-    private srvUr: UtilsReportService
-   ) { }
+  constructor(
+    private categoriaSer: CategoriasService,
+    private srvUr: UtilsReportService,
+    public authService: AuthService
+  ) {}
   categoriaList: Categoria[];
   baseEndpoint = BASE_ENDPOINT + "/categorias";
-  paginator:any;
+  paginator: any;
   ngOnInit() {
     this.getCategorias();
     this.getCategoriaPage();
@@ -45,16 +43,16 @@ export class CategoriaListComponent implements OnInit {
 
   getCategoriaPage(): void {
     this.categoriaSer
-        .getCategoriasPage(this.paginaActual.toString())
-        .subscribe((p) => {
-          this.categoriaList = p.content as Categoria[];
-          this.totalRegistros = p.totalElements as number;
-          this.paginador._intl.itemsPerPageLabel = "Registros por página:";
-          this.paginador._intl.nextPageLabel = "Siguiente";
-          this.paginador._intl.previousPageLabel = "Previa";
-          this.paginador._intl.firstPageLabel = "Primera Página";
-          this.paginador._intl.lastPageLabel = "Última Página";
-        });
+      .getCategoriasPage(this.paginaActual.toString())
+      .subscribe((p) => {
+        this.categoriaList = p.content as Categoria[];
+        this.totalRegistros = p.totalElements as number;
+        this.paginador._intl.itemsPerPageLabel = "Registros por página:";
+        this.paginador._intl.nextPageLabel = "Siguiente";
+        this.paginador._intl.previousPageLabel = "Previa";
+        this.paginador._intl.firstPageLabel = "Primera Página";
+        this.paginador._intl.lastPageLabel = "Última Página";
+      });
   }
 
   buscarCategoria(termino: string) {
@@ -85,19 +83,13 @@ export class CategoriaListComponent implements OnInit {
     );
     pdf.add(new Txt(`${this.srvUr.fecha()}`).alignment("right").italics().end);
     pdf.add(pdf.ln(1));
-    pdf.add(
-      new Txt("Categorias").alignment("center").bold().italics().end
-    );
+    pdf.add(new Txt("Categorias").alignment("center").bold().italics().end);
     pdf.add(pdf.ln(1));
-    pdf.add(
-      new Columns([ '#','Nombre' ]).columnGap(3).end
-    );
-    this.categoriaList.forEach( categoria => {
-      pdf.add(
-        new Columns([ categoria.id,categoria.nombre ]).columnGap(3).end
-      );
+    pdf.add(new Columns(["#", "Nombre"]).columnGap(3).end);
+    this.categoriaList.forEach((categoria) => {
+      pdf.add(new Columns([categoria.id, categoria.nombre]).columnGap(3).end);
     });
-    pdf.create().open()
+    pdf.create().open();
   }
 
   public cargarCategoriaDefault(event: any) {
@@ -108,44 +100,44 @@ export class CategoriaListComponent implements OnInit {
     }
   }
 
-
   getCategorias(): void {
-    this.categoriaSer.getCategorias().subscribe( categoria => {
+    this.categoriaSer.getCategorias().subscribe((categoria) => {
       this.categoriaList = categoria;
     });
   }
 
-  delete(categoria: Categoria):void {
+  delete(categoria: Categoria): void {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
-        confirmButton: 'btn btn-success',
-        cancelButton: 'btn btn-danger'
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
       },
-      buttonsStyling: false
-    })
+      buttonsStyling: false,
+    });
 
-    swalWithBootstrapButtons.fire({
-      title: '¿Estas  seguro?',
-      text: `¿Seguro que quieres eliminar ${categoria.nombre}?`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Si, eliminar!',
-      cancelButtonText: 'No, cancelar!',
-      reverseButtons: true
-    }).then((result) => {
-      if (result.value) {
-        this.categoriaSer.eliminar(categoria.id).subscribe(
-          response => {
-            this.categoriaList = this.categoriaList.filter(cate => cate !== categoria)
+    swalWithBootstrapButtons
+      .fire({
+        title: "¿Estas  seguro?",
+        text: `¿Seguro que quieres eliminar ${categoria.nombre}?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, eliminar!",
+        cancelButtonText: "No, cancelar!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.value) {
+          this.categoriaSer.eliminar(categoria.id).subscribe((response) => {
+            this.categoriaList = this.categoriaList.filter(
+              (cate) => cate !== categoria
+            );
             swalWithBootstrapButtons.fire(
-              'Eliminado!',
+              "Eliminado!",
               `Categoria ${categoria.nombre} eliminada correctamente!`,
-              'success'
-            )
-          }
-        )
-      }
-    })
+              "success"
+            );
+          });
+        }
+      });
   }
-
 }

@@ -4,7 +4,17 @@
 </div>
 <div class="row">
   <div class="col-sm-3">
-    <button class="btn bg-pri white" routerLink="/dashper/personas/form">
+    <button
+      class="btn bg-pri white"
+      routerLink="/dashper/personas/form"
+      *ngIf="
+        authService.hasAnyRoles([
+          'ROLE_ADMIN',
+          'ROLE_DOCENTE',
+          'ROLE_ESTUDIANTE'
+        ])
+      "
+    >
       <i class="fa fa-user-plus mr-1"></i>Nueva Persona
     </button>
   </div>
@@ -40,7 +50,7 @@
   </div>
   <div class="table-scroll">
     <table
-      class="table table-bordered table-striped table-responsive-sm table-sm text-center"
+      class="table table-bordered table-striped table-responsive-sm table-sm text-center animated fadeIn fast"
       *ngIf="personas?.length > 0"
     >
       <thead class="bg-pri white">
@@ -50,80 +60,76 @@
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Telefono</th>
-          <th>Editar-Eliminar</th>
+          <th
+            *ngIf="
+              authService.hasAnyRoles([
+                'ROLE_ADMIN',
+                'ROLE_DOCENTE',
+                'ROLE_ESTUDIANTE'
+              ])
+            "
+          >
+            Editar-Eliminar
+          </th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let persona of personas">
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-12 col-md-12 mt-3">
-                <img
-                  class="img-fluid rounded"
-                  *ngIf="persona.fotoHashCode"
-                  alt="Imagen Persona"
-                  [src]="
-                    baseEndpoint +
-                    '/img/' +
-                    persona.id +
-                    '?fotoHashCode=' +
-                    persona.fotoHashCode
-                  "
-                  style="width: 125px; height: 100px"
-                />
-                <img
-                  class="img-fluid rounded"
-                  *ngIf="!persona.fotoHashCode"
-                  src="../../../../../assets/img/notuser.png"
-                  style="width: 70px"
-                />
-              </div>
-            </div>
+            <img
+              class="rounded-circle img-fluid"
+              *ngIf="persona.fotoHashCode"
+              alt="Imagen Persona"
+              [src]="
+                baseEndpoint +
+                '/img/' +
+                persona.id +
+                '?fotoHashCode=' +
+                persona.fotoHashCode
+              "
+              style="width: 125px; height: 100px"
+            />
+            <img
+              class="irounded-circle img-fluid"
+              *ngIf="!persona.fotoHashCode"
+              src="../../../../../assets/img/notuser.png"
+              style="width: 70px"
+            />
           </td>
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-6 mt-4">
-                {{ persona.cedula }}
-              </div>
-            </div>
+            {{ persona.cedula }}
           </td>
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-6 mt-4">
-                {{ persona.nombre }}
-              </div>
-            </div>
+            {{ persona.nombre }}
           </td>
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-6 mt-4">
-                {{ persona.apellido }}
-              </div>
-            </div>
+            {{ persona.apellido }}
           </td>
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-6 mt-4">
-                {{ persona.telefono }}
-              </div>
-            </div>
+            {{ persona.telefono }}
           </td>
-          <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-3 mt-3 mb-1">
-                <button
-                  class="btn btn-warning btn-sm"
-                  [routerLink]="['/dashper/personas/form/', persona.id]"
-                >
-                  <i class="fa fa-edit"></i>
-                </button>
-              </div>
-              <div class="col-sm-3 mt-3">
-                <button class="btn btn-danger btn-sm" (click)="delete(persona)">
-                  <i class="fa fa-trash"></i>
-                </button>
-              </div>
-            </div>
+          <td
+            *ngIf="
+              authService.hasAnyRoles([
+                'ROLE_ADMIN',
+                'ROLE_DOCENTE',
+                'ROLE_ESTUDIANTE'
+              ])
+            "
+          >
+            <button
+              class="btn btn-warning btn-sm mr-2 mb-1"
+              [routerLink]="['/dashper/personas/form/', persona.id]"
+            >
+              <i class="fa fa-edit"></i>
+            </button>
+
+            <button
+              class="btn btn-danger btn-sm mr-2 mb-1"
+              (click)="delete(persona)"
+            >
+              <i class="fa fa-trash"></i>
+            </button>
           </td>
         </tr>
       </tbody>

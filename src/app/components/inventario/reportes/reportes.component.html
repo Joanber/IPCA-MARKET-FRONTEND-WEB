@@ -71,7 +71,6 @@
         type="button"
         class="btn btn-primary btn-sm mr-3 mb-1"
         (click)="reportePDF()"
-        *ngIf="listRegistros.length > 0"
       >
         <i class="fas fa-print mr-1"></i>Imprimir
       </button>
@@ -80,21 +79,17 @@
   <br/>
   <div class="row">
     <div class="col-sm-12">
-      <div class="alert alert-info text-center" *ngIf="listRegistros.length <= 0">
+      <div class="alert alert-info text-center" *ngIf="!listRegistros">
           No hay ventas registradas
       </div>
       <div class="table-scroll">
-        <table 
-          class="table table-bordered table-striped table-responsive-sm table-sm text-center" 
-          *ngIf="listRegistros.length > 0"
-        >
+        <table class="table table-bordered table-striped table-responsive-sm table-sm text-center" *ngIf="listRegistros">
           <thead class="bg-pri white">
               <tr>
                   <th>Cantidad</th>
                   <th>Nombre</th>
                   <th>Precio</th>
                   <th>Categoría</th>
-                  <th>Fecha y Hora</th>
               </tr>
           </thead>
           <tbody>
@@ -103,10 +98,6 @@
               <td>{{ registro.nombre }}</td>
               <td>{{ registro.precio | currency }}</td>
               <td>{{ registro.nombre_categoria }}</td>
-              <td>
-                {{ registro.fecha | date}}
-                {{ registro.fecha | date: 'H:mm a'}}
-              </td>
             </tr>
           </tbody>
         </table>

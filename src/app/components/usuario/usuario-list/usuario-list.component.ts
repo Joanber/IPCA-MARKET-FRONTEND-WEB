@@ -83,19 +83,19 @@ export class UsuarioListComponent implements OnInit {
         "Cedula",
         "Nombre - Apellido",
         "Direccion",
-        "Roles",
       ]).columnGap(3).end
     );
     this.usuarios.forEach((user) => {
-      pdf.add(
-        new Columns([
-          user.username,
-          user.persona.cedula,
-          user.persona.nombre + " " + user.persona.apellido,
-          user.persona.direccion,
-          user.roles[0].nombre,
-        ]).columnGap(1).end
-      );
+      user.roles.forEach((rol) => {
+        pdf.add(
+          new Columns([
+            user.username,
+            user.persona.cedula,
+            user.persona.nombre + " " + user.persona.apellido,
+            user.persona.direccion,
+          ]).columnGap(1).end
+        );
+      });
     });
 
     pdf.create().open();

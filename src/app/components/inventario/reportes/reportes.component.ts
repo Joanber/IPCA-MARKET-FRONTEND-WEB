@@ -35,8 +35,8 @@ export class ReportesComponent implements OnInit {
       this.fechaInicio = this.formatoFecha(new Date().toDateString());
       this.fechaFin = this.formatoFecha(new Date().toDateString());
       
-      this.fs.getVentas(this.fechaInicio, this.fechaFin, this.user).subscribe(async data => { 
-        this.listRegistros = await data;
+      this.fs.getVentas(this.fechaInicio, this.fechaFin, this.user).subscribe(data => { 
+        this.listRegistros = data;
         console.log(this.listRegistros);
         this.total();
       });
@@ -69,20 +69,7 @@ export class ReportesComponent implements OnInit {
         .bold()
         .italics().end
     );
-    
     pdf.add(new Txt(`${this.srvUr.fecha()}`).alignment("right").italics().end);
-    pdf.add(pdf.ln(1));
-    pdf.add(
-      new Txt(`Vendedor: ${this.user || 'TODOS'}`)
-        .alignment("center")
-        .end
-    );
-    pdf.add(pdf.ln(1));
-    pdf.add(
-      new Txt(`Fechas: ${this.formatoFecha(this.fechaInicio)} / ${this.formatoFecha(this.fechaFin)}`)
-        .alignment("center")
-        .end
-    );
     pdf.add(pdf.ln(1));
     pdf.add(
       new Txt("Reporte de Ventas").alignment("center").bold().italics().end
@@ -117,8 +104,8 @@ export class ReportesComponent implements OnInit {
   ver() {
     const fechaInicio = this.formatoFecha(this.fechaInicio);
     const fechaFin = this.formatoFecha(this.fechaFin);
-    this.fs.getVentas(fechaInicio, fechaFin, this.user).subscribe(async data => { 
-      this.listRegistros = await data;
+    this.fs.getVentas(fechaInicio, fechaFin, this.user).subscribe(data => { 
+      this.listRegistros = data;
       this.total();
     });
     

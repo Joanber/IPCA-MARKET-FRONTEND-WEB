@@ -53,6 +53,8 @@
           <th>Nombre</th>
           <th>Precio</th>
           <th>Categoría</th>
+          <th>Cant. Máxima</th>
+          <th>Cant. Minima</th>
           <th>Editar-Eliminar</th>
         </tr>
       </thead>
@@ -101,6 +103,20 @@
             <div class="row justify-content-center">
               <div class="col-sm-6 mt-4">
                 {{ producto.categoria.nombre }}
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="row justify-content-center">
+              <div class="col-sm-6 mt-4">
+                {{ producto.cantidad_maxima }}
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="row justify-content-center">
+              <div class="col-sm-6 mt-4">
+                {{ producto.cantidad_minima }}
               </div>
             </div>
           </td>

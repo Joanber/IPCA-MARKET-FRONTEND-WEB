@@ -62,56 +62,43 @@
       <tbody>
         <tr *ngFor="let categoria of categoriaList">
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-12 col-md-12 mt-3">
-                <img
-                  class="rounded-circle img-fluid"
-                  *ngIf="categoria.fotoHashCode"
-                  alt="Imagen Producto"
-                  [src]="
-                    baseEndpoint +
-                    '/img/' +
-                    categoria.id +
-                    '?fotoHashCode=' +
-                    categoria.fotoHashCode
-                  "
-                  style="width: 125px; height: 100px"
-                />
-                <img
-                  class="img-fluid rounded"
-                  *ngIf="!categoria.fotoHashCode"
-                  src="../../../../../assets/img/notproducto.jpg"
-                  style="width: 70px"
-                />
-              </div>
-            </div>
+            <img
+              class="rounded-circle img-fluid"
+              *ngIf="categoria.fotoHashCode"
+              alt="Imagen Producto"
+              [src]="
+                baseEndpoint +
+                '/img/' +
+                categoria.id +
+                '?fotoHashCode=' +
+                categoria.fotoHashCode
+              "
+              style="width: 125px; height: 100px"
+            />
+            <img
+              class="img-fluid rounded"
+              *ngIf="!categoria.fotoHashCode"
+              src="../../../../../assets/img/notproducto.jpg"
+              style="width: 70px"
+            />
           </td>
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-6 mt-4">
-                {{ categoria.nombre | uppercase }}
-              </div>
-            </div>
+            {{ categoria.nombre | uppercase }}
           </td>
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-3 mt-3 mb-1">
-                <button
-                  class="btn btn-warning btn-sm"
-                  [routerLink]="['/dashprod/categoria/form/', categoria.id]"
-                >
-                  <i class="fa fa-edit"></i>
-                </button>
-              </div>
-              <div
-                class="col-sm-3 mt-3"
-                *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])"
-              >
-                <button class="btn btn-danger btn-sm">
-                  <i class="fa fa-trash" (click)="delete(categoria)"></i>
-                </button>
-              </div>
-            </div>
+            <button
+              class="btn btn-warning btn-sm mr-2 mb-1"
+              [routerLink]="['/dashprod/categoria/form/', categoria.id]"
+            >
+              <i class="fa fa-edit"></i>
+            </button>
+
+            <button
+              class="btn btn-danger btn-sm mr-2 mb-1"
+              *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])"
+            >
+              <i class="fa fa-trash" (click)="delete(categoria)"></i>
+            </button>
           </td>
         </tr>
       </tbody>

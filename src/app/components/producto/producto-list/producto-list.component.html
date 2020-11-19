@@ -68,84 +68,55 @@
       <tbody>
         <tr *ngFor="let producto of prodLista">
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-12 col-md-12 mt-3">
-                <img
-                  class="rounded-circle img-fluid"
-                  *ngIf="producto.fotoHashCode"
-                  alt="Imagen Producto"
-                  [src]="
-                    baseEndpoint +
-                    '/img/' +
-                    producto.id +
-                    '?fotoHashCode=' +
-                    producto.fotoHashCode
-                  "
-                  style="width: 125px; height: 100px"
-                />
-                <img
-                  class="img-fluid rounded"
-                  *ngIf="!producto.fotoHashCode"
-                  src="../../../../../assets/img/notproducto.jpg"
-                  style="width: 70px"
-                />
-              </div>
-            </div>
+            <img
+              class="rounded-circle img-fluid"
+              *ngIf="producto.fotoHashCode"
+              alt="Imagen Producto"
+              [src]="
+                baseEndpoint +
+                '/img/' +
+                producto.id +
+                '?fotoHashCode=' +
+                producto.fotoHashCode
+              "
+              style="width: 125px; height: 100px"
+            />
+            <img
+              class="img-fluid rounded"
+              *ngIf="!producto.fotoHashCode"
+              src="../../../../../assets/img/notproducto.jpg"
+              style="width: 70px"
+            />
           </td>
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-6 mt-4">
-                {{ producto.nombre | uppercase }}
-              </div>
-            </div>
+            {{ producto.nombre | uppercase }}
           </td>
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-6 mt-4">
-                {{ producto.precio | currency }}
-              </div>
-            </div>
+            {{ producto.precio | currency }}
           </td>
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-6 mt-4">
-                {{ producto.categoria.nombre }}
-              </div>
-            </div>
+            {{ producto.categoria.nombre }}
           </td>
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-6 mt-4">
-                {{ producto.cantidad_maxima }}
-              </div>
-            </div>
+            {{ producto.cantidad_maxima }}
           </td>
           <td>
-            <div class="row justify-content-center">
-              <div class="col-sm-6 mt-4">
-                {{ producto.cantidad_minima }}
-              </div>
-            </div>
+            {{ producto.cantidad_minima }}
           </td>
           <td *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])">
-            <div class="row justify-content-center">
-              <div class="col-sm-3 mt-3 mb-1">
-                <button
-                  class="btn btn-warning btn-sm"
-                  [routerLink]="['/dashprod/producto/form/', producto.id]"
-                >
-                  <i class="fa fa-edit"></i>
-                </button>
-              </div>
-              <div class="col-sm-3 mt-3">
-                <button
-                  class="btn btn-danger btn-sm"
-                  (click)="delete(producto)"
-                >
-                  <i class="fa fa-trash"></i>
-                </button>
-              </div>
-            </div>
+            <button
+              class="btn btn-warning btn-sm mr-2 mb-1"
+              [routerLink]="['/dashprod/producto/form/', producto.id]"
+            >
+              <i class="fa fa-edit"></i>
+            </button>
+
+            <button
+              class="btn btn-danger btn-sm mr-2 mb-1"
+              (click)="delete(producto)"
+            >
+              <i class="fa fa-trash"></i>
+            </button>
           </td>
         </tr>
       </tbody>

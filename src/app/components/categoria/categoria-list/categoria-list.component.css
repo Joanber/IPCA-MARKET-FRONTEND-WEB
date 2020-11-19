@@ -1,8 +1,11 @@
 .fa:hover {
-    color: #042331 !important;
-  }
-  .mat-paginator {
-    color: #042331;
-    display: flex;
-    justify-content: center;
-  }
+  color: #042331 !important;
+}
+.mat-paginator {
+  color: #042331;
+  display: flex;
+  justify-content: center;
+}
+.table td {
+  vertical-align: middle;
+}

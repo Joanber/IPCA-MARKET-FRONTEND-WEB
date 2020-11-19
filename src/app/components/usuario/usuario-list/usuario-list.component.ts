@@ -17,7 +17,7 @@ import { Rol } from "src/app/models/rol";
 })
 export class UsuarioListComponent implements OnInit {
   usuarios: Usuario[];
-  todosUsuarius: Usuario[];
+  todosUsuarios: Usuario[] = [];
   totalRegistros = 0;
   paginaActual = 0;
   totalPorPagina = 5;
@@ -29,8 +29,9 @@ export class UsuarioListComponent implements OnInit {
     private srvUr: UtilsReportService
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this.getUsuariospage();
+    this.getUsuariosTodos();
   }
   paginar(event: PageEvent): void {
     this.paginaActual = event.pageIndex;
@@ -50,13 +51,15 @@ export class UsuarioListComponent implements OnInit {
         this.paginador._intl.lastPageLabel = "Última Página";
       });
   }
-  getUsuarios(): void {
-    this.usuarioService
-      .getUsuarios()
-      .subscribe((usuarios) => (this.usuarios = usuarios));
+  getUsuariosTodos(): void {
+    this.usuarioService.getUsuarios().subscribe((usuarios) => {
+      this.todosUsuarios = usuarios;
+      console.log(this.todosUsuarios);
+    });
   }
 
   imprimirPDF() {
+    this.getUsuariosTodos();
     const pdf = new PdfMakeWrapper();
     pdf.info({
       title: "Reporte de Usuarios",
@@ -82,20 +85,18 @@ export class UsuarioListComponent implements OnInit {
         "Username",
         "Cedula",
         "Nombre - Apellido",
-        "Direccion",
+        "Teléfono",
       ]).columnGap(3).end
     );
-    this.usuarios.forEach((user) => {
-      user.roles.forEach((rol) => {
-        pdf.add(
-          new Columns([
-            user.username,
-            user.persona.cedula,
-            user.persona.nombre + " " + user.persona.apellido,
-            user.persona.direccion,
-          ]).columnGap(1).end
-        );
-      });
+    this.todosUsuarios.forEach((user) => {
+      pdf.add(
+        new Columns([
+          user.username,
+          user.persona.cedula,
+          user.persona.nombre + " " + user.persona.apellido,
+          user.persona.telefono,
+        ]).columnGap(1).end
+      );
     });
 
     pdf.create().open();

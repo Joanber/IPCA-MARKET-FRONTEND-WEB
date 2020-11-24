@@ -11,25 +11,37 @@ import Swal from "sweetalert2";
   styleUrls: ["./producto-in.component.css"],
 })
 export class ProductoInComponent implements OnInit {
-  baseEndpoint = BASE_ENDPOINT + "/productos";
+  public baseEndpoint = BASE_ENDPOINT + "/productos";
   public nombre_producto: string = "Nombre del Producto";
-  cantidad_producto: number = 0;
+  public cantidad_producto: number = 0;
   public producto = new Producto();
-  codBarras: string = "";
-  codIncorrecto: boolean = false;
+  private codBarras: string = "";
+  public codIncorrecto: boolean = false;
   constructor(private srvP: ProductoService) {}
 
   ngOnInit() {}
 
-  public obtenerProducto(codigo: string) {
-    if (codigo.length > 0) {
+  public async obtenerProducto(codigo: string) {
+    if (codigo.length > 9) {
       this.srvP.getproductoByCodigoBarras(codigo).subscribe((producto) => {
-        this.producto = producto;
-        this.nombre_producto = this.producto.nombre;
-        this.cantidad_producto = this.producto.cantidad_maxima;
-        this.producto.cantidad_maxima = 0;
-        this.codBarras = this.producto.codigo_barras;
-        console.log(this.producto);
+        if (producto) {
+          this.producto = producto;
+          this.nombre_producto = this.producto.nombre;
+          this.cantidad_producto = this.producto.cantidad_maxima;
+          this.producto.cantidad_maxima = 0;
+          this.codBarras = this.producto.codigo_barras;
+        } else {
+          Swal.fire({
+            title: "!PRODUCTO NO ENCONTRADO¡",
+            icon: "error",
+            showConfirmButton: false,
+            onOpen: function () {
+              setTimeout(function () {
+                Swal.close();
+              }, 1300);
+            },
+          });
+        }
       });
     }
   }
@@ -50,14 +62,14 @@ export class ProductoInComponent implements OnInit {
       }
     }
   }
-  formReset(form: NgForm) {
+  private formReset(form: NgForm) {
     form.reset();
     this.producto = new Producto();
     this.cantidad_producto = 0;
     this.nombre_producto = "Nombre del Producto";
     this.codBarras = "";
   }
-  resetearForm(termino: string) {
+  public resetearForm(termino: string) {
     if (termino.length < 1) {
       this.producto = new Producto();
       this.cantidad_producto = 0;
@@ -65,7 +77,7 @@ export class ProductoInComponent implements OnInit {
       this.codBarras = "";
     }
   }
-  onIsError(): void {
+  private onIsError(): void {
     this.codIncorrecto = true;
     setTimeout(() => {
       this.codIncorrecto = false;

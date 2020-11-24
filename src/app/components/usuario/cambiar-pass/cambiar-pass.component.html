@@ -27,9 +27,13 @@
           name="passactual"
           #passactual
           (keyup)="filtrarPassword(passactual.value)"
+          (change)="filtrarPassword(passactual.value)"
         />
         <div class="text-center field-error" *ngIf="existePass">
           !Contraseña actual incorrecta¡
+        </div>
+        <div class="text-center field-error" *ngIf="existe">
+          !Contraseña actual correcta!
         </div>
       </div>
     </div>

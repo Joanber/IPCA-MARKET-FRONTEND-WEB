@@ -30,19 +30,20 @@
         />
       </div>
       <div class="form-group">
-        <label for="town" class="control-label">Código del Producto:</label>
+        <label for="town" class="control-label">Código de Barras:</label>
 
         <div class="input-group">
           <input
             type="text"
             name="town"
             class="form-control"
-            placeholder="Codigo"
+            placeholder="Escanee o digite"
             #termino
             [(ngModel)]="producto.codigo_barras"
             #codigoBarras="ngModel"
             (keyup)="resetearForm(termino.value)"
             required
+            minlength="10"
             [class.is-invalid]="codigoBarras.touched && codigoBarras.invalid"
           />
           <div class="input-group-append">
@@ -57,11 +58,17 @@
         </div>
         <small
           *ngIf="codigoBarras.invalid && codigoBarras.touched"
-          class="form-text text-danger"
+          class="form-text text-danger text-center"
           >Código es requerido!</small
         >
-        <small *ngIf="codIncorrecto" class="form-text text-danger"
+        <small *ngIf="codIncorrecto" class="form-text text-danger text-center"
           >Código es incorrecto!</small
+        >
+        <small
+          *ngIf="codigoBarras.errors?.minlength"
+          class="form-text text-danger text-center"
+          >!Por lo menos
+          {{ codigoBarras.errors.minlength.requiredLength }} caracteres¡</small
         >
       </div>
 

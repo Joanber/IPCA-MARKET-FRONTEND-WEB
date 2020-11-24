@@ -13,24 +13,24 @@ import Swal from "sweetalert2";
 export class CambiarPassComponent implements OnInit {
   public usuario = new Usuario();
   public username: string;
-  fieldTextType: boolean;
-  repeatFieldTextType: boolean;
-  existePassword: boolean;
-  existePass = false;
-  existe = false;
+  public fieldTextType: boolean;
+  public repeatFieldTextType: boolean;
+  private existePassword: boolean;
+  public existePass = false;
+  public existe = false;
   constructor(
     private srvU: UsuarioService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.cargarUsername();
   }
-  irUsuarios() {
+  public irUsuarios() {
     this.router.navigate(["/dashper/usuarios"]);
   }
-  public cargarUsername(): void {
+  public async cargarUsername() {
     this.route.paramMap.subscribe((params) => {
       const id: number = +params.get("id");
       if (id) {
@@ -60,15 +60,15 @@ export class CambiarPassComponent implements OnInit {
       }
     }
   }
-  toggleFieldTextType() {
+  public toggleFieldTextType() {
     this.fieldTextType = !this.fieldTextType;
   }
 
-  toggleRepeatFieldTextType() {
+  public toggleRepeatFieldTextType() {
     this.repeatFieldTextType = !this.repeatFieldTextType;
   }
 
-  filtrarPassword(passactual: string) {
+  public filtrarPassword(passactual: string) {
     this.route.paramMap.subscribe((params) => {
       const id: number = +params.get("id");
       if (id && passactual.length > 7) {
@@ -85,7 +85,7 @@ export class CambiarPassComponent implements OnInit {
       }
     });
   }
-  onIsError(): void {
+  private onIsError(): void {
     this.existePass = true;
     setTimeout(() => {
       this.existePass = false;

@@ -11,27 +11,21 @@ import { AuthService } from "src/app/services/login_services/auth.service";
   styleUrls: ["./prod-bajo-inv.component.css"],
 })
 export class ProdBajoInvComponent implements OnInit {
-  productosBajosInventario: ProductoBajoInventario[] = [];
-
-  fechaAc: string;
+  public productosBajosInventario: ProductoBajoInventario[] = [];
   constructor(
     private srvF: FacturasService,
     private srvUR: UtilsReportService,
     public authService: AuthService
   ) {}
 
-  ngOnInit() {
-    this.getProdcutosBajosInventario();
-  }
-  getProdcutosBajosInventario() {
-    this.srvF
+  async ngOnInit() {
+    this.productosBajosInventario = await this.srvF
       .getProductosBajosEnInventario()
-      .subscribe((productosBajoInventario) => {
-        this.productosBajosInventario = productosBajoInventario;
-        console.log(this.productosBajosInventario);
-      });
+      .toPromise()
+      .then((prodbajosInv) => (this.productosBajosInventario = prodbajosInv));
   }
-  imprimirPDF() {
+
+  public imprimirPDF() {
     const pdf = new PdfMakeWrapper();
     pdf.pageSize("A4");
     pdf.info({
@@ -76,7 +70,7 @@ export class ProdBajoInvComponent implements OnInit {
     pdf.create().open();
   }
 
-  formateaValor(valor) {
+  private formateaValor(valor) {
     return isNaN(valor) ? valor : parseFloat(valor).toFixed(2);
   }
 }

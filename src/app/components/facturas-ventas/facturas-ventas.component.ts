@@ -18,11 +18,11 @@ import { FacturaModalService } from "../modal-factura/factura-modal.service";
   styleUrls: ["./facturas-ventas.component.css"],
 })
 export class FacturasVentasComponent implements OnInit {
-  factura: Factura = new Factura();
-  autocompleteControl = new FormControl();
-  productoFiltrado: Producto;
+  public factura: Factura = new Factura();
+  public autocompleteControl = new FormControl();
+  public productoFiltrado: Producto;
   public facturaModal: Factura;
-  productosBajosInventario: ProductoBajoInventario[] = [];
+  public productosBajosInventario: ProductoBajoInventario[] = [];
   public proBajos: boolean = false;
   public mensaje: string;
 
@@ -34,11 +34,11 @@ export class FacturasVentasComponent implements OnInit {
     public usuService: UsuarioService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.getProductosBajosInventario();
   }
 
-  productoEscaneadoDigitado(termino: string, event) {
+  public productoEscaneadoDigitado(termino: string, event) {
     if (termino.length > 9) {
       this.srvP.getCodigoBarrasExiste(termino.toUpperCase()).subscribe((p) => {
         if (p == null) {
@@ -52,7 +52,7 @@ export class FacturasVentasComponent implements OnInit {
       });
     }
   }
-  seleccionarProducto(producto: Producto): void {
+  public seleccionarProducto(producto: Producto): void {
     if (producto.cantidad_maxima == 0) {
       Swal.fire({
         title: ` ! INVENTARIO INSUFICIENTE DE ${producto.nombre}, HAY 0 DISPONIBLES ! `,
@@ -76,7 +76,7 @@ export class FacturasVentasComponent implements OnInit {
     this.autocompleteControl.setValue("");
   }
 
-  existeItem(id: number): boolean {
+  private existeItem(id: number): boolean {
     let existe = false;
     this.factura.detalles_facturas.forEach((delalle: DetalleFactura) => {
       if (id === delalle.producto.id) {
@@ -85,7 +85,7 @@ export class FacturasVentasComponent implements OnInit {
     });
     return existe;
   }
-  incrementaCantidad(id: number): void {
+  private incrementaCantidad(id: number): void {
     this.factura.detalles_facturas = this.factura.detalles_facturas.map(
       (detalle: DetalleFactura) => {
         if (id === detalle.producto.id) {
@@ -101,13 +101,13 @@ export class FacturasVentasComponent implements OnInit {
       }
     );
   }
-  eliminarItemFactura(id: number): void {
+  public eliminarItemFactura(id: number): void {
     this.factura.detalles_facturas = this.factura.detalles_facturas.filter(
       (detalle: DetalleFactura) => id !== detalle.producto.id
     );
   }
 
-  actualizarCantidad(id: number, event: any): void {
+  public actualizarCantidad(id: number, event: any): void {
     let cantidad: number = event.target.value as number;
     if (cantidad == 0) {
       return this.eliminarItemFactura(id);
@@ -140,7 +140,6 @@ export class FacturasVentasComponent implements OnInit {
             console.log(detalle.producto.cantidad_maxima, "detalle producto");
           }
         }
-
         console.log(detalle.cantidad, "detalle cantidad");
         console.log(detalle.producto.cantidad_maxima, "detalle producto");
         console.log("detalles finales");
@@ -159,7 +158,7 @@ export class FacturasVentasComponent implements OnInit {
       this.srMF.abrirModal();
     }
   }
-  getProductosBajosInventario() {
+  private async getProductosBajosInventario() {
     this.srvF
       .getProductosBajosEnInventario()
       .subscribe((productosBajoInventario) => {
@@ -171,7 +170,7 @@ export class FacturasVentasComponent implements OnInit {
         }
       });
   }
-  onIsError(): void {
+  public onIsError(): void {
     this.proBajos = true;
     setTimeout(() => {
       this.proBajos = false;

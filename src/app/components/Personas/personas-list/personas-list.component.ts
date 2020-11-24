@@ -13,13 +13,14 @@ import { AuthService } from "src/app/services/login_services/auth.service";
   styleUrls: ["./personas-list.component.css"],
 })
 export class PersonasListComponent implements OnInit {
-  baseEndpoint = BASE_ENDPOINT + "/personas";
-  totalRegistros = 0;
-  paginaActual = 0;
-  totalPorPagina = 5;
-  personas: Persona[];
+  public baseEndpoint = BASE_ENDPOINT + "/personas";
+  public totalRegistros = 0;
+  public paginaActual = 0;
+  public totalPorPagina = 5;
+  public personas: Persona[];
+  public busqueda = true;
   @ViewChild(MatPaginator, { static: false }) paginador: MatPaginator;
-  busqueda = true;
+
   constructor(
     private personaService: PersonasService,
     private route: ActivatedRoute,
@@ -34,7 +35,7 @@ export class PersonasListComponent implements OnInit {
     this.totalPorPagina = event.pageSize;
     this.getPersonasPage();
   }
-  private getPersonasPage() {
+  private async getPersonasPage() {
     this.personaService
       .getPersonasPage(this.paginaActual.toString())
       .subscribe((p) => {
@@ -48,18 +49,19 @@ export class PersonasListComponent implements OnInit {
       });
   }
 
-  buscarPersona(termino: string) {
+  public async buscarPersona(termino: string) {
     if (termino.length > 0) {
-      this.personaService
+      this.personas = await this.personaService
         .getPersonasFiltradas(termino.toUpperCase())
-        .subscribe((personas) => (this.personas = personas));
+        .toPromise()
+        .then((personas) => (this.personas = personas));
       this.busqueda = false;
     } else {
       this.getPersonasPage();
     }
   }
 
-  delete(persona: Persona): void {
+  public delete(persona: Persona): void {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: "btn btn-success",

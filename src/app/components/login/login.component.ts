@@ -10,15 +10,15 @@ import { AuthService } from "src/app/services/login_services/auth.service";
   styleUrls: ["./login.component.css"],
 })
 export class LoginComponen implements OnInit {
-  usuario: Usuario;
-  esValido = true;
-  invalido = "";
+  public usuario: Usuario;
+  public esValido = true;
+  public invalido = "";
 
   constructor(private authService: AuthService, private router: Router) {
     this.usuario = new Usuario();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.authService.isAuthenticated()) {
       Swal.fire(
         "Login",
@@ -29,11 +29,11 @@ export class LoginComponen implements OnInit {
     }
   }
 
-  cerrarError() {
+  public cerrarError() {
     this.esValido = true;
   }
 
-  login(): void {
+  public login(): void {
     if (this.usuario.username == null || this.usuario.password == null) {
       this.esValido = false;
       this.invalido = "Username y/o Password vacías";

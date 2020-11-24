@@ -8,7 +8,6 @@ import { UtilsReportService } from "src/app/services/utils-report.service";
 
 import { MatPaginator, PageEvent } from "@angular/material";
 import { AuthService } from "src/app/services/login_services/auth.service";
-import { Rol } from "src/app/models/rol";
 
 @Component({
   selector: "app-usuario-list",
@@ -16,20 +15,21 @@ import { Rol } from "src/app/models/rol";
   styleUrls: ["./usuario-list.component.css"],
 })
 export class UsuarioListComponent implements OnInit {
-  usuarios: Usuario[];
-  todosUsuarios: Usuario[] = [];
-  totalRegistros = 0;
-  paginaActual = 0;
-  totalPorPagina = 5;
+  public usuarios: Usuario[];
+  private todosUsuarios: Usuario[] = [];
+  public totalRegistros = 0;
+  public paginaActual = 0;
+  public totalPorPagina = 5;
+  public busqueda = true;
   @ViewChild(MatPaginator, { static: false }) paginador: MatPaginator;
-  busqueda = true;
+
   constructor(
     private usuarioService: UsuarioService,
     public authService: AuthService,
     private srvUr: UtilsReportService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.getUsuariospage();
     this.getUsuariosTodos();
   }
@@ -38,7 +38,7 @@ export class UsuarioListComponent implements OnInit {
     this.totalPorPagina = event.pageSize;
     this.getUsuariospage();
   }
-  private getUsuariospage() {
+  private async getUsuariospage() {
     this.usuarioService
       .getUsuariosPage(this.paginaActual.toString())
       .subscribe((u) => {
@@ -51,13 +51,13 @@ export class UsuarioListComponent implements OnInit {
         this.paginador._intl.lastPageLabel = "Última Página";
       });
   }
-  getUsuariosTodos(): void {
+  private getUsuariosTodos(): void {
     this.usuarioService.getUsuarios().subscribe((usuarios) => {
       this.todosUsuarios = usuarios;
     });
   }
 
-  imprimirPDF() {
+  public imprimirPDF() {
     this.getUsuariosTodos();
     const pdf = new PdfMakeWrapper();
     pdf.info({
@@ -80,12 +80,9 @@ export class UsuarioListComponent implements OnInit {
     pdf.add(pdf.ln(1));
 
     pdf.add(
-      new Columns([
-        "Username",
-        "Cedula",
-        "Nombre - Apellido",
-        "Teléfono",
-      ]).columnGap(3).end
+      new Columns(["Username", "Cedula", "Nombre - Apellido", "Teléfono"])
+        .bold()
+        .columnGap(3).end
     );
     this.todosUsuarios.forEach((user) => {
       pdf.add(
@@ -101,18 +98,19 @@ export class UsuarioListComponent implements OnInit {
     pdf.create().open();
   }
 
-  buscarUsuario(termino: string) {
+  public async buscarUsuario(termino: string) {
     if (termino.length > 0) {
-      this.usuarioService
+      this.usuarios = await this.usuarioService
         .getUsuariosFiltrados(termino)
-        .subscribe((usuarios) => (this.usuarios = usuarios));
+        .toPromise()
+        .then((usuarios) => (this.usuarios = usuarios));
       this.busqueda = false;
     } else {
       this.getUsuariospage();
     }
   }
 
-  delete(usuario: Usuario): void {
+  public delete(usuario: Usuario): void {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: "btn btn-success",

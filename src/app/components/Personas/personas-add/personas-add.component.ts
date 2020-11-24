@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 import { BASE_ENDPOINT } from "src/app/DB_CONFIG/bdConig";
 import { DatePipe } from "@angular/common";
 import { NgForm } from "@angular/forms";
-import { UtilsReportService } from "src/app/services/utils-report.service";
 
 @Component({
   selector: "app-personas-add",
@@ -15,7 +14,7 @@ import { UtilsReportService } from "src/app/services/utils-report.service";
   providers: [DatePipe],
 })
 export class PersonasAddComponent implements OnInit {
-  baseEndpoint = BASE_ENDPOINT + "/personas";
+  public baseEndpoint = BASE_ENDPOINT + "/personas";
   private fotoSeleccionada: File;
   public imageSrc;
   public titulo: string = "Nueva Persona";
@@ -23,8 +22,8 @@ export class PersonasAddComponent implements OnInit {
   public existe: boolean = false;
   public mensaje: string;
   public validador = true;
-
   public persona = new Persona();
+
   constructor(
     private srvP: PersonasService,
     private router: Router,
@@ -32,13 +31,12 @@ export class PersonasAddComponent implements OnInit {
     private miDatePipe: DatePipe
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.cargarPersona();
   }
 
-  public seleccionarFoto(event): void {
-    this.fotoSeleccionada = event.target.files[0];
-    console.info(this.fotoSeleccionada);
+  public async seleccionarFoto(event) {
+    this.fotoSeleccionada = await event.target.files[0];
     if (this.fotoSeleccionada.type.indexOf("image") < 0) {
       this.fotoSeleccionada = null;
       Swal.fire(
@@ -56,11 +54,10 @@ export class PersonasAddComponent implements OnInit {
     }
   }
 
-  public cargarPersona(): void {
+  public async cargarPersona() {
     this.route.paramMap.subscribe((params) => {
       const id: number = +params.get("id");
       if (id) {
-        this.existeCedulaPersona("");
         this.titulo = "Actualizar Persona";
         this.srvP.getPersona(id).subscribe((persona) => {
           this.persona = persona;
@@ -147,11 +144,11 @@ export class PersonasAddComponent implements OnInit {
         });
     }
   }
-  irPersonas() {
+  public irPersonas() {
     this.router.navigate(["/dashper/personas"]);
   }
 
-  existeCedulaPersona(cedula: string): void {
+  public existeCedulaPersona(cedula: string): void {
     console.log(cedula.length);
     if (cedula.length == 10) {
       this.srvP.getCedulaPersonaExiste(cedula).subscribe((persona) => {
@@ -167,13 +164,13 @@ export class PersonasAddComponent implements OnInit {
     }
   }
 
-  onIsError(): void {
+  private onIsError(): void {
     this.existeCedula = true;
     setTimeout(() => {
       this.existeCedula = false;
     }, 1800);
   }
-  validadorDeCedula(cedula: string) {
+  public validadorDeCedula(cedula: string) {
     let cedulaCorrecta = false;
     if (cedula.length == 10) {
       let tercerDigito = parseInt(cedula.substring(2, 3));

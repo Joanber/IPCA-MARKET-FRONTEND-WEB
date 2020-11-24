@@ -1,6 +1,6 @@
 import { Usuario } from "./usuario";
 export class Rol {
-  id?: number;
+  id: number;
   nombre: string;
-  check?: boolean = false;
+  check: boolean = false;
 }

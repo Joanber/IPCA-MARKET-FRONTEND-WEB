@@ -30,10 +30,10 @@ export class ProductoListComponent implements OnInit {
   ) {}
   baseEndpoint = BASE_ENDPOINT + "/productos";
   prodLista: Producto[];
-  paginator: any;
+  prodListaImprimir: Producto[] = [];
   ngOnInit() {
     this.getProductoPage();
-    this.getProductos();
+    this.getProductosImprimir();
   }
 
   public cargarProductoDefault(event: any) {
@@ -50,9 +50,9 @@ export class ProductoListComponent implements OnInit {
     this.getProductoPage();
   }
 
-  getProductos(): void {
+  getProductosImprimir(): void {
     this.prodService.getProductos().subscribe((productos) => {
-      this.prodLista = productos;
+      this.prodListaImprimir = productos;
     });
   }
 
@@ -61,8 +61,9 @@ export class ProductoListComponent implements OnInit {
       this.prodService
         .getProductosFiltro(termino.toUpperCase())
         .subscribe((productos) => (this.prodLista = productos));
+      this.busqueda = false;
     } else {
-      this.getProductos();
+      this.getProductoPage();
     }
   }
 
@@ -80,6 +81,7 @@ export class ProductoListComponent implements OnInit {
       });
   }
   reportePDF() {
+    this.getProductosImprimir();
     const pdf = new PdfMakeWrapper();
     pdf.pageMargins([40, 60, 40, 60]);
     pdf.pageSize("A4");
@@ -109,7 +111,7 @@ export class ProductoListComponent implements OnInit {
         "Precio",
       ]).columnGap(3).end
     );
-    this.prodLista.forEach((prod) => {
+    this.prodListaImprimir.forEach((prod) => {
       pdf.add(
         new Columns([
           prod.id,

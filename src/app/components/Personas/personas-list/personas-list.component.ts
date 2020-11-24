@@ -18,7 +18,6 @@ export class PersonasListComponent implements OnInit {
   paginaActual = 0;
   totalPorPagina = 5;
   personas: Persona[];
-  todaspersonas: Persona[];
   @ViewChild(MatPaginator, { static: false }) paginador: MatPaginator;
   busqueda = true;
   constructor(

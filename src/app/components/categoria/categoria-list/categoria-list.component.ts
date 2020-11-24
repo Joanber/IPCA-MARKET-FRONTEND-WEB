@@ -28,10 +28,11 @@ export class CategoriaListComponent implements OnInit {
     public authService: AuthService
   ) {}
   categoriaList: Categoria[];
+  categoriaListImprimir: Categoria[] = [];
   baseEndpoint = BASE_ENDPOINT + "/categorias";
   paginator: any;
   ngOnInit() {
-    this.getCategorias();
+    this.getCategoriasTodas();
     this.getCategoriaPage();
   }
 
@@ -60,12 +61,14 @@ export class CategoriaListComponent implements OnInit {
       this.categoriaSer
         .getCategoriasFiltro(termino.toUpperCase())
         .subscribe((categorias) => (this.categoriaList = categorias));
+      this.busqueda = false;
     } else {
-      this.getCategorias();
+      this.getCategoriaPage();
     }
   }
 
   reportePDF() {
+    this.getCategoriasTodas();
     const pdf = new PdfMakeWrapper();
     pdf.pageMargins([40, 60, 40, 60]);
     pdf.pageSize("A4");
@@ -86,7 +89,7 @@ export class CategoriaListComponent implements OnInit {
     pdf.add(new Txt("Categorias").alignment("center").bold().italics().end);
     pdf.add(pdf.ln(1));
     pdf.add(new Columns(["#", "Nombre"]).columnGap(3).end);
-    this.categoriaList.forEach((categoria) => {
+    this.categoriaListImprimir.forEach((categoria) => {
       pdf.add(new Columns([categoria.id, categoria.nombre]).columnGap(3).end);
     });
     pdf.create().open();
@@ -100,9 +103,9 @@ export class CategoriaListComponent implements OnInit {
     }
   }
 
-  getCategorias(): void {
+  getCategoriasTodas(): void {
     this.categoriaSer.getCategorias().subscribe((categoria) => {
-      this.categoriaList = categoria;
+      this.categoriaListImprimir = categoria;
     });
   }
 

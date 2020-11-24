@@ -33,7 +33,7 @@ export class UsuarioAddComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.srvU.getRoles().subscribe((roles) => {
       this.roles = roles;
     });
@@ -41,21 +41,34 @@ export class UsuarioAddComponent implements OnInit {
     this.srvP.getPersonas().subscribe((personas) => (this.personas = personas));
   }
 
-  public cargarUsuario(): void {
+  public cargarUsuario() {
     this.route.paramMap.subscribe((params) => {
       const id: number = +params.get("id");
       if (id) {
         this.mostrarInputPass = false;
         this.titulo = "Actualizar Usuario";
-        this.srvU.getUsuario(id).subscribe((usuario) => {
-          this.usuario = usuario;
-          this.usuario.roles.forEach((rol1) => {
-            this.roles.forEach((rol2) => {
+
+        this.srvU.getUsuario(id).subscribe(async (usuario) => {
+          this.usuario = await usuario;
+          for (let rol1 of this.usuario.roles) {
+            for (let rol2 of this.roles) {
               if (rol1.id === rol2.id) {
                 rol2.check = true;
               }
+            }
+          }
+          /*   this.usuario.roles.forEachAsync(async (rol1) => {
+            console.log("1--");
+            this.roles.forEach(async (rol2) => {
+              console.log("2--");
+              if (rol1.id === rol2.id) {
+                rol2.check = await true;
+                console.log("3--");
+              }
+              console.log("4--");
             });
-          });
+          }); */
+          console.log(this.usuario.roles);
         });
       } else {
         this.mostrarInputPass = true;

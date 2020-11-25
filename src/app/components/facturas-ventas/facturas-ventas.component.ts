@@ -153,12 +153,16 @@ export class FacturasVentasComponent implements OnInit {
     if (this.factura.detalles_facturas.length > 0) {
       this.usuService
         .getUsuario(this.authService.usuario.id)
-        .subscribe((usuario) => (this.factura.usuario = usuario));
+        .subscribe((usuario) => {
+          this.factura.usuario = usuario;
+          this.factura.observacion = "";
+        });
       this.facturaModal = factura;
+      console.log(this.factura, "desde facturas ventas");
       this.srMF.abrirModal();
     }
   }
-  private async getProductosBajosInventario() {
+  private getProductosBajosInventario() {
     this.srvF
       .getProductosBajosEnInventario()
       .subscribe((productosBajoInventario) => {

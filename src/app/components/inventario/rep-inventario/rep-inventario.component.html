@@ -34,29 +34,38 @@
     </div>
 </div>
 <div class="row table-scroll">
-    <table class="table table-bordered table-striped table-responsive-sm table-sm text-center animated fadeIn fast" 
-        scrollY="true" maxHeight="200" bordered="true">
-        <thead class="bg-pri white">
-            <tr>
-                <th>Codigo</th>
-                <th>Nombre</th>
-                <th>Precio</th>
-                <th>Existencia</th>
-                <th>Inn Minimo</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let producto of facturaLista">
-                <td>{{ producto.codigo_barras }}</td>
-                <td>{{ producto.nombre }}</td>
-                <td>{{ producto.precio | currency }}</td>
-                <td  >
-                    <span [ngClass]="{'badge badge-danger': producto.cantidad_maxima <= producto.cantidad_minima }">
-                        {{ producto.cantidad_maxima }}
-                    </span>
-                </td>
-                <td>{{ producto.cantidad_minima }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="col-sm-12">
+        <div class="alert alert-info text-center" *ngIf="facturaLista.length <= 0">
+            No hay inventario
+        </div>
+        <div class="table-scroll">
+            <table class="table table-bordered table-striped table-responsive-sm table-sm text-center animated fadeIn fast" 
+                scrollY="true" maxHeight="200" bordered="true"
+                *ngIf="facturaLista.length > 0"
+            >
+                <thead class="bg-pri white">
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Existencia</th>
+                        <th>Inn Minimo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let producto of facturaLista">
+                        <td>{{ producto.codigo_barras }}</td>
+                        <td>{{ producto.nombre }}</td>
+                        <td>{{ producto.precio | currency }}</td>
+                        <td  >
+                            <span [ngClass]="{'badge badge-danger': producto.cantidad_maxima <= producto.cantidad_minima }">
+                                {{ producto.cantidad_maxima }}
+                            </span>
+                        </td>
+                        <td>{{ producto.cantidad_minima }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

@@ -2,9 +2,8 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { Categoria } from "src/app/models/categoria";
 import { CategoriasService } from "../../../services/categorias.service";
 import Swal from "sweetalert2";
-import { ActivatedRoute } from "@angular/router";
 import { PdfMakeWrapper } from "pdfmake-wrapper";
-import { Txt, Columns, Rect, Canvas } from "pdfmake-wrapper";
+import { Txt, Columns } from "pdfmake-wrapper";
 import { BASE_ENDPOINT } from "src/app/DB_CONFIG/bdConig";
 import { MatPaginator, PageEvent } from "@angular/material";
 import { UtilsReportService } from "../../../services/utils-report.service";
@@ -16,33 +15,35 @@ import { AuthService } from "src/app/services/login_services/auth.service";
   styleUrls: ["./categoria-list.component.css"],
 })
 export class CategoriaListComponent implements OnInit {
-  totalRegistros = 0;
-  paginaActual = 0;
-  totalPorPagina = 5;
+  public totalRegistros = 0;
+  public paginaActual = 0;
+  public totalPorPagina = 5;
   @ViewChild(MatPaginator, { static: false }) paginador: MatPaginator;
-  busqueda = true;
+  public busqueda = true;
+
+  public categoriaList: Categoria[];
+  public categoriaListImprimir: Categoria[] = [];
+  public baseEndpoint = BASE_ENDPOINT + "/categorias";
+  public paginator: any;
 
   constructor(
     private categoriaSer: CategoriasService,
     private srvUr: UtilsReportService,
     public authService: AuthService
   ) {}
-  categoriaList: Categoria[];
-  categoriaListImprimir: Categoria[] = [];
-  baseEndpoint = BASE_ENDPOINT + "/categorias";
-  paginator: any;
+  
   ngOnInit() {
     this.getCategoriasTodas();
     this.getCategoriaPage();
   }
 
-  paginar(event: PageEvent): void {
+  public paginar(event: PageEvent): void {
     this.paginaActual = event.pageIndex;
     this.totalPorPagina = event.pageSize;
     this.getCategoriaPage();
   }
 
-  getCategoriaPage(): void {
+  public getCategoriaPage(): void {
     this.categoriaSer
       .getCategoriasPage(this.paginaActual.toString())
       .subscribe((p) => {
@@ -56,7 +57,7 @@ export class CategoriaListComponent implements OnInit {
       });
   }
 
-  buscarCategoria(termino: string) {
+  public buscarCategoria(termino: string) {
     if (termino.length > 0) {
       this.categoriaSer
         .getCategoriasFiltro(termino.toUpperCase())
@@ -67,7 +68,7 @@ export class CategoriaListComponent implements OnInit {
     }
   }
 
-  reportePDF() {
+  public reportePDF() {
     this.getCategoriasTodas();
     const pdf = new PdfMakeWrapper();
     pdf.pageMargins([40, 60, 40, 60]);
@@ -103,13 +104,13 @@ export class CategoriaListComponent implements OnInit {
     }
   }
 
-  getCategoriasTodas(): void {
+  public getCategoriasTodas(): void {
     this.categoriaSer.getCategorias().subscribe((categoria) => {
       this.categoriaListImprimir = categoria;
     });
   }
 
-  delete(categoria: Categoria): void {
+  public delete(categoria: Categoria): void {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: "btn btn-success",

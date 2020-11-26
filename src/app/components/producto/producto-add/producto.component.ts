@@ -15,8 +15,8 @@ import { BASE_ENDPOINT } from "src/app/DB_CONFIG/bdConig";
 export class ProductoComponent implements OnInit {
   private fotoSeleccionada: File;
   public imageSrc;
-  baseEndpoint = BASE_ENDPOINT + "/productos";
-  titulo: string = "Crear Producto";
+  public baseEndpoint = BASE_ENDPOINT + "/productos";
+  public titulo: string = "Crear Producto";
   public mensaje: string;
   public existe: boolean = false;
   public existeCodigo: boolean = false;

@@ -3,7 +3,7 @@ import { Categoria } from "src/app/models/categoria";
 import { FacturasService } from '../../../services/facturas.service';
 import { CategoriasService } from "src/app/services/categorias.service";
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
-import { Txt, Columns, Rect, Canvas} from 'pdfmake-wrapper';
+import { Txt, Columns } from 'pdfmake-wrapper';
 import { UtilsReportService } from '../../../services/utils-report.service';
 
 
@@ -15,30 +15,27 @@ import { UtilsReportService } from '../../../services/utils-report.service';
 })
 export class RepInventarioComponent implements OnInit {
 
-  facturaLista: any[] = [];
-  cont: number = 0;
-  total: number = 0;
-  lista: Categoria[];
-  categoria: string;
+  public facturaLista: any[] = [];
+  public cont: number = 0;
+  public total: number = 0;
+  public lista: Categoria[];
+  public categoria: string;
   constructor( private fs: FacturasService,
     private srvUr: UtilsReportService,
     private catService: CategoriasService) {
-    this.fs.getProductosInventario().subscribe( data => { 
-      this.facturaLista = data;
-      for (const producto of this.facturaLista) {
-        this.cont = producto.precio * producto.cantidad_maxima;
-        this.total += this.cont;
-      }
-    });
-  }
-
-  ngOnInit() {
     this.catService.getCategorias().subscribe((data) => {
       this.lista = data;
     });
+    
   }
 
-  reportePDF() {
+  ngOnInit() {
+    this.fs.getProductosInventario().subscribe( data => { 
+      this.obtenerData(data);
+    });
+  }
+
+  public reportePDF() {
     const pdf = new PdfMakeWrapper();
     pdf.pageMargins([40, 60, 40, 60]);
     pdf.pageSize("A4");
@@ -78,27 +75,27 @@ export class RepInventarioComponent implements OnInit {
   }
 
 
-  filtrarCategoria() {
+  public filtrarCategoria() {
     this.cont = 0;
     this.total = 0;
     if (this.categoria !== undefined) {
       this.fs.getProductosByCategoria(this.categoria).subscribe( data => { 
-        this.facturaLista = data;
-        for (const producto of this.facturaLista) {
-          this.cont = producto.precio * producto.cantidad_maxima;
-          this.total += this.cont;
-        }
+        this.obtenerData(data);
       });
     } else {
       this.fs.getProductosInventario().subscribe( data => { 
-        this.facturaLista = data;
-        for (const producto of this.facturaLista) {
-          this.cont = producto.precio * producto.cantidad_maxima;
-          this.total += this.cont;
-        }
+        this.obtenerData(data);
       });
     }
     
+  }
+
+  public async obtenerData(data) {
+    this.facturaLista = await data;
+    for (const producto of this.facturaLista) {
+      this.cont = producto.precio * producto.cantidad_maxima;
+      this.total += this.cont;
+    }
   }
 
 

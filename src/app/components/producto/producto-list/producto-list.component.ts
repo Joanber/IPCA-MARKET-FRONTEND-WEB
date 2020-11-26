@@ -3,11 +3,10 @@ import { ProductoService } from "../../../services/producto.service";
 import { Producto } from "src/app/models/producto";
 import Swal from "sweetalert2";
 import { ActivatedRoute } from "@angular/router";
-import { tap } from "rxjs/operators";
 import { BASE_ENDPOINT } from "src/app/DB_CONFIG/bdConig";
 import { PdfMakeWrapper } from "pdfmake-wrapper";
 import { MatPaginator, PageEvent } from "@angular/material";
-import { Txt, Columns, Rect, Canvas } from "pdfmake-wrapper";
+import { Txt, Columns } from "pdfmake-wrapper";
 import { UtilsReportService } from "../../../services/utils-report.service";
 import { AuthService } from "src/app/services/login_services/auth.service";
 
@@ -17,20 +16,22 @@ import { AuthService } from "src/app/services/login_services/auth.service";
   styleUrls: ["./producto-list.component.css"],
 })
 export class ProductoListComponent implements OnInit {
-  totalRegistros = 0;
-  paginaActual = 0;
-  totalPorPagina = 5;
+  public totalRegistros = 0;
+  public paginaActual = 0;
+  public totalPorPagina = 5;
   @ViewChild(MatPaginator, { static: false }) paginador: MatPaginator;
-  busqueda = true;
+  public busqueda = true;
+  public baseEndpoint = BASE_ENDPOINT + "/productos";
+  public prodLista: Producto[];
+  public prodListaImprimir: Producto[] = [];
+
   constructor(
     private prodService: ProductoService,
     private srvUr: UtilsReportService,
     private route: ActivatedRoute,
     public authService: AuthService
   ) {}
-  baseEndpoint = BASE_ENDPOINT + "/productos";
-  prodLista: Producto[];
-  prodListaImprimir: Producto[] = [];
+  
   ngOnInit() {
     this.getProductoPage();
     this.getProductosImprimir();
@@ -44,30 +45,31 @@ export class ProductoListComponent implements OnInit {
     }
   }
 
-  paginar(event: PageEvent): void {
+  public paginar(event: PageEvent): void {
     this.paginaActual = event.pageIndex;
     this.totalPorPagina = event.pageSize;
     this.getProductoPage();
   }
 
-  getProductosImprimir(): void {
+  public getProductosImprimir(): void {
     this.prodService.getProductos().subscribe((productos) => {
       this.prodListaImprimir = productos;
     });
   }
 
-  buscarProducto(termino: string) {
+  public async buscarProducto(termino: string) {
     if (termino.length > 0) {
-      this.prodService
+      this.prodLista = await this.prodService
         .getProductosFiltro(termino.toUpperCase())
-        .subscribe((productos) => (this.prodLista = productos));
+        .toPromise()
+        .then((productos) => (this.prodLista = productos));
       this.busqueda = false;
     } else {
       this.getProductoPage();
     }
   }
 
-  getProductoPage(): void {
+  public getProductoPage(): void {
     this.prodService
       .getProductosPage(this.paginaActual.toString())
       .subscribe((p) => {
@@ -80,7 +82,7 @@ export class ProductoListComponent implements OnInit {
         this.paginador._intl.lastPageLabel = "Última Página";
       });
   }
-  reportePDF() {
+  public reportePDF() {
     this.getProductosImprimir();
     const pdf = new PdfMakeWrapper();
     pdf.pageMargins([40, 60, 40, 60]);
@@ -125,7 +127,7 @@ export class ProductoListComponent implements OnInit {
     pdf.create().open();
   }
 
-  delete(producto: Producto): void {
+  public delete(producto: Producto): void {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: "btn btn-success",

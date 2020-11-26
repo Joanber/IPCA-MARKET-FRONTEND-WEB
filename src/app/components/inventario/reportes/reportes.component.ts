@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
-import { Txt, Columns, Rect, Canvas} from 'pdfmake-wrapper';
+import { Txt, Columns } from 'pdfmake-wrapper';
 import { FacturasService } from '../../../services/facturas.service';
 import { UtilsReportService } from '../../../services/utils-report.service';
 import { Usuario } from '../../../models/usuario';
@@ -15,14 +15,14 @@ import { UsuarioService } from "src/app/services/usuario.service";
 })
 export class ReportesComponent implements OnInit {
 
-  listRegistros :any[] = [];
+  public listRegistros :any[] = [];
 
-  cont: number;
-  totalVentas: number;
+  public cont: number;
+  public totalVentas: number;
 
-  fechaInicio: string = null;
-  fechaFin: string = null;
-  user: string = undefined;
+  public fechaInicio: string = null;
+  public fechaFin: string = null;
+  public user: string = undefined;
 
   usuarios: Usuario[];
 
@@ -35,25 +35,22 @@ export class ReportesComponent implements OnInit {
       this.fechaInicio = this.formatoFecha(new Date().toDateString());
       this.fechaFin = this.formatoFecha(new Date().toDateString());
       
-      this.fs.getVentas(this.fechaInicio, this.fechaFin, this.user).subscribe(async data => { 
-        this.listRegistros = await data;
-        console.log(this.listRegistros);
-        this.total();
-      });
+      this.obtenerRegistros(this.fechaInicio, this.fechaFin, this.user);
       
     }
 
-  getUsuarios(): void {
-    this.usuarioService
+  public async  getUsuarios() {
+    this.usuarios = await this.usuarioService
       .getUsuarios()
-      .subscribe((usuarios) => (this.usuarios = usuarios));
+      .toPromise()
+      .then((usuarios) => (this.usuarios = usuarios));
   }
 
   ngOnInit() {
     
   }
 
-  reportePDF() {
+  public reportePDF() {
     const pdf = new PdfMakeWrapper();
     pdf.pageMargins([40, 60, 40, 60]);
     pdf.pageSize("A4");
@@ -113,25 +110,29 @@ export class ReportesComponent implements OnInit {
     pdf.create().open()
   }
 
-  ver() {
+  public ver() {
     const fechaInicio = this.formatoFecha(this.fechaInicio);
     const fechaFin = this.formatoFecha(this.fechaFin);
-    this.fs.getVentas(fechaInicio, fechaFin, this.user).subscribe(async data => { 
+    
+    this.obtenerRegistros(fechaInicio, fechaFin, this.user);
+  }
+
+  public obtenerRegistros(inicio: string , fin:string, usuario: string) {
+    this.fs.getVentas(inicio, fin, usuario).subscribe(async data => { 
       this.listRegistros = await data;
       this.total();
     });
-    
   }
 
-  formatoFecha(fecha: string) {
+  public formatoFecha(fecha: string) {
     return this.miDatePipe.transform(fecha, 'yyyy-MM-dd');
   }
 
-  formatoHora(hora: string) {
+  public formatoHora(hora: string) {
     return this.miDatePipe.transform(hora, 'H:mm a');
   }
 
-  total() {
+  public total() {
     this.totalVentas = 0;
     this.cont = 0;
     for (const prod of this.listRegistros) {

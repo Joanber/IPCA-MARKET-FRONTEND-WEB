@@ -16,13 +16,15 @@ export class CategoriaAddComponent implements OnInit {
 
   private fotoSeleccionada: File;
   public imageSrc;
-  baseEndpoint = BASE_ENDPOINT + "/categorias";
+  public baseEndpoint = BASE_ENDPOINT + "/categorias";
+
+  public titulo:string = 'Crear Categoría';
+  public categoria= new Categoria;
 
   constructor( private categoriaS: CategoriasService,
     private router: Router,
     private route: ActivatedRoute) { }
-  titulo:string = 'Crear Categoría';
-  categoria= new Categoria;
+  
   ngOnInit() {
     this.cargarCategoria();
   }
@@ -47,7 +49,7 @@ export class CategoriaAddComponent implements OnInit {
     }
   }
 
-  crear(): void {
+  public crear(): void {
     if (!this.fotoSeleccionada) {
       this.categoriaS.crearCategoria(this.categoria).subscribe( categoria => {
         this.irCategorias();
@@ -69,7 +71,7 @@ export class CategoriaAddComponent implements OnInit {
     }
 
   }
-  cargarCategoria(): void {
+  public cargarCategoria(): void {
     this.route.paramMap.subscribe( param => {
       const id:number = +param.get('id');
       if (id) {
@@ -79,7 +81,7 @@ export class CategoriaAddComponent implements OnInit {
     });
   }
 
-  editar(): void {
+  public editar(): void {
     if (!this.fotoSeleccionada) {
 
       this.categoriaS.editarCategoria(this.categoria).subscribe( categoria =>{
@@ -115,7 +117,7 @@ export class CategoriaAddComponent implements OnInit {
     }
   }
 
-  irCategorias() {
+  public irCategorias() {
     this.router.navigate(['/dashprod/categoria']);
   }
 }

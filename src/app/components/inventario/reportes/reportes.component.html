@@ -1,125 +1,152 @@
-<hr class="separador-pri w-100 ">
+<hr class="separador-pri w-100" />
 <div class="text-center">
-    <h2>Ventas</h2>
+  <h2>Ventas</h2>
 </div>
 
 <div class="row">
-<div class="col-sm-4">
-  <form class="border shadow rounded mx-5 " #MyForm="ngForm">
-    <div class="col-sm-12">
-      <label for="fecha">Inicio:</label>
-      <input [matDatepicker]="myDatepicker" [(ngModel)]='fechaInicio' class="form-control" style="display: inline;" name="fechaInicio"/>
-      <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
-      <mat-datepicker color="dark" #myDatepicker></mat-datepicker>
-      <!-- <div class="text-center">
-          <p class="field-error" *ngIf="fecha.hasError('required') && fecha.touched">
+  <div class="col-sm-4">
+    <form class="border shadow rounded mx-5" #MyForm="ngForm">
+      <div class="col-sm-12 mb-3">
+        <label class="mt-3" for="ventas">Mostrar ventas de:</label>
+        <select
+          name="miselect"
+          class="form-control"
+          [(ngModel)]="opcionSeleccionada"
+          (change)="capturarPeriodo()"
+        >
+          <option [value]="item" *ngFor="let item of optionsFechas">
+            {{ item }}
+          </option>
+        </select>
+      </div>
+      <div *ngIf="mostrarFechasPorPeriodo">
+        <div class="col-sm-12">
+          <label for="fecha">Inicio:</label>
+          <input
+            [matDatepicker]="myDatepicker"
+            [(ngModel)]="fechaInicio"
+            class="form-control"
+            style="display: inline"
+            name="fechaIni"
+            required
+            #fechaIni="ngModel"
+          />
+          <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker color="dark" #myDatepicker></mat-datepicker>
+          <div class="text-center">
+            <p
+              class="field-error"
+              *ngIf="fechaIni.hasError('required') && fechaIni.touched"
+            >
               Fecha requerido!
-          </p>
-      </div> -->
-    </div>
-    <div class="col-sm-12">
-      <label for="fecha">Fin:</label>
-      <input [matDatepicker]="myDatepicker2" [(ngModel)]='fechaFin'  class="form-control" style="display: inline;" name="fechaFin"/>
-      <mat-datepicker-toggle [for]="myDatepicker2"></mat-datepicker-toggle>
-      <mat-datepicker color="dark" #myDatepicker2></mat-datepicker>
-      <!-- <div class="text-center">
-          <p class="field-error" *ngIf="fecha.hasError('required') && fecha.touched">
+            </p>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <label for="fecha">Fin:</label>
+          <input
+            [matDatepicker]="myDatepicker2"
+            [(ngModel)]="fechaFin"
+            class="form-control"
+            style="display: inline"
+            #fechaFinn="ngModel"
+            required
+            name="fechaFinn"
+          />
+          <mat-datepicker-toggle [for]="myDatepicker2"></mat-datepicker-toggle>
+          <mat-datepicker color="dark" #myDatepicker2></mat-datepicker>
+          <div class="text-center">
+            <p
+              class="field-error"
+              *ngIf="fechaFinn.hasError('required') && fechaFinn.touched"
+            >
               Fecha requerido!
-          </p>
-      </div> -->
-    </div>
-    <div class="col-sm-12 mb-3 mx-auto">
-      <label for="persona">Usuario: <small>(Opcional)</small></label>
-      <select
-        name="persona"
-        class="form-control"
-        [(ngModel)]="user"
-      >
-        <option [ngValue]="undefined">-Seleccione un usuario-</option>
-        <option *ngFor="let usuario of usuarios" [ngValue]="usuario.username">
-          {{ usuario.username }}
-        </option>
-      </select>
-      
-    </div>
-    <div class="form-row mb-3 ">
+            </p>
+          </div>
+        </div>
+      </div>
 
-      <div class="col-md-5 mx-auto " *ngIf="fechaInicio && fechaFin">
-        <button class="btn bg-pri btn-block text-white " (click)="ver()" >
-          Ver
+      <div class="col-sm-12 mb-3 mx-auto">
+        <label for="persona">Usuario: <small>(Opcional)</small></label>
+        <select name="persona" class="form-control" [(ngModel)]="user">
+          <option [ngValue]="undefined">Todos</option>
+          <option *ngFor="let usuario of usuarios" [ngValue]="usuario.username">
+            {{ usuario.username }}
+          </option>
+        </select>
+      </div>
+      <div class="form-row mb-3">
+        <div class="col-md-5 mx-auto">
+          <button
+            class="btn bg-pri btn-block text-white"
+            (click)="ver()"
+            [disabled]="!MyForm.form.valid"
+          >
+            Ver
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-sm-8" id="reportes">
+    <div class="row">
+      <div class="col-sm-9 text-left">
+        <div class="row justify-content">
+          <div class="col-sm-4">
+            <h3 style="color: blue">Total: {{ cont | currency }}</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3 text-right">
+        <button
+          type="button"
+          class="btn btn-primary btn-sm mr-3 mb-1"
+          (click)="reportePDF()"
+          *ngIf="listRegistros.length > 0"
+        >
+          <i class="fas fa-print mr-1"></i>Imprimir
         </button>
       </div>
-      
     </div>
-  </form>
-
-
-
-</div>
-
-<div class="col-sm-8" id="reportes">
-  <div class="row">
-    <div class="col-sm-9 text-left">
-      <div class="row justify-content">
-        <div class="col-sm-4">
-          <h3 style="color: blue">Total: {{ cont | currency}}</h3>
+    <br />
+    <div class="row">
+      <div class="col-sm-12">
+        <div
+          class="alert alert-info text-center"
+          *ngIf="listRegistros.length <= 0"
+        >
+          No hay ventas registradas
+        </div>
+        <div class="table-scroll">
+          <table
+            class="table table-bordered table-striped table-responsive-sm table-sm text-center animated fadeIn fast"
+            *ngIf="listRegistros.length > 0"
+          >
+            <thead class="bg-pri white">
+              <tr>
+                <th>Cantidad</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Categoría</th>
+                <th>Fecha-Hora</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let registro of listRegistros">
+                <td>{{ registro.cantidad }}</td>
+                <td>{{ registro.nombre }}</td>
+                <td>{{ registro.precio | currency }}</td>
+                <td>{{ registro.nombre_categoria }}</td>
+                <td>
+                  {{ registro.fecha | date }}
+                  {{ registro.fecha | date: "H:mm a" }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-    <div class="col-sm-3 text-right">
-      <button
-        type="button"
-        class="btn btn-primary btn-sm mr-3 mb-1"
-        (click)="reportePDF()"
-        *ngIf="listRegistros.length > 0"
-      >
-        <i class="fas fa-print mr-1"></i>Imprimir
-      </button>
-    </div>
   </div>
-  <br/>
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="alert alert-info text-center" *ngIf="listRegistros.length <= 0">
-          No hay ventas registradas
-      </div>
-      <div class="table-scroll">
-        <table 
-          class="table table-bordered table-striped table-responsive-sm table-sm text-center animated fadeIn fast" 
-          *ngIf="listRegistros.length > 0"
-        >
-          <thead class="bg-pri white">
-              <tr>
-                  <th>Cantidad</th>
-                  <th>Nombre</th>
-                  <th>Precio</th>
-                  <th>Categoría</th>
-                  <th>Fecha-Hora</th>
-              </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let registro of listRegistros">
-              <td>{{ registro.cantidad }}</td>
-              <td>{{ registro.nombre }}</td>
-              <td>{{ registro.precio | currency }}</td>
-              <td>{{ registro.nombre_categoria }}</td>
-              <td>
-                {{ registro.fecha |date}}
-                {{ registro.fecha |date: 'H:mm a'}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      
-    </div>
-
-    
-
-  </div>
-
-  </div>
-  
-
 </div>

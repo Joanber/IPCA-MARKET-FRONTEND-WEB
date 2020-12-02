@@ -35,7 +35,10 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 // Set the fonts to use
 PdfMakeWrapper.setFonts(pdfFonts);
 import { MatDatepickerModule } from "@angular/material";
-import { MatMomentDateModule } from "@angular/material-moment-adapter";
+import {
+  MatMomentDateModule,
+  MomentDateModule,
+} from "@angular/material-moment-adapter";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -47,6 +50,7 @@ import { TokenInterceptor } from "./services/Interceptores/token.interceptor";
 import { AuthInterceptor } from "./services/Interceptores/AuthInterceptor";
 import { LoginComponen } from "./components/login/login.component";
 import { CambiarPassComponent } from "./components/usuario/cambiar-pass/cambiar-pass.component";
+import { NoconnectionComponent } from "./components/noconnection/noconnection.component";
 
 @NgModule({
   declarations: [
@@ -77,6 +81,7 @@ import { CambiarPassComponent } from "./components/usuario/cambiar-pass/cambiar-
     FooterComponent,
     RepInventarioComponent,
     CambiarPassComponent,
+    NoconnectionComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,6 +97,7 @@ import { CambiarPassComponent } from "./components/usuario/cambiar-pass/cambiar-
     MatInputModule,
     MatFormFieldModule,
     MatPaginatorModule,
+    MomentDateModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "en-US" },

@@ -4,6 +4,7 @@ import { DetalleFactura } from "src/app/models/detalleFactura";
 import { Factura } from "src/app/models/factura";
 import { Producto } from "src/app/models/producto";
 import { ProductoBajoInventario } from "src/app/models/ProductoBajoInventario";
+import { ConnectionService } from "src/app/services/connection.service";
 import { FacturasService } from "src/app/services/facturas.service";
 import { AuthService } from "src/app/services/login_services/auth.service";
 import { ProductoService } from "src/app/services/producto.service";
@@ -31,7 +32,8 @@ export class FacturasVentasComponent implements OnInit {
     private srvF: FacturasService,
     private srMF: FacturaModalService,
     public authService: AuthService,
-    public usuService: UsuarioService
+    public usuService: UsuarioService,
+    private conSrv: ConnectionService
   ) {}
 
   async ngOnInit() {

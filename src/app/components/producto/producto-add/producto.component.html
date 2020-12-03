@@ -67,6 +67,9 @@
                     <p class="field-error" *ngIf="cantidad_minima.hasError('required') && cantidad_minima.touched">
                         Cantidad Minima requerido!
                     </p>
+                    <p class="field-error" *ngIf="cantidad_minima.value === 0">
+                        Cantidad Minima no puede ser menor a 1
+                    </p>
                 </div>
             </div>
 
@@ -81,6 +84,10 @@
                 <div class="text-center">
                     <p class="field-error" *ngIf="cantidad_maxima.hasError('required') && cantidad_maxima.touched">
                         Cantidad Máxima requerido!
+                    </p>
+                    <p class="field-error" 
+                        *ngIf="cantidad_maxima.value < cantidad_minima.value">
+                        Cantidad Máxima no puede ser menor a Cantidad Minima!
                     </p>
                 </div>
             </div>

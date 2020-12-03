@@ -106,17 +106,17 @@ export class ProductoListComponent implements OnInit {
 
     pdf.add(
       new Columns([
-        "#",
+        "Codigo Barras",
         "Nombre",
         "Categoria",
         "Descripción",
         "Precio",
-      ]).columnGap(3).end
+      ]).columnGap(3).bold().end
     );
     this.prodListaImprimir.forEach((prod) => {
       pdf.add(
         new Columns([
-          prod.id,
+          prod.codigo_barras,
           prod.nombre,
           prod.categoria.nombre,
           prod.descripcion,

@@ -142,7 +142,7 @@ export class ReportesComponent implements OnInit {
   }
 
   public formatoFecha(fecha: string) {
-    return this.miDatePipe.transform(fecha, "yyyy-MM-dd");
+    return this.miDatePipe.transform(fecha || new Date().toDateString() , "yyyy-MM-dd");
   }
 
   public formatoHora(hora: string) {

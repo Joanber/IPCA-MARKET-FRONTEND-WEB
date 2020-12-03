@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 
-describe('AppComponent', () => {
+describe('Pruebas en el <AppComponent />', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -13,23 +13,28 @@ describe('AppComponent', () => {
       ],
     }).compileComponents();
   }));
+  
 
-  it('should create the app', () => {
+  // Verifica que la app se crea correctamente
+  it('debe de crear la app', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'IPCA-MARKET-FRONTEND'`, () => {
+
+  // Verifica el titulo
+  it(`debe tener el titulo de: 'Ipca Market'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('IPCA-MARKET-FRONTEND');
+    expect(app.title).toEqual('Ipca Market');
   });
-
-  it('should render title', () => {
+  
+  // Verifica que exista el componente
+  it('debe existir el elemento div y el router-outlet', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('IPCA-MARKET-FRONTEND app is running!');
+    expect(compiled).toBeTruthy();
   });
 });

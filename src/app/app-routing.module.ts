@@ -23,6 +23,8 @@ import { AuthGuard } from "./services/guards/auth.guard";
 import { LoginComponen } from "./components/login/login.component";
 import { CambiarPassComponent } from "./components/usuario/cambiar-pass/cambiar-pass.component";
 import { RoleGuard } from "./services/guards/role.guard";
+import { ConecctionGuard } from "./services/guards/conecction.guard";
+import { NoconnectionComponent } from "./components/noconnection/noconnection.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponen },
@@ -31,15 +33,16 @@ const routes: Routes = [
     component: PrincipalComponent,
     canActivate: [AuthGuard],
     children: [
+      { path: "not-conection", component: NoconnectionComponent },
       {
         path: "home",
         component: HomeComponent,
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, ConecctionGuard],
       },
       {
         path: "home/ventas",
         component: FacturasVentasComponent,
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, ConecctionGuard],
       },
       {
         path: "dashprod",
@@ -49,7 +52,7 @@ const routes: Routes = [
           {
             path: "producto",
             component: ProductoListComponent,
-            canActivate: [AuthGuard, RoleGuard],
+            canActivate: [AuthGuard, RoleGuard, ConecctionGuard],
             data: {
               role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
             },
@@ -73,7 +76,7 @@ const routes: Routes = [
           {
             path: "categoria",
             component: CategoriaListComponent,
-            canActivate: [AuthGuard, RoleGuard],
+            canActivate: [AuthGuard, RoleGuard, ConecctionGuard],
             data: {
               role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
             },
@@ -105,7 +108,7 @@ const routes: Routes = [
           {
             path: "personas",
             component: PersonasListComponent,
-            canActivate: [AuthGuard, RoleGuard],
+            canActivate: [AuthGuard, RoleGuard, ConecctionGuard],
             data: {
               role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
             },
@@ -113,7 +116,7 @@ const routes: Routes = [
           {
             path: "usuarios",
             component: UsuarioListComponent,
-            canActivate: [AuthGuard, RoleGuard],
+            canActivate: [AuthGuard, RoleGuard, ConecctionGuard],
             data: {
               role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
             },
@@ -169,7 +172,7 @@ const routes: Routes = [
           {
             path: "producto",
             component: ProductoInComponent,
-            canActivate: [AuthGuard, RoleGuard],
+            canActivate: [AuthGuard, RoleGuard, ConecctionGuard],
             data: {
               role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
             },
@@ -177,7 +180,7 @@ const routes: Routes = [
           {
             path: "reporte",
             component: ReportesComponent,
-            canActivate: [AuthGuard, RoleGuard],
+            canActivate: [AuthGuard, RoleGuard, ConecctionGuard],
             data: {
               role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
             },
@@ -185,7 +188,7 @@ const routes: Routes = [
           {
             path: "productos/bajos",
             component: ProdBajoInvComponent,
-            canActivate: [AuthGuard, RoleGuard],
+            canActivate: [AuthGuard, RoleGuard, ConecctionGuard],
             data: {
               role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
             },
@@ -193,7 +196,7 @@ const routes: Routes = [
           {
             path: "reporte_inventario",
             component: RepInventarioComponent,
-            canActivate: [AuthGuard, RoleGuard],
+            canActivate: [AuthGuard, RoleGuard, ConecctionGuard],
             data: {
               role: ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"],
             },

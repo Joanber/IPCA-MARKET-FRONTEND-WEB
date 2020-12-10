@@ -39,9 +39,6 @@ import {
   MatMomentDateModule,
   MomentDateModule,
 } from "@angular/material-moment-adapter";
-import { MatAutocompleteModule } from "@angular/material/autocomplete";
-import { MatInputModule } from "@angular/material/input";
-import { MatFormFieldModule } from "@angular/material/form-field";
 import { ArraypipePipe } from "./pipes/arraypipe.pipe";
 import { ProductoInComponent } from "./components/inventario/producto-in/producto-in.component";
 import { InventarioComponent } from "./components/inventario/inventario/inventario.component";
@@ -93,9 +90,6 @@ import { NoconnectionComponent } from "./components/noconnection/noconnection.co
     MatDatepickerModule,
     MatMomentDateModule,
     ReactiveFormsModule,
-    MatAutocompleteModule,
-    MatInputModule,
-    MatFormFieldModule,
     MatPaginatorModule,
     MomentDateModule,
   ],

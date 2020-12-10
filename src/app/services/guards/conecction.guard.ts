@@ -23,12 +23,10 @@ export class ConecctionGuard implements CanActivate {
     | boolean
     | UrlTree {
     if (this.conSrv.online) {
-      console.log(this.conSrv.online, "valor boolean");
       return true;
     }
     this.conSrv.isNetworkStopped = true;
     this.router.navigate(["/not-conection"]);
-    console.log(this.conSrv.online, "valor boolean");
     return false;
   }
 }

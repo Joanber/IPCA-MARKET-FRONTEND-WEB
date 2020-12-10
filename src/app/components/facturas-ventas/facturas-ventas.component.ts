@@ -47,7 +47,7 @@ export class FacturasVentasComponent implements OnInit {
     if (termino.length > 9) {
       this.srvP.getCodigoBarrasExiste(termino.toUpperCase()).subscribe((p) => {
         if (p == null) {
-          console.log("no exitse");
+          console.log("no existe");
         } else {
           this.productoFiltrado = p;
           this.seleccionarProducto(this.productoFiltrado);
@@ -97,10 +97,8 @@ export class FacturasVentasComponent implements OnInit {
         if (id === detalle.producto.id) {
           if (detalle.cantidad >= detalle.producto.cantidad_maxima) {
             detalle.cantidad = detalle.producto.cantidad_maxima;
-            console.log(detalle.cantidad, "1");
           } else {
             ++detalle.cantidad;
-            console.log(detalle.cantidad, "2");
           }
         }
         return detalle;
@@ -123,11 +121,6 @@ export class FacturasVentasComponent implements OnInit {
       (detalle: DetalleFactura) => {
         if (id === detalle.producto.id) {
           if (cantidad > detalle.producto.cantidad_maxima) {
-            console.log(cantidad, "cantidad digitada");
-            console.log(
-              detalle.producto.cantidad_maxima,
-              "cantidadmaxima del producto"
-            );
             Swal.fire({
               title: ` ! INVENTARIO INSUFICIENTE DE ${detalle.producto.nombre}, HAY ${detalle.producto.cantidad_maxima} DISPONIBLES ! `,
               icon: "error",
@@ -139,18 +132,10 @@ export class FacturasVentasComponent implements OnInit {
               },
             });
             detalle.cantidad = detalle.producto.cantidad_maxima;
-            console.log(detalle.cantidad, "paso por aki 1");
-            console.log(detalle.producto.cantidad_maxima, "detalle producto");
           } else {
             detalle.cantidad = cantidad;
-            console.log(cantidad, "paso por aki 2");
-            console.log(detalle.producto.cantidad_maxima, "detalle producto");
           }
         }
-        console.log(detalle.cantidad, "detalle cantidad");
-        console.log(detalle.producto.cantidad_maxima, "detalle producto");
-        console.log("detalles finales");
-        console.log(detalle);
         return detalle;
       }
     );
@@ -192,7 +177,6 @@ export class FacturasVentasComponent implements OnInit {
       this.factura.detalles_facturas.length > 0 &&
       this.authService.token != null
     ) {
-      console.log("guadarando");
       this.temFacSer.guardarFactura(this.factura);
     }
   }

@@ -56,9 +56,7 @@ export class CategoriasService {
   getCategoriasPage(page: string): Observable<any> {
     return this.http.get(this.baseEndpoint + "/page/" + page).pipe(
       tap((response: any) => {
-        (response.content as Categoria[]).forEach((categoria) => {
-          console.log(categoria.nombre);
-        });
+        (response.content as Categoria[]).forEach((categoria) => {});
       }),
       map((response: any) => {
         (response.content as Categoria[]).map((producto) => {

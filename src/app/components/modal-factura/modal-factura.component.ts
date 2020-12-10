@@ -49,7 +49,6 @@ export class ModalFacturaComponent implements OnInit {
 
   public async guardarVentaFactura() {
     this.srvF.crearFactura(this.factura).subscribe((factura) => {
-      console.log(this.factura, "modal ");
       this.cerrarModal();
       this.temFacSer.borrarItemsFacturas();
       window.location.reload();

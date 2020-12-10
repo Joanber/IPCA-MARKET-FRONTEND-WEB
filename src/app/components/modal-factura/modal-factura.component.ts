@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { Factura } from "src/app/models/factura";
 import { FacturasService } from "src/app/services/facturas.service";
+import { TempFacturaService } from "src/app/services/temp-factura.service";
 import Swal from "sweetalert2";
 import { FacturaModalService } from "./factura-modal.service";
 
@@ -17,7 +18,8 @@ export class ModalFacturaComponent implements OnInit {
   constructor(
     public srvMF: FacturaModalService,
     private srvF: FacturasService,
-    private router: Router
+    private router: Router,
+    private temFacSer: TempFacturaService
   ) {}
 
   ngOnInit() {}
@@ -45,10 +47,12 @@ export class ModalFacturaComponent implements OnInit {
     this.pagoCon = 0;
   }
 
-  public guardarVentaFactura() {
+  public async guardarVentaFactura() {
     this.srvF.crearFactura(this.factura).subscribe((factura) => {
-      console.log(this.factura);
+      console.log(this.factura, "modal ");
       this.cerrarModal();
+      this.temFacSer.borrarItemsFacturas();
+      window.location.reload();
       Swal.fire({
         title: "!PRODUCTO VENDIDO CON ÉXITO¡",
         icon: "success",
@@ -59,9 +63,10 @@ export class ModalFacturaComponent implements OnInit {
           }, 1000);
         },
       });
-      this.router
+
+      /* this.router
         .navigateByUrl("/home", { skipLocationChange: true })
-        .then(() => this.router.navigate(["/home/ventas"]));
+        .then(() => this.router.navigate(["/home/ventas"])); */
     });
   }
 }

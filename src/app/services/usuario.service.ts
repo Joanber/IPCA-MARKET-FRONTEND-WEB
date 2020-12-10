@@ -88,7 +88,7 @@ export class UsuarioService {
   delete(id: number): Observable<Usuario> {
     return this.http.delete<Usuario>(`${this.baseEndpoint}/${id}`).pipe(
       catchError((e) => {
-        Swal.fire("Error al eliminar al usuario", e.error.mensaje, "error");
+        Swal.fire("Error", e.error.mensaje, "error");
         return throwError(e);
       })
     );

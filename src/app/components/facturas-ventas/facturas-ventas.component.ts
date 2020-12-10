@@ -4,10 +4,10 @@ import { DetalleFactura } from "src/app/models/detalleFactura";
 import { Factura } from "src/app/models/factura";
 import { Producto } from "src/app/models/producto";
 import { ProductoBajoInventario } from "src/app/models/ProductoBajoInventario";
-import { ConnectionService } from "src/app/services/connection.service";
 import { FacturasService } from "src/app/services/facturas.service";
 import { AuthService } from "src/app/services/login_services/auth.service";
 import { ProductoService } from "src/app/services/producto.service";
+import { TempFacturaService } from "src/app/services/temp-factura.service";
 import { UsuarioService } from "src/app/services/usuario.service";
 import Swal from "sweetalert2";
 
@@ -33,11 +33,14 @@ export class FacturasVentasComponent implements OnInit {
     private srMF: FacturaModalService,
     public authService: AuthService,
     public usuService: UsuarioService,
-    private conSrv: ConnectionService
+    private temFacSer: TempFacturaService
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this.getProductosBajosInventario();
+    if (this.temFacSer.getFactura.total > 0) {
+      this.factura = this.temFacSer.getFactura;
+    }
   }
 
   public productoEscaneadoDigitado(termino: string, event) {
@@ -75,6 +78,7 @@ export class FacturasVentasComponent implements OnInit {
       nuevoDetalle.producto = producto;
       this.factura.detalles_facturas.push(nuevoDetalle);
     }
+    localStorage.setItem("facturas", JSON.stringify(this.factura));
     this.autocompleteControl.setValue("");
   }
 
@@ -107,6 +111,7 @@ export class FacturasVentasComponent implements OnInit {
     this.factura.detalles_facturas = this.factura.detalles_facturas.filter(
       (detalle: DetalleFactura) => id !== detalle.producto.id
     );
+    this.temFacSer.borrarItemsFacturas();
   }
 
   public actualizarCantidad(id: number, event: any): void {
@@ -160,7 +165,7 @@ export class FacturasVentasComponent implements OnInit {
           this.factura.observacion = "";
         });
       this.facturaModal = factura;
-      console.log(this.factura, "desde facturas ventas");
+      this.ngOnDestroy();
       this.srMF.abrirModal();
     }
   }
@@ -181,5 +186,14 @@ export class FacturasVentasComponent implements OnInit {
     setTimeout(() => {
       this.proBajos = false;
     }, 3000);
+  }
+  ngOnDestroy(): void {
+    if (
+      this.factura.detalles_facturas.length > 0 &&
+      this.authService.token != null
+    ) {
+      console.log("guadarando");
+      this.temFacSer.guardarFactura(this.factura);
+    }
   }
 }

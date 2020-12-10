@@ -4,6 +4,7 @@ import { Usuario } from "src/app/models/usuario";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Rol } from "src/app/models/rol";
+import { TempFacturaService } from "../temp-factura.service";
 
 @Injectable({
   providedIn: "root",
@@ -14,7 +15,10 @@ export class AuthService {
 
   protected baseEndpoint = BASE_ENDPOINT + "/auth";
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private temFacSer: TempFacturaService
+  ) {}
 
   public get usuario(): Usuario {
     if (this._usuario != null) {
@@ -74,9 +78,11 @@ export class AuthService {
   logout(): void {
     this._token = null;
     this._usuario = null;
-    sessionStorage.clear();
+    this.usuario.facturas = null;
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("usuario");
+    this.temFacSer.borrarFacturas();
+    sessionStorage.clear();
   }
   guardarUsuario(response: any): void {
     this._usuario = new Usuario();

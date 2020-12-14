@@ -89,9 +89,10 @@ export class CategoriaListComponent implements OnInit {
     pdf.add(pdf.ln(1));
     pdf.add(new Txt("Categorias").alignment("center").bold().italics().end);
     pdf.add(pdf.ln(1));
-    pdf.add(new Columns(["#", "Nombre"]).columnGap(3).end);
+    pdf.add(new Columns(["#", "Nombre"]).columnGap(3).bold().end);
     this.categoriaListImprimir.forEach((categoria) => {
       pdf.add(new Columns([categoria.id, categoria.nombre]).columnGap(3).end);
+      pdf.add(pdf.ln(1));
     });
     pdf.create().open();
   }

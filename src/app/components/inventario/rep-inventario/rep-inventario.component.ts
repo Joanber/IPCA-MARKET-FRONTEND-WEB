@@ -57,19 +57,39 @@ export class RepInventarioComponent implements OnInit {
       new Txt("Reporte de Inventario").alignment("center").bold().italics().end
     );
     pdf.add(pdf.ln(1));
+    pdf.add(
+      new Txt(`Categoria: ${this.categoria || 'TODAS'}`)
+        .alignment("left")
+        .end
+    );
+    pdf.add(pdf.ln(1));
+    pdf.add(
+      new Txt(`Cantidad productos inventario: ${this.facturaLista.length}`)
+        .alignment("left")
+        .end
+    );
+    pdf.add(pdf.ln(1));
+    pdf.add(
+      new Txt(`Costo total del inventario: $${this.srvUr.formateaValor(this.total)}`)
+        .alignment("left")
+        .end
+    );
+    pdf.add(pdf.ln(1));
 
     pdf.add(
-      new Columns([ 'Codigo de barras','Nombre','Precio', 'Existencia', 'Inv Minimo' ]).columnGap(3).style("text-center").bold().end
+      new Columns([ 'Codigo Barras','Nombre','Precio U','SubTotal', 'Existencia', 'Inv Minimo' ]).columnGap(3).style("text-center").bold().end
     );
     this.facturaLista.forEach( registro => {
       pdf.add(
         new Columns([ registro.codigo_barras,
           registro.nombre,
           `$${this.srvUr.formateaValor(registro.precio)}`,
+          `$${this.srvUr.formateaValor(registro.precio * registro.cantidad_maxima)}`,
           registro.cantidad_maxima,
           registro.cantidad_minima 
         ]).columnGap(3).end
       );
+      pdf.add(pdf.ln(1));
     });
     pdf.create().open()
   }

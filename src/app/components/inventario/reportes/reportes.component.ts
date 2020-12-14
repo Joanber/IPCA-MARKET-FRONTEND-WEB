@@ -103,7 +103,8 @@ export class ReportesComponent implements OnInit {
       new Columns([
         "Cantidad",
         "Nombre",
-        "Precio",
+        "Precio U.",
+        "SubTotal",
         "Codigo de Barras",
         "Categoria",
         "Hora",
@@ -118,6 +119,7 @@ export class ReportesComponent implements OnInit {
           registro.cantidad,
           registro.nombre,
           `$${this.srvUr.formateaValor(registro.precio)}`,
+          `$${this.srvUr.formateaValor(registro.precio * registro.cantidad)}`,
           registro.codigo_barras,
           registro.nombre_categoria,
           this.formatoHora(registro.fecha),
@@ -125,6 +127,7 @@ export class ReportesComponent implements OnInit {
           .columnGap(1)
           .alignment("center").end
       );
+      pdf.add(pdf.ln(1));
     });
     pdf.create().open();
   }

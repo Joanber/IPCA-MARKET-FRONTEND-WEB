@@ -37,6 +37,7 @@
       type="button"
       class="btn btn-primary btn-sm mr-3 mb-1"
       (click)="reportePDF()"
+      *ngIf="prodLista?.length > 0"
     >
       <i class="fas fa-print mr-1"></i>Imprimir Todos
     </button>
@@ -55,6 +56,7 @@
       <thead class="bg-pri white">
         <tr>
           <th>Foto</th>
+          <th>Codigo Barras</th>
           <th>Nombre</th>
           <th>Precio</th>
           <th>Categoría</th>
@@ -87,6 +89,9 @@
               src="../../../../../assets/img/notproducto.jpg"
               style="width: 70px"
             />
+          </td>
+          <td>
+            {{ producto.codigo_barras | uppercase }}
           </td>
           <td>
             {{ producto.nombre | uppercase }}

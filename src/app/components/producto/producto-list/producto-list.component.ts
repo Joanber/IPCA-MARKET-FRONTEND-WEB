@@ -123,6 +123,7 @@ export class ProductoListComponent implements OnInit {
           `$${this.srvUr.formateaValor(prod.precio)}`,
         ]).columnGap(3).end
       );
+      pdf.add(pdf.ln(1));
     });
     pdf.create().open();
   }

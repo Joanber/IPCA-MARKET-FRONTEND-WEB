@@ -62,7 +62,7 @@
           <th>Categoría</th>
           <th>Cant. Máxima</th>
           <th>Cant. Minima</th>
-          <th *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])">
+          <th *ngIf="authService.hasAnyRoles(this.authService.rolesNotAll)">
             Editar-Eliminar
           </th>
         </tr>
@@ -108,7 +108,7 @@
           <td>
             {{ producto.cantidad_minima }}
           </td>
-          <td *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])">
+          <td *ngIf="authService.hasAnyRoles(this.authService.rolesNotAll)">
             <button
               class="btn btn-warning btn-sm mr-2 mb-1"
               [routerLink]="['/dashprod/producto/form/', producto.id]"
@@ -136,5 +136,4 @@
     showFirstLastButtons
   >
   </mat-paginator>
-  <!-- <app-paginador *ngIf="paginator" [paginator]="paginator"></app-paginador> -->
 </div>

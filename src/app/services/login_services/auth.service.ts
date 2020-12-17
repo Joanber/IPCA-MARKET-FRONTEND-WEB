@@ -12,13 +12,15 @@ import { TempFacturaService } from "../temp-factura.service";
 export class AuthService {
   private _usuario: Usuario;
   private _token: string;
+  public rolesAll: any = ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"];
+  public rolesNotAll: any = ["ROLE_ADMIN", "ROLE_DOCENTE"];
 
   protected baseEndpoint = BASE_ENDPOINT + "/auth";
 
-  constructor(
-    private http: HttpClient,
-    private temFacSer: TempFacturaService
-  ) {}
+  constructor(private http: HttpClient, private temFacSer: TempFacturaService) {
+    this.rolesAll = this.rolesAll as Rol[];
+    this.rolesNotAll = this.rolesNotAll as Rol[];
+  }
 
   public get usuario(): Usuario {
     if (this._usuario != null) {

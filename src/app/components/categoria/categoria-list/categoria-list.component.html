@@ -96,7 +96,7 @@
 
             <button
               class="btn btn-danger btn-sm mr-2 mb-1"
-              *ngIf="authService.hasAnyRoles(['ROLE_ADMIN', 'ROLE_DOCENTE'])"
+              *ngIf="authService.hasAnyRoles(this.authService.rolesNotAll)"
             >
               <i class="fa fa-trash" (click)="delete(categoria)"></i>
             </button>
@@ -114,5 +114,4 @@
     showFirstLastButtons
   >
   </mat-paginator>
-  <!-- <app-paginador *ngIf=" paginator " [paginator]="paginator "></app-paginador> -->
 </div>

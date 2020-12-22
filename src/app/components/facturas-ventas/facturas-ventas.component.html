@@ -25,13 +25,10 @@
 <form #form="ngForm">
   <div class="form-row justify-content-center">
     <div class="col-7 my-1">
-      <label for="buscar" class="col-form-label font-weight-bold"
-        >Código del Producto:</label
-      >
       <input
         type="text"
-        placeholder="Escanea el código o escríbelo y presiona enter "
-        class="form-control mayusculas"
+        placeholder="Escanea el código de barras o escríbelo y presiona enter "
+        class="form-control mayusculas form-control-sm"
         #termino
         (keydown)="productoEscaneadoDigitado(termino.value, $event)"
       />

@@ -3,7 +3,7 @@ import { BASE_ENDPOINT } from "../DB_CONFIG/bdConig";
 import { HttpClient } from "@angular/common/http";
 import { Producto } from "../models/producto";
 import { Observable, throwError } from "rxjs";
-import { map, catchError, tap } from 'rxjs/operators';
+import { map, catchError, tap } from "rxjs/operators";
 import Swal from "sweetalert2";
 
 @Injectable({
@@ -43,28 +43,24 @@ export class ProductoService {
   getProductosFiltro(termino: string): Observable<Producto[]> {
     return this.http.get<Producto[]>(`${this.baseEndpoint}/filtrar/${termino}`);
   }
-  
+
   getCodigoBarrasExiste(codigo: string): Observable<Producto> {
-    return this.http.get<Producto>(
-      `${this.baseEndpoint}/codigo/${codigo}`
-    );
+    return this.http.get<Producto>(`${this.baseEndpoint}/codigo/${codigo}`);
   }
-  getProductosPage(page: string): Observable<any>{
-    return this.http.get(this.baseEndpoint+'/page/'+page).pipe(
-      tap((response:any) => {
-        (response.content  as Producto[]).forEach(producto => {
+  getProductosPage(page: string): Observable<any> {
+    return this.http.get(this.baseEndpoint + "/page/" + page).pipe(
+      tap((response: any) => {
+        (response.content as Producto[]).forEach((producto) => {
           return producto;
-        })
+        });
       }),
-      map((response:any) => {
-        (response.content as Producto[]).map(producto => {
-  
+      map((response: any) => {
+        (response.content as Producto[]).map((producto) => {
           return producto;
-        })
-        return response
+        });
+        return response;
       })
-  
-    )
+    );
   }
 
   editarSinFoto(producto: Producto): Observable<Producto> {
@@ -92,6 +88,7 @@ export class ProductoService {
     formData.append("descripcion", producto.descripcion);
     formData.append("codigo_barras", producto.codigo_barras);
     formData.append("categoria.id", String(producto.categoria.id));
+    formData.append("precio_compra", String(producto.precio_compra));
     formData.append("categoria.nombre", producto.categoria.nombre);
     return this.http
       .post<Producto>(`${this.baseEndpoint}` + "/crear-con-foto", formData)
@@ -117,9 +114,13 @@ export class ProductoService {
     formData.append("descripcion", producto.descripcion);
     formData.append("codigo_barras", producto.codigo_barras);
     formData.append("categoria.id", String(producto.categoria.id));
+    formData.append("precio_compra", String(producto.precio_compra));
     formData.append("categoria.nombre", producto.categoria.nombre);
     return this.http
-      .put<Producto>(`${this.baseEndpoint}` + `/editar-con-foto/${producto.id}`, formData)
+      .put<Producto>(
+        `${this.baseEndpoint}` + `/editar-con-foto/${producto.id}`,
+        formData
+      )
       .pipe(
         map((response: any) => response.producto as Producto),
         catchError((e) => {

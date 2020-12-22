@@ -29,6 +29,8 @@ export class ReportesComponent implements OnInit {
 
   public cont: number;
   public totalVentas: number;
+  public ganancia: number;
+  public totalganancia: number;
 
   public fechaInicio: string = null;
   public fechaFin: string = null;
@@ -58,7 +60,6 @@ export class ReportesComponent implements OnInit {
 
   public reportePDF() {
     this.switch();
-    console.log(this.totalVentas);
     const pdf = new PdfMakeWrapper();
     pdf.pageMargins([40, 60, 40, 60]);
     pdf.pageSize("A4");
@@ -90,6 +91,11 @@ export class ReportesComponent implements OnInit {
     );
     pdf.add(
       new Txt(`Total Vendido: $${this.srvUr.formateaValor(this.cont)}`)
+        .alignment("right")
+        .bold().end
+    );
+    pdf.add(
+      new Txt(`Ganancia: $${this.srvUr.formateaValor(this.ganancia)}`)
         .alignment("right")
         .bold().end
     );
@@ -141,11 +147,15 @@ export class ReportesComponent implements OnInit {
     this.fs.getVentas(inicio, fin, usuario).subscribe(async (data) => {
       this.listRegistros = await data;
       this.total();
+      this.totalGanancia();
     });
   }
 
   public formatoFecha(fecha: string) {
-    return this.miDatePipe.transform(fecha || new Date().toDateString() , "yyyy-MM-dd");
+    return this.miDatePipe.transform(
+      fecha || new Date().toDateString(),
+      "yyyy-MM-dd"
+    );
   }
 
   public formatoHora(hora: string) {
@@ -161,6 +171,15 @@ export class ReportesComponent implements OnInit {
     }
   }
 
+  public totalGanancia() {
+    this.ganancia = 0;
+    this.totalganancia = 0;
+    for (const prod of this.listRegistros) {
+      this.totalganancia =
+        prod.precio * prod.cantidad - prod.precio_compra * prod.cantidad;
+      this.ganancia += this.totalganancia;
+    }
+  }
   private switch() {
     switch (this.opcionSeleccionada) {
       case "Hoy":

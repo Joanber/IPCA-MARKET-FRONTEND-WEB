@@ -12,7 +12,6 @@ import { PrincipalComponent } from "./components/principal.component";
 import { PersonasListComponent } from "./components/Personas/personas-list/personas-list.component";
 import { PersonasAddComponent } from "./components/Personas/personas-add/personas-add.component";
 import { ProductoListComponent } from "./components/producto/producto-list/producto-list.component";
-import { Grafico1Component } from "./elements/grafico1/grafico1.component";
 import { UsuarioListComponent } from "./components/usuario/usuario-list/usuario-list.component";
 import { UsuarioAddComponent } from "./components/usuario/usuario-add/usuario-add.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -61,7 +60,6 @@ import { NoconnectionComponent } from "./components/noconnection/noconnection.co
     PersonasListComponent,
     PersonasAddComponent,
     ProductoListComponent,
-    Grafico1Component,
     UsuarioListComponent,
     UsuarioAddComponent,
     ArraypipePipe,

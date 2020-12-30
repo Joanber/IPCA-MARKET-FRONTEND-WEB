@@ -83,6 +83,7 @@ export class AuthService {
     this.usuario.facturas = null;
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("usuario");
+    sessionStorage.removeItem("factura");
     this.temFacSer.borrarFacturas();
     sessionStorage.clear();
   }

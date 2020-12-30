@@ -12,7 +12,7 @@ import { FacturaModalService } from "./factura-modal.service";
   styleUrls: ["./modal-factura.component.css"],
 })
 export class ModalFacturaComponent implements OnInit {
-  @Input() factura: Factura;
+  public factura: Factura = new Factura();
   public pagoCon: number = 0;
   public cambio: number = 0;
   constructor(
@@ -22,7 +22,11 @@ export class ModalFacturaComponent implements OnInit {
     private temFacSer: TempFacturaService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.temFacSer.getFactura.total > 0) {
+      this.factura = this.temFacSer.getFactura;
+    }
+  }
 
   public actualizarPagoCon(event: any, factura: Factura) {
     let cantidad: number = event.target.value as number;
@@ -41,17 +45,11 @@ export class ModalFacturaComponent implements OnInit {
     return this.cambio;
   }
 
-  public cerrarModal() {
-    this.srvMF.cerrarModal();
-    this.cambio = 0;
-    this.pagoCon = 0;
+  public irHome() {
+    this.router.navigate(["/home"]);
   }
-
-  public async guardarVentaFactura() {
+  public guardarVentaFactura() {
     this.srvF.crearFactura(this.factura).subscribe((factura) => {
-      this.cerrarModal();
-      this.temFacSer.borrarItemsFacturas();
-      window.location.reload();
       Swal.fire({
         title: "!PRODUCTO VENDIDO CON ÉXITO¡",
         icon: "success",
@@ -62,10 +60,8 @@ export class ModalFacturaComponent implements OnInit {
           }, 1000);
         },
       });
-
-      /* this.router
-        .navigateByUrl("/home", { skipLocationChange: true })
-        .then(() => this.router.navigate(["/home/ventas"])); */
     });
+    this.temFacSer.borrarItemsFacturas();
+    this.irHome();
   }
 }

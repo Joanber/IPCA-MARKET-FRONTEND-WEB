@@ -25,6 +25,8 @@ import { CambiarPassComponent } from "./components/usuario/cambiar-pass/cambiar-
 import { RoleGuard } from "./services/guards/role.guard";
 import { ConecctionGuard } from "./services/guards/conecction.guard";
 import { NoconnectionComponent } from "./components/noconnection/noconnection.component";
+import { ModalFacturaComponent } from "./components/modal-factura/modal-factura.component";
+import { CobrarGuard } from "./services/guards/cobrar.guard";
 
 const routes: Routes = [
   { path: "login", component: LoginComponen },
@@ -40,9 +42,9 @@ const routes: Routes = [
         canActivate: [AuthGuard, ConecctionGuard],
       },
       {
-        path: "home/ventas",
-        component: FacturasVentasComponent,
-        canActivate: [AuthGuard, ConecctionGuard],
+        path: "cobrar",
+        component: ModalFacturaComponent,
+        canActivate: [AuthGuard, ConecctionGuard, CobrarGuard],
       },
       {
         path: "dashprod",

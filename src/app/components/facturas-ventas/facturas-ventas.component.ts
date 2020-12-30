@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, NgForm } from "@angular/forms";
+import { Router } from "@angular/router";
 import { DetalleFactura } from "src/app/models/detalleFactura";
 import { Factura } from "src/app/models/factura";
 import { Producto } from "src/app/models/producto";
@@ -33,16 +34,25 @@ export class FacturasVentasComponent implements OnInit {
     private srMF: FacturaModalService,
     public authService: AuthService,
     public usuService: UsuarioService,
-    private temFacSer: TempFacturaService
+    private temFacSer: TempFacturaService,
+    private router: Router
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.usuService
+      .getUsuario(this.authService.usuario.id)
+      .subscribe((usuario) => {
+        this.factura.usuario = usuario;
+        this.factura.observacion = "";
+      });
     this.getProductosBajosInventario();
+    this.facTemporal();
+  }
+  public facTemporal() {
     if (this.temFacSer.getFactura.total > 0) {
       this.factura = this.temFacSer.getFactura;
     }
   }
-
   public productoEscaneadoDigitado(termino: string, event) {
     if (termino.length > 9) {
       this.srvP.getCodigoBarrasExiste(termino.toUpperCase()).subscribe((p) => {
@@ -141,17 +151,10 @@ export class FacturasVentasComponent implements OnInit {
     );
   }
 
-  public abrirModal(factura: Factura, form: NgForm) {
+  public abrirModal() {
     if (this.factura.detalles_facturas.length > 0) {
-      this.usuService
-        .getUsuario(this.authService.usuario.id)
-        .subscribe((usuario) => {
-          this.factura.usuario = usuario;
-          this.factura.observacion = "";
-        });
-      this.facturaModal = factura;
+      this.router.navigate(["/cobrar"]);
       this.ngOnDestroy();
-      this.srMF.abrirModal();
     }
   }
   private getProductosBajosInventario() {

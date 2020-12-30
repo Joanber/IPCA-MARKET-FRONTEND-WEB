@@ -33,6 +33,7 @@ export class TempFacturaService {
   }
 
   public borrarItemsFacturas() {
+    this.factura = null;
     sessionStorage.removeItem("factura");
     localStorage.removeItem("facturas");
   }

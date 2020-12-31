@@ -4,7 +4,6 @@ import { Factura } from "src/app/models/factura";
 import { FacturasService } from "src/app/services/facturas.service";
 import { TempFacturaService } from "src/app/services/temp-factura.service";
 import Swal from "sweetalert2";
-import { FacturaModalService } from "./factura-modal.service";
 
 @Component({
   selector: "app-modal-factura",
@@ -16,7 +15,6 @@ export class ModalFacturaComponent implements OnInit {
   public pagoCon: number = 0;
   public cambio: number = 0;
   constructor(
-    public srvMF: FacturaModalService,
     private srvF: FacturasService,
     private router: Router,
     private temFacSer: TempFacturaService

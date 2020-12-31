@@ -12,8 +12,6 @@ import { TempFacturaService } from "src/app/services/temp-factura.service";
 import { UsuarioService } from "src/app/services/usuario.service";
 import Swal from "sweetalert2";
 
-import { FacturaModalService } from "../modal-factura/factura-modal.service";
-
 @Component({
   selector: "app-facturas-ventas",
   templateUrl: "./facturas-ventas.component.html",
@@ -31,7 +29,6 @@ export class FacturasVentasComponent implements OnInit {
   constructor(
     private srvP: ProductoService,
     private srvF: FacturasService,
-    private srMF: FacturaModalService,
     public authService: AuthService,
     public usuService: UsuarioService,
     private temFacSer: TempFacturaService,

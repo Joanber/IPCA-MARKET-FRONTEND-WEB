@@ -12,8 +12,8 @@ import { TempFacturaService } from "../temp-factura.service";
 export class AuthService {
   private _usuario: Usuario;
   private _token: string;
-  public rolesAll: any = ["ROLE_ADMIN", "ROLE_DOCENTE", "ROLE_ESTUDIANTE"];
-  public rolesNotAll: any = ["ROLE_ADMIN", "ROLE_DOCENTE"];
+  public rolesAll: any = ["ROLE_ADMIN", "ROLE_USER"];
+  public rolesNotAll: any = ["ROLE_ADMIN"];
 
   protected baseEndpoint = BASE_ENDPOINT + "/auth";
 

@@ -23,7 +23,6 @@ export class PersonasListComponent implements OnInit {
 
   constructor(
     private personaService: PersonasService,
-    private route: ActivatedRoute,
     public authService: AuthService
   ) {}
 

@@ -1,0 +1,8 @@
+.mat-paginator {
+  color: #042331;
+  display: flex;
+  justify-content: center;
+}
+.table td {
+  vertical-align: middle;
+}

@@ -30,7 +30,9 @@ import { ProdBajoInvComponent } from "./components/inventario/prod-bajo-inv/prod
 import { FooterComponent } from "./components/footer/footer.component";
 import { RepInventarioComponent } from "./components/inventario/rep-inventario/rep-inventario.component";
 import { MatPaginatorModule } from "@angular/material/paginator";
-
+import localeES from "@angular/common/locales/es";
+import { registerLocaleData } from "@angular/common";
+registerLocaleData(localeES, "es");
 // Set the fonts to use
 PdfMakeWrapper.setFonts(pdfFonts);
 import { MatDatepickerModule } from "@angular/material";
@@ -47,6 +49,8 @@ import { AuthInterceptor } from "./services/Interceptores/AuthInterceptor";
 import { LoginComponen } from "./components/login/login.component";
 import { CambiarPassComponent } from "./components/usuario/cambiar-pass/cambiar-pass.component";
 import { NoconnectionComponent } from "./components/noconnection/noconnection.component";
+import { FacturasListComponent } from "./components/inventario/facturas-list/facturas-list.component";
+import { FacturasEditComponent } from "./components/inventario/facturas-edit/facturas-edit.component";
 
 @NgModule({
   declarations: [
@@ -77,6 +81,8 @@ import { NoconnectionComponent } from "./components/noconnection/noconnection.co
     RepInventarioComponent,
     CambiarPassComponent,
     NoconnectionComponent,
+    FacturasListComponent,
+    FacturasEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,7 +98,7 @@ import { NoconnectionComponent } from "./components/noconnection/noconnection.co
     MomentDateModule,
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: "en-US" },
+    { provide: LOCALE_ID, useValue: "es" },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],

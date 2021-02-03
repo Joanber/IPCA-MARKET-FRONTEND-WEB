@@ -152,7 +152,7 @@
                 <td>{{ registro.precio * registro.cantidad | currency }}</td>
                 <td>{{ registro.nombre_categoria }}</td>
                 <td>
-                  {{ registro.fecha | date }}
+                  {{ registro.fecha | date | titlecase }}
                   {{ registro.fecha | date: "H:mm a" }}
                 </td>
               </tr>

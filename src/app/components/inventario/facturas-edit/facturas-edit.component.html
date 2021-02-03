@@ -1,0 +1,64 @@
+<hr class="separador-pri w-100" />
+<div class="text-center">
+  <h4>Actualizar Factura</h4>
+</div>
+<ul class="list-group">
+  <li class="list-group-item">
+    Factura N° <strong>{{ factura.id }}</strong>
+  </li>
+  <li class="list-group-item">
+    Usuario vendedor:
+    <strong>{{ usuarioVendedor | titlecase }} </strong>
+  </li>
+  <li class="list-group-item">
+    Fecha:<strong>
+      {{ factura.fecha | date | titlecase }}
+      {{ factura.fecha | date: "H:mm a" }}
+    </strong>
+  </li>
+</ul>
+<hr />
+<div class="table-scroll">
+  <table
+    class="table table-bordered table-responsive-sm table-sm text-center"
+    *ngIf="factura.detalles_facturas.length > 0"
+  >
+    <thead class="bg-pri white">
+      <tr>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Subtotal</th>
+        <th>Eliminar Item</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of factura.detalles_facturas">
+        <td>{{ item.producto.codigo_barras }}</td>
+        <td>{{ item.producto.nombre }}</td>
+        <td>
+          <div class="row justify-content-center">
+            <input
+              type="number"
+              value="{{ item.cantidad }}"
+              class="form-control col-sm-4"
+              (change)="actualizarCantidad(item.producto.id, $event)"
+            />
+          </div>
+        </td>
+        <td>{{ item.producto.precio | currency }}</td>
+        <td>{{ item.total | currency }}</td>
+        <td>
+          <button
+            class="btn bg-pri white btn-sm"
+            type="button"
+            (click)="eliminarItemFactura(item.producto.id)"
+          >
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

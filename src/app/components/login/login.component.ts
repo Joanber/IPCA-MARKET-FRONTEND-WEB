@@ -48,6 +48,8 @@ export class LoginComponen implements OnInit {
         (err) => {
           if (err.status == 500) {
             this.esValido = false;
+            this.usuario.username = null;
+            this.usuario.password = null;
             this.invalido = "Username y/o Password incorectas!";
             return;
           }

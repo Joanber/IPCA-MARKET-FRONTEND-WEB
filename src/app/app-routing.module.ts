@@ -27,6 +27,8 @@ import { ConecctionGuard } from "./services/guards/conecction.guard";
 import { NoconnectionComponent } from "./components/noconnection/noconnection.component";
 import { ModalFacturaComponent } from "./components/modal-factura/modal-factura.component";
 import { CobrarGuard } from "./services/guards/cobrar.guard";
+import { FacturasListComponent } from "./components/inventario/facturas-list/facturas-list.component";
+import { FacturasEditComponent } from "./components/inventario/facturas-edit/facturas-edit.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponen },
@@ -201,6 +203,22 @@ const routes: Routes = [
             canActivate: [AuthGuard, RoleGuard, ConecctionGuard],
             data: {
               role: ["ROLE_ADMIN", "ROLE_USER"],
+            },
+          },
+          {
+            path: "facturas",
+            component: FacturasListComponent,
+            canActivate: [AuthGuard, RoleGuard, ConecctionGuard],
+            data: {
+              role: ["ROLE_ADMIN"],
+            },
+          },
+          {
+            path: "factura/:id",
+            component: FacturasEditComponent,
+            canActivate: [AuthGuard, RoleGuard, ConecctionGuard],
+            data: {
+              role: ["ROLE_ADMIN"],
             },
           },
           { path: "**", pathMatch: "full", redirectTo: "producto" },

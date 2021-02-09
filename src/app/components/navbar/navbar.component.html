@@ -7,6 +7,7 @@
       ><img
         src="../../../assets/img/logoipca.png"
         class="img-fluid mr-2"
+        width="60px"
         alt=""
     /></a>
     <button
@@ -46,7 +47,7 @@
       <ul class="navbar-nav mt-lg-0" *ngIf="authService.isAuthenticated()">
         <li class="nav-item">
           <a class="nav-link" style="color: darkkhaki; cursor: unset"
-            ><i class="fas fa-user mr-2"></i>Usuario:
+            ><i class="fas fa-user mr-2"></i>
             {{ authService.usuario.username | titlecase }}</a
           >
         </li>

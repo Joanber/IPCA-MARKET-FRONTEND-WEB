@@ -16,7 +16,7 @@ export class PersonasListComponent implements OnInit {
   public baseEndpoint = BASE_ENDPOINT + "/personas";
   public totalRegistros = 0;
   public paginaActual = 0;
-  public totalPorPagina = 5;
+  public totalPorPagina = 10;
   public personas: Persona[];
   public busqueda = true;
   @ViewChild(MatPaginator, { static: false }) paginador: MatPaginator;

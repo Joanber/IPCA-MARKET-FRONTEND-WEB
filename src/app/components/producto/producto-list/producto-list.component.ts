@@ -18,7 +18,7 @@ import { AuthService } from "src/app/services/login_services/auth.service";
 export class ProductoListComponent implements OnInit {
   public totalRegistros = 0;
   public paginaActual = 0;
-  public totalPorPagina = 5;
+  public totalPorPagina = 10;
   @ViewChild(MatPaginator, { static: false }) paginador: MatPaginator;
   public busqueda = true;
   public baseEndpoint = BASE_ENDPOINT + "/productos";
@@ -31,7 +31,7 @@ export class ProductoListComponent implements OnInit {
     private route: ActivatedRoute,
     public authService: AuthService
   ) {}
-  
+
   ngOnInit() {
     this.getProductoPage();
     this.getProductosImprimir();
@@ -111,7 +111,9 @@ export class ProductoListComponent implements OnInit {
         "Categoria",
         "Descripción",
         "Precio",
-      ]).columnGap(3).bold().end
+      ])
+        .columnGap(3)
+        .bold().end
     );
     this.prodListaImprimir.forEach((prod) => {
       pdf.add(

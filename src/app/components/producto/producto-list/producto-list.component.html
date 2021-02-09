@@ -1,19 +1,21 @@
-<hr class="separador-pri w-100" />
+<hr />
 <div class="text-center">
-  <h4>Listado de Productos</h4>
+  <h6>Listado de Productos</h6>
 </div>
 <div class="row">
-  <div class="col-sm-3">
-    <button class="btn bg-pri white" routerLink="/dashprod/producto/form">
+  <div class="col-sm-4 mb-1">
+    <button
+      class="btn bg-pri btn-sm white"
+      routerLink="/dashprod/producto/form"
+    >
       <i class="fas fa-pizza-slice"></i> Nuevo Producto
     </button>
   </div>
-
-  <div class="col-sm-6 text-right">
+  <div class="col-sm-4 text-right">
     <div class="input-group">
       <input
         type="text"
-        class="form-control mayusculas"
+        class="form-control mayusculas form-control-sm"
         #termino
         placeholder="Buscar"
         (keyup)="cargarProductoDefault($event)"
@@ -22,7 +24,7 @@
       />
       <div class="input-group-append">
         <button
-          class="btn bg-pri text-white"
+          class="btn bg-pri btn-sm text-white"
           (click)="buscarProducto(termino.value)"
           type="button"
           id="button-addon2"
@@ -32,7 +34,7 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-3 text-right">
+  <div class="col-sm-4 text-right">
     <button
       type="button"
       class="btn btn-primary btn-sm mr-3 mb-1"
@@ -43,7 +45,7 @@
     </button>
   </div>
 </div>
-<br />
+
 <div id="productos">
   <div class="alert alert-info text-center" *ngIf="prodLista?.length == 0">
     No hay Registros
@@ -81,13 +83,13 @@
                 '?fotoHashCode=' +
                 producto.fotoHashCode
               "
-              style="width: 125px; height: 100px"
+              style="width: 30px; height: 30px"
             />
             <img
               class="img-fluid rounded"
               *ngIf="!producto.fotoHashCode"
-              src="../../../../../assets/img/notproducto.jpg"
-              style="width: 70px"
+              src="../../../../../assets/img/notproducto.png"
+              style="width: 30px"
             />
           </td>
           <td>

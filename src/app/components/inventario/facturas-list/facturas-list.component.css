@@ -3,6 +3,7 @@
   display: flex;
   justify-content: center;
 }
-.table td {
-  vertical-align: middle;
+.table-scroll {
+  height: 430px;
+  overflow-y: auto;
 }

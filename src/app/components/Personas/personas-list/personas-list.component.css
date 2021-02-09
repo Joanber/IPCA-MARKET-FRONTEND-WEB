@@ -2,7 +2,7 @@
   color: #042331 !important;
 }
 .table-scroll {
-  height: 528px;
+  height: 415px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -17,7 +17,4 @@ thead tr:nth-child(1) th {
   color: #042331;
   display: flex;
   justify-content: center;
-}
-.table td {
-  vertical-align: middle;
 }

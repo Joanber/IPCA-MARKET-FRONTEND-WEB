@@ -17,7 +17,7 @@ import { AuthService } from "src/app/services/login_services/auth.service";
 export class CategoriaListComponent implements OnInit {
   public totalRegistros = 0;
   public paginaActual = 0;
-  public totalPorPagina = 5;
+  public totalPorPagina = 10;
   @ViewChild(MatPaginator, { static: false }) paginador: MatPaginator;
   public busqueda = true;
 
@@ -31,7 +31,7 @@ export class CategoriaListComponent implements OnInit {
     private srvUr: UtilsReportService,
     public authService: AuthService
   ) {}
-  
+
   ngOnInit() {
     this.getCategoriasTodas();
     this.getCategoriaPage();

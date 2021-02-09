@@ -1,264 +1,267 @@
-<div class="container my-3">
-  <div class="row justify-content-center">
-    <h4>{{ titulo }}</h4>
-    <button class="btn btn-danger mb-2 mx-3" (click)="irProductos()">
+<hr />
+
+<div class="d-flex justify-content-between mb-0">
+  <div class="p-1"></div>
+  <div class="p-1">
+    <h5>{{ titulo }}</h5>
+  </div>
+  <div class="p-1">
+    <button class="btn btn-danger btn-sm mb-1 mx-3" (click)="irProductos()">
       <i class="fas fa-times"></i>
     </button>
   </div>
-
-  <form
-    class="border shadow rounded mx-5 animated fadeIn fast"
-    #MyForm="ngForm"
-  >
-    <div class="form-row mt-3">
-      <div class="col-md-5 mx-auto">
-        <label for="nombre">Nombre:</label>
-        <input
-          required
-          class="form-control mayusculas"
-          type="text"
-          name="nombre"
-          [(ngModel)]="producto.nombre"
-          required
-          #nombre="ngModel"
-        />
-        <div class="text-center">
-          <p
-            class="field-error"
-            *ngIf="nombre.hasError('required') && nombre.touched"
-          >
-            Nombre es requerido!
-          </p>
-        </div>
-      </div>
-
-      <div class="col-md-5 mb-3 mx-auto">
-        <label for="apellido">Codigo de barras:</label>
-        <input
-          required
-          class="form-control mayusculas"
-          type="text"
-          name="codigo_barras"
-          #codigo_barras="ngModel"
-          #termino
-          [(ngModel)]="producto.codigo_barras"
-          (keyup)="existeCodigoProducto(termino.value)"
-          #codigo_barras="ngModel"
-          minlength="10"
-        />
-        <div class="text-center">
-          <p
-            class="field-error"
-            *ngIf="precio.hasError('required') && precio.touched"
-          >
-            Codigo de barras es requerido!
-          </p>
-        </div>
-        <div class="text-center field-error" *ngIf="existe">
-          {{ mensaje }}
-        </div>
-        <div
-          class="text-center field-error"
-          *ngIf="codigo_barras.errors?.minlength"
-        >
-          !Por lo menos
-          {{ codigo_barras.errors.minlength.requiredLength }} caracteres¡
-        </div>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="col-md-5 mb-3 mx-auto">
-        <label for="precio">Precio Venta:</label>
-        <input
-          required
-          class="form-control mayusculas"
-          type="number"
-          name="precio"
-          [(ngModel)]="producto.precio"
-          required
-          #precio="ngModel"
-        />
-        <div class="text-center">
-          <p
-            class="field-error"
-            *ngIf="precio.hasError('required') && precio.touched"
-          >
-            Precio venta requerido!
-          </p>
-        </div>
-      </div>
-      <div class="col-md-5 mb-3 mx-auto">
-        <label for="precio_compra">Precio Compra:</label>
-        <input
-          required
-          class="form-control mayusculas"
-          type="number"
-          name="precio_compra"
-          [(ngModel)]="producto.precio_compra"
-          required
-          #precio_compra="ngModel"
-        />
-        <div class="text-center">
-          <p
-            class="field-error"
-            *ngIf="precio_compra.hasError('required') && precio_compra.touched"
-          >
-            Precio compra requerido!
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="col-md-5 mb-3 mx-auto">
-        <label for="telefono">Cantidad Máxima:</label>
-        <input
-          class="form-control"
-          type="number"
-          name="cantidad_maxima"
-          [(ngModel)]="producto.cantidad_maxima"
-          required
-          #cantidad_maxima="ngModel"
-        />
-        <div class="text-center">
-          <p
-            class="field-error"
-            *ngIf="
-              cantidad_maxima.hasError('required') && cantidad_maxima.touched
-            "
-          >
-            Cantidad Máxima requerido!
-          </p>
-          <p
-            class="field-error"
-            *ngIf="cantidad_maxima.value < cantidad_minima.value"
-          >
-            Cantidad Máxima no puede ser menor a Cantidad Minima!
-          </p>
-        </div>
-      </div>
-      <div class="col-md-5 mb-3 mx-auto">
-        <label for="email">Cantidad Minima:</label>
-        <input
-          required
-          class="form-control"
-          type="number"
-          name="cantidad_minima"
-          [(ngModel)]="producto.cantidad_minima"
-          required
-          #cantidad_minima="ngModel"
-        />
-        <div class="text-center">
-          <p
-            class="field-error"
-            *ngIf="
-              cantidad_minima.hasError('required') && cantidad_minima.touched
-            "
-          >
-            Cantidad Minima requerido!
-          </p>
-          <p class="field-error" *ngIf="cantidad_minima.value === 0">
-            Cantidad Minima no puede ser menor a 1
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="col-md-5 mb-3 mx-auto">
-        <label for="categoria">Categoría:</label>
-        <select
-          [compareWith]="compararProducto"
-          class="form-control"
-          name="categoria"
-          [(ngModel)]="producto.categoria"
-          required
-          #categoria="ngModel"
-        >
-          <option [ngValue]="undefined">--Seleccionar categoria--</option>
-          <option *ngFor="let categoria of lista" [ngValue]="categoria">
-            {{ categoria.nombre }}
-          </option>
-        </select>
-        <div class="text-center">
-          <p
-            class="field-error"
-            *ngIf="categoria.hasError('required') && categoria.touched"
-          >
-            Categoría requerido!
-          </p>
-        </div>
-      </div>
-      <div class="col-md-5 mb-3 mx-auto">
-        <label for="">Descripcion:</label>
-        <textarea
-          class="form-control capitalize"
-          name="descripcion"
-          rows="2"
-          cols="80"
-          [(ngModel)]="producto.descripcion"
-          required
-          #descripcion="ngModel"
-        ></textarea>
-        <div class="text-center">
-          <p
-            class="field-error"
-            *ngIf="descripcion.hasError('required') && descripcion.touched"
-          >
-            Descripción requerido!
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="form-row justify-content-start">
-      <div class="col-md-5 mb-3 mx-auto">
-        <label class="mt-3" for="foto">Foto:</label>
-        <div class="custom-file">
-          <input type="file" (change)="seleccionarFoto($event)" />
-        </div>
-
-        <img
-          [src]="imageSrc"
-          *ngIf="imageSrc; else elseblockImg"
-          class="img-fluid mt-2 text-center"
-          style="width: auto"
-        />
-        <ng-template #elseblockImg>
-          <img
-            class="img-fluid"
-            *ngIf="producto.fotoHashCode"
-            [src]="
-              baseEndpoint +
-              '/img/' +
-              producto.id +
-              '?fotoHashCode=' +
-              producto.fotoHashCode
-            "
-            style="width: auto"
-          />
-        </ng-template>
-      </div>
-    </div>
-    <div class="form-row mb-3">
-      <div class="col-md-5 mx-auto" *ngIf="MyForm.form.valid">
-        <button
-          class="btn bg-pri btn-block text-white"
-          *ngIf="!producto.id; else elseBlock"
-          (click)="crear()"
-        >
-          Guardar
-        </button>
-        <ng-template #elseBlock>
-          <button
-            type="button"
-            class="btn bg-pri btn-block text-white"
-            (click)="editar()"
-          >
-            Actualizar
-          </button>
-        </ng-template>
-      </div>
-    </div>
-  </form>
-  <hr class="separador-pri w-100" />
 </div>
+
+<form #MyForm="ngForm">
+  <div class="form-row">
+    <div class="col-md-6 mb-2">
+      <label for="nombre">Nombre:</label>
+      <input
+        required
+        class="form-control mayusculas"
+        type="text"
+        name="nombre"
+        [(ngModel)]="producto.nombre"
+        required
+        #nombre="ngModel"
+      />
+      <div class="text-center">
+        <p
+          class="field-error"
+          *ngIf="nombre.hasError('required') && nombre.touched"
+        >
+          Nombre es requerido!
+        </p>
+      </div>
+    </div>
+
+    <div class="col-md-6 mb-2">
+      <label for="apellido">Codigo de barras:</label>
+      <input
+        required
+        class="form-control mayusculas"
+        type="text"
+        name="codigo_barras"
+        #codigo_barras="ngModel"
+        #termino
+        [(ngModel)]="producto.codigo_barras"
+        (keyup)="existeCodigoProducto(termino.value)"
+        #codigo_barras="ngModel"
+        minlength="10"
+      />
+      <div class="text-center">
+        <p
+          class="field-error"
+          *ngIf="codigo_barras.hasError('required') && codigo_barras.touched"
+        >
+          Codigo de barras es requerido!
+        </p>
+      </div>
+      <div class="text-center field-error" *ngIf="existe">
+        {{ mensaje }}
+      </div>
+      <div
+        class="text-center field-error"
+        *ngIf="codigo_barras.errors?.minlength"
+      >
+        !Por lo menos
+        {{ codigo_barras.errors.minlength.requiredLength }} caracteres¡
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-md-3 mb-2">
+      <label for="precio">Precio Venta:</label>
+      <input
+        required
+        class="form-control mayusculas"
+        type="number"
+        name="precio"
+        [(ngModel)]="producto.precio"
+        required
+        #precio="ngModel"
+      />
+      <div class="text-center">
+        <p
+          class="field-error"
+          *ngIf="precio.hasError('required') && precio.touched"
+        >
+          Precio venta requerido!
+        </p>
+      </div>
+    </div>
+    <div class="col-md-3 mb-2">
+      <label for="precio_compra">Precio Compra:</label>
+      <input
+        required
+        class="form-control mayusculas"
+        type="number"
+        name="precio_compra"
+        [(ngModel)]="producto.precio_compra"
+        required
+        #precio_compra="ngModel"
+      />
+      <div class="text-center">
+        <p
+          class="field-error"
+          *ngIf="precio_compra.hasError('required') && precio_compra.touched"
+        >
+          Precio compra requerido!
+        </p>
+      </div>
+    </div>
+    <div class="col-md-3 mb-2">
+      <label for="telefono">Cantidad Máxima:</label>
+      <input
+        class="form-control"
+        type="number"
+        name="cantidad_maxima"
+        [(ngModel)]="producto.cantidad_maxima"
+        required
+        #cantidad_maxima="ngModel"
+      />
+      <div class="text-center">
+        <p
+          class="field-error"
+          *ngIf="
+            cantidad_maxima.hasError('required') && cantidad_maxima.touched
+          "
+        >
+          Cantidad Máxima requerido!
+        </p>
+        <p
+          class="field-error"
+          *ngIf="cantidad_maxima.value < cantidad_minima.value"
+        >
+          Cantidad Máxima no puede ser menor a Cantidad Minima!
+        </p>
+      </div>
+    </div>
+    <div class="col-md-3 mb-2">
+      <label for="email">Cantidad Minima:</label>
+      <input
+        required
+        class="form-control"
+        type="number"
+        name="cantidad_minima"
+        [(ngModel)]="producto.cantidad_minima"
+        required
+        #cantidad_minima="ngModel"
+      />
+      <div class="text-center">
+        <p
+          class="field-error"
+          *ngIf="
+            cantidad_minima.hasError('required') && cantidad_minima.touched
+          "
+        >
+          Cantidad Minima requerido!
+        </p>
+        <p class="field-error" *ngIf="cantidad_minima.value === 0">
+          Cantidad Minima no puede ser menor a 1
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-6 mb-0">
+      <label for="categoria">Categoría:</label>
+      <select
+        [compareWith]="compararProducto"
+        class="form-control"
+        name="categoria"
+        [(ngModel)]="producto.categoria"
+        required
+        #categoria="ngModel"
+      >
+        <option [ngValue]="undefined">--Seleccionar categoria--</option>
+        <option *ngFor="let categoria of lista" [ngValue]="categoria">
+          {{ categoria.nombre }}
+        </option>
+      </select>
+      <div class="text-center">
+        <p
+          class="field-error"
+          *ngIf="categoria.hasError('required') && categoria.touched"
+        >
+          Categoría requerido!
+        </p>
+      </div>
+    </div>
+    <div class="col-md-6 mb-1">
+      <label for="">Descripcion:</label>
+      <textarea
+        class="form-control capitalize"
+        name="descripcion"
+        rows="2"
+        cols="80"
+        [(ngModel)]="producto.descripcion"
+        required
+        #descripcion="ngModel"
+      ></textarea>
+      <div class="text-center">
+        <p
+          class="field-error"
+          *ngIf="descripcion.hasError('required') && descripcion.touched"
+        >
+          Descripción requerido!
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label for="foto">Foto:</label>
+      <div class="custom-file">
+        <input type="file" (change)="seleccionarFoto($event)" />
+      </div>
+    </div>
+    <div
+      class="col-md-3 text-center mb-3 border"
+      style="width: 160px; height: 160px"
+    >
+      <img
+        [src]="imageSrc"
+        *ngIf="imageSrc; else elseblockImg"
+        class="img-fluid mt-2 text-center"
+        style="width: 130px"
+      />
+      <ng-template #elseblockImg>
+        <img
+          class="img-fluid"
+          *ngIf="producto.fotoHashCode"
+          [src]="
+            baseEndpoint +
+            '/img/' +
+            producto.id +
+            '?fotoHashCode=' +
+            producto.fotoHashCode
+          "
+          style="width: 135px"
+        />
+      </ng-template>
+    </div>
+  </div>
+  <div class="form-row mb-3 justify-content-end">
+    <button
+      class="btn bg-pri text-white"
+      *ngIf="!producto.id; else elseBlock"
+      [disabled]="!MyForm.form.valid"
+      (click)="crear()"
+    >
+      Guardar
+    </button>
+    <ng-template #elseBlock>
+      <button
+        type="button"
+        class="btn bg-pri text-white"
+        [disabled]="!MyForm.form.valid"
+        (click)="editar()"
+      >
+        Actualizar
+      </button>
+    </ng-template>
+  </div>
+</form>
+<hr />

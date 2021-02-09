@@ -19,7 +19,7 @@ export class UsuarioListComponent implements OnInit {
   private todosUsuarios: Usuario[] = [];
   public totalRegistros = 0;
   public paginaActual = 0;
-  public totalPorPagina = 5;
+  public totalPorPagina = 10;
   public busqueda = true;
   @ViewChild(MatPaginator, { static: false }) paginador: MatPaginator;
 

@@ -1,24 +1,26 @@
-<hr class="separador-pri w-100" />
-<div class="container my-3">
-  <div class="row justify-content-center">
-    <h4>Cambiar Contraseña</h4>
-    <button class="btn btn-danger mb-2 mx-3" (click)="irUsuarios()">
-      <i class="fas fa-times"></i>
-    </button>
+<div class="contenido">
+  <hr />
+  <div class="d-flex justify-content-between mb-0">
+    <div class="p-1"></div>
+    <div class="p-1">
+      <h5>Cambiar Contraseña</h5>
+    </div>
+    <div class="p-1">
+      <button class="btn btn-danger btn-sm mb-1 mx-3" (click)="irUsuarios()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
   </div>
-  <form
-    class="border shadow rounded mx-5 animated fadeIn fast"
-    #MyForm="ngForm"
-  >
-    <div class="form-row mt-2 text-center">
-      <div class="col-md-5 mb-3 mx-auto">
+  <form #MyForm="ngForm">
+    <div class="form-row">
+      <div class="col-md-5 mb-3">
         <label for="username"
           >Usuario: <strong>{{ username }}</strong></label
         >
       </div>
     </div>
-    <div class="form-row mt-1 text-center">
-      <div class="col-md-5 mb-3 mx-auto">
+    <div class="form-row">
+      <div class="col-md-4 mb-3">
         <label for="password">Contraseña actual:</label>
         <input
           required
@@ -36,9 +38,7 @@
           !Contraseña actual correcta!
         </div>
       </div>
-    </div>
-    <div class="form-row mt-1 text-center">
-      <div class="col-md-5 mb-3 mx-auto">
+      <div class="col-md-4 mb-3">
         <label for="password">Nueva Contraseña:</label>
         <div class="input-group">
           <input
@@ -75,9 +75,7 @@
           {{ password.errors.minlength.requiredLength }} caracteres¡
         </div>
       </div>
-    </div>
-    <div class="form-row mt-3 text-center">
-      <div class="col-md-5 mx-auto">
+      <div class="col-md-4 mb-3">
         <label for="confirmpassword">Confirmar Contraseña:</label>
         <div class="input-group">
           <input
@@ -121,17 +119,16 @@
         </div>
       </div>
     </div>
-    <div class="form-row mt-3 text-center">
-      <div class="col-md-5 mb-3 mx-auto">
-        <button
-          class="btn bg-pri btn-block text-white"
-          [disabled]="!MyForm.form.valid"
-          (click)="create(MyForm)"
-        >
-          Guardar
-        </button>
-      </div>
+
+    <div class="form-row justify-content-end">
+      <button
+        class="btn bg-pri text-white"
+        [disabled]="!MyForm.form.valid"
+        (click)="create(MyForm)"
+      >
+        Guardar
+      </button>
     </div>
   </form>
 </div>
-<hr class="separador-pri w-100" />
+<hr />

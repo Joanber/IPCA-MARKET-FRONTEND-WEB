@@ -6,6 +6,15 @@
   display: flex;
   justify-content: center;
 }
-.table td {
-  vertical-align: middle;
+
+.table-scroll {
+  height: 415px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+thead tr:nth-child(1) th {
+  background: #042331;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }

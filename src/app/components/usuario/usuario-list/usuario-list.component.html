@@ -1,22 +1,22 @@
 <hr class="separador-pri w-100" />
 <div class="text-center">
-  <h4>Listado de Usuarios</h4>
+  <h6>Listado de Usuarios</h6>
 </div>
 <div class="row">
-  <div class="col-sm-3">
+  <div class="col-sm-4 mb-1">
     <button
       *ngIf="authService.hasAnyRoles(this.authService.rolesNotAll)"
-      class="btn bg-pri white"
+      class="btn bg-pri btn-sm white"
       routerLink="/dashper/usuarios/form"
     >
       <i class="fa fa-user-plus mr-1"></i>Nuevo Usuario
     </button>
   </div>
-  <div class="col-sm-6 text-right">
+  <div class="col-sm-4 text-right">
     <div class="input-group">
       <input
         type="text"
-        class="form-control"
+        class="form-control form-control-sm"
         #termino
         placeholder="Buscar"
         (keyup)="cargarUsuariosDefault($event)"
@@ -25,7 +25,7 @@
       />
       <div class="input-group-append">
         <button
-          class="btn bg-pri text-white"
+          class="btn bg-pri btn-sm text-white"
           (click)="buscarUsuario(termino.value)"
           type="button"
           id="button-addon2"
@@ -35,7 +35,7 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-3 text-right">
+  <div class="col-sm-4 text-right">
     <button
       type="button"
       class="btn btn-primary btn-sm mr-3 mb-1"
@@ -45,7 +45,6 @@
     </button>
   </div>
 </div>
-<br />
 <div>
   <div class="alert alert-info text-center" *ngIf="usuarios?.length == 0">
     No hay Registros

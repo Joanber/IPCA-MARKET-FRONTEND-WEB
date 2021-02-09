@@ -1,16 +1,19 @@
-<div class="container my-3">
-  <div class="row justify-content-center">
-    <h4>{{ titulo }}</h4>
-    <button class="btn btn-danger mb-2 mx-3" (click)="irCategorias()">
-      <i class="fas fa-times"></i>
-    </button>
+<div class="contenido">
+  <hr />
+  <div class="d-flex justify-content-between mb-0">
+    <div class="p-1"></div>
+    <div class="p-1">
+      <h5>{{ titulo }}</h5>
+    </div>
+    <div class="p-1">
+      <button class="btn btn-danger btn-sm mb-1 mx-3" (click)="irCategorias()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
   </div>
-  <form
-    class="border shadow rounded mx-5 animated fadeIn fast"
-    #MyForm="ngForm"
-  >
-    <div class="form-row mt-3">
-      <div class="col-md-5 mb-1 mx-auto">
+  <form #MyForm="ngForm">
+    <div class="form-row">
+      <div class="col-md-5 mb-3">
         <label for="nombre">Nombre:</label>
         <input
           required
@@ -31,18 +34,22 @@
         </div>
       </div>
     </div>
-    <div class="form-row mt-1">
-      <div class="col-md-5 mb-3 mx-auto">
+    <div class="form-row">
+      <div class="col-md-5 mb-3">
         <label class="mt-3" for="foto">Foto:</label>
         <div class="custom-file">
           <input type="file" (change)="seleccionarFoto($event)" />
         </div>
-
+      </div>
+      <div
+        class="col-md-3 text-center mb-3 border"
+        style="width: 200px; height: 200px"
+      >
         <img
           [src]="imageSrc"
           *ngIf="imageSrc; else elseblockImg"
           class="img-fluid mt-2 text-center"
-          style="width: auto"
+          style="width: 160px; height: 160px"
         />
         <ng-template #elseblockImg>
           <img
@@ -55,32 +62,32 @@
               '?fotoHashCode=' +
               categoria.fotoHashCode
             "
-            style="width: auto"
+            style="width: 160px"
           />
         </ng-template>
       </div>
     </div>
 
-    <div class="form-row mt-3">
-      <div class="col-md-5 mb-3 mx-auto" *ngIf="MyForm.form.valid">
+    <div class="form-row justify-content-end">
+      <button
+        class="btn bg-pri text-white"
+        *ngIf="!categoria.id; else elseBlock"
+        [disabled]="!MyForm.form.valid"
+        (click)="crear()"
+      >
+        Guardar
+      </button>
+      <ng-template #elseBlock>
         <button
-          class="btn bg-pri btn-block text-white"
-          *ngIf="!categoria.id; else elseBlock"
-          (click)="crear()"
+          type="button"
+          class="btn bg-pri text-white"
+          (click)="editar()"
+          [disabled]="!MyForm.form.valid"
         >
-          Guardar
+          Actualizar
         </button>
-        <ng-template #elseBlock>
-          <button
-            type="button"
-            class="btn bg-pri btn-block text-white"
-            (click)="editar()"
-            [disabled]="!MyForm.form.valid"
-          >
-            Actualizar
-          </button>
-        </ng-template>
-      </div>
+      </ng-template>
     </div>
   </form>
+  <hr />
 </div>

@@ -1,0 +1,5 @@
+.contenido {
+  height: 510px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

@@ -77,3 +77,10 @@ body {
 .fadeIn {
   animation-name: fadeIn;
 }
+.table td {
+  vertical-align: middle !important;
+  font-size: 13px;
+}
+.table tr {
+  font-size: 13px;
+}

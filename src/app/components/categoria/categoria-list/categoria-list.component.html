@@ -1,19 +1,22 @@
-<hr class="separador-pri w-100" />
+<hr />
 <div class="text-center">
-  <h4>Listado de Categorias</h4>
+  <h6>Listado de Categorias</h6>
 </div>
 <div class="row">
-  <div class="col-sm-3">
-    <button class="btn bg-pri white" routerLink="/dashprod/categoria/form">
+  <div class="col-sm-4 mb-1">
+    <button
+      class="btn bg-pri btn-sm white"
+      routerLink="/dashprod/categoria/form"
+    >
       <i class="fas fa-grip-horizontal mr-1"></i> Nueva Categoria
     </button>
   </div>
 
-  <div class="col-sm-6 text-right">
+  <div class="col-sm-4 text-right">
     <div class="input-group">
       <input
         type="text"
-        class="form-control mayusculas"
+        class="form-control mayusculas form-control-sm"
         #termino
         placeholder="Buscar"
         (keyup)="cargarCategoriaDefault($event)"
@@ -22,7 +25,7 @@
       />
       <div class="input-group-append">
         <button
-          class="btn bg-pri text-white"
+          class="btn bg-pri btn-sm text-white"
           (click)="buscarCategoria(termino.value)"
           type="button"
           id="button-addon2"
@@ -32,7 +35,7 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-3 text-right">
+  <div class="col-sm-4 text-right">
     <button
       type="button"
       class="btn btn-primary btn-sm mr-3 mb-1"
@@ -43,7 +46,6 @@
     </button>
   </div>
 </div>
-<br />
 <div>
   <div class="alert alert-info text-center" *ngIf="categoriaList?.length == 0">
     No hay Registros
@@ -74,13 +76,13 @@
                 '?fotoHashCode=' +
                 categoria.fotoHashCode
               "
-              style="width: 125px; height: 100px"
+              style="width: 30px; height: 30px"
             />
             <img
               class="img-fluid rounded"
               *ngIf="!categoria.fotoHashCode"
-              src="../../../../../assets/img/notproducto.jpg"
-              style="width: 70px"
+              src="../../../../../assets/img/notproducto.png"
+              style="width: 30px"
             />
           </td>
           <td>

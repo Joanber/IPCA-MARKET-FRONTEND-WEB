@@ -31,7 +31,11 @@ import { FooterComponent } from "./components/footer/footer.component";
 import { RepInventarioComponent } from "./components/inventario/rep-inventario/rep-inventario.component";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import localeES from "@angular/common/locales/es";
-import { registerLocaleData } from "@angular/common";
+import {
+  HashLocationStrategy,
+  LocationStrategy,
+  registerLocaleData,
+} from "@angular/common";
 registerLocaleData(localeES, "es");
 // Set the fonts to use
 PdfMakeWrapper.setFonts(pdfFonts);
@@ -101,6 +105,7 @@ import { FacturasEditComponent } from "./components/inventario/facturas-edit/fac
     { provide: LOCALE_ID, useValue: "es" },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
   ],
   bootstrap: [AppComponent],
 })

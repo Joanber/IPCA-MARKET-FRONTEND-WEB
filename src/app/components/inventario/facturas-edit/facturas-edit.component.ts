@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, NgForm } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DetalleFactura } from "src/app/models/detalleFactura";
 import { Factura } from "src/app/models/factura";
@@ -18,6 +18,9 @@ export class FacturasEditComponent implements OnInit {
   public autocompleteControl = new FormControl();
   public productoFiltrado: Producto;
   public usuarioVendedor: string = null;
+  public total: number;
+  public existencia: number;
+  public isError = false;
   constructor(
     private srvf: FacturasService,
     private router: Router,
@@ -64,7 +67,6 @@ export class FacturasEditComponent implements OnInit {
       this.factura.detalles_facturas.push(nuevoDetalle);
     }
     this.autocompleteControl.setValue("");
-    console.log(this.factura);
   }
   private existeItem(id: number): boolean {
     let existe = false;
@@ -93,7 +95,6 @@ export class FacturasEditComponent implements OnInit {
     this.factura.detalles_facturas = this.factura.detalles_facturas.filter(
       (detalle: DetalleFactura) => id !== detalle.producto.id
     );
-    console.log(this.factura);
   }
 
   public actualizarCantidad(id: number, event: any): void {
@@ -139,5 +140,36 @@ export class FacturasEditComponent implements OnInit {
 
   public irFacturas() {
     this.router.navigate(["/inventario/facturas"]);
+  }
+  public calcularGranTotal(): number {
+    this.total = 0;
+    this.factura.detalles_facturas.forEach((item: DetalleFactura) => {
+      this.total += item.cantidad * item.producto.precio;
+    });
+    return this.total;
+  }
+
+  public actualizarFactura(form: NgForm) {
+    if (this.factura.detalles_facturas.length > 0) {
+      this.factura.detalles_facturas.forEach((item: DetalleFactura) => {
+        item.total = item.cantidad * item.producto.precio;
+      });
+      this.srvf.update(this.factura).subscribe((factura) => {
+        this.irFacturas();
+        Swal.fire(
+          "Actualizar Factura",
+          `!Factura N° ${factura.id} actualizada con exito!`,
+          "success"
+        );
+      });
+    } else {
+      this.onIsError();
+    }
+  }
+  private onIsError(): void {
+    this.isError = true;
+    setTimeout(() => {
+      this.isError = false;
+    }, 1000);
   }
 }

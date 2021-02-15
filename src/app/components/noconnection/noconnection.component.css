@@ -1,1 +1,5 @@
-
+.layout {
+  height: 580px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

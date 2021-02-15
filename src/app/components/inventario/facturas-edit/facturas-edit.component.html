@@ -39,6 +39,9 @@
     {{ termino.focus() }}
   </div>
 </div>
+<div class="text-center alert alert-info small p-1 my-1" *ngIf="isError">
+  AGREGUE PRODUCTOS A SU FACTURA, AL MENOS UNA !
+</div>
 <div class="table-scroll">
   <table
     class="table table-bordered table-responsive-sm table-sm text-center"
@@ -51,6 +54,7 @@
         <th>Cantidad</th>
         <th>Precio</th>
         <th>Subtotal</th>
+        <th>Existencia</th>
         <th>Eliminar Item</th>
       </tr>
     </thead>
@@ -69,7 +73,8 @@
           </div>
         </td>
         <td>{{ item.producto.precio | currency }}</td>
-        <!-- <td>{{ item.calcularImporte() | currency }}</td> -->
+        <td>{{ item.cantidad * item.producto.precio | currency }}</td>
+        <td>{{ item.producto.cantidad_maxima - item.cantidad }}</td>
         <td>
           <button
             class="btn bg-pri white btn-sm"
@@ -85,10 +90,15 @@
 </div>
 <div class="row justify-content-end">
   <div class="col-3 text-center">
-    <!-- <h3 style="color: blue">
-      {{ this.factura.calcularGranTotal() | currency }}
-    </h3> -->
-    <button class="btn bg-pri btn-block text-white float-right" type="button">
+    <h3 style="color: blue">
+      {{ this.calcularGranTotal() | currency }}
+    </h3>
+
+    <button
+      class="btn bg-pri btn-block text-white float-right"
+      type="button"
+      (click)="actualizarFactura()"
+    >
       <i class="fas fa-cart-arrow-down mr-2"></i>Actualizar
     </button>
   </div>

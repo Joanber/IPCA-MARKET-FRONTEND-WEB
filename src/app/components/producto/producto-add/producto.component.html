@@ -81,6 +81,7 @@
         [(ngModel)]="producto.precio"
         required
         #precio="ngModel"
+        min="1"
       />
       <div class="text-center">
         <p
@@ -100,6 +101,7 @@
         name="precio_compra"
         [(ngModel)]="producto.precio_compra"
         required
+        min="1"
         #precio_compra="ngModel"
       />
       <div class="text-center">
@@ -119,6 +121,7 @@
         name="cantidad_maxima"
         [(ngModel)]="producto.cantidad_maxima"
         required
+        min="1"
         #cantidad_maxima="ngModel"
       />
       <div class="text-center">
@@ -147,6 +150,7 @@
         name="cantidad_minima"
         [(ngModel)]="producto.cantidad_minima"
         required
+        min="1"
         #cantidad_minima="ngModel"
       />
       <div class="text-center">

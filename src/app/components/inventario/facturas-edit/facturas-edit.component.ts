@@ -21,6 +21,7 @@ export class FacturasEditComponent implements OnInit {
   public total: number;
   public existencia: number;
   public isError = false;
+  public existenciapro: number;
   constructor(
     private srvf: FacturasService,
     private router: Router,
@@ -100,7 +101,7 @@ export class FacturasEditComponent implements OnInit {
   public actualizarCantidad(id: number, event: any): void {
     let cantidad: number = event.target.value as number;
     if (cantidad == 0) {
-      return this.eliminarItemFactura(id);
+      return this.onIsError();
     }
     this.factura.detalles_facturas = this.factura.detalles_facturas.map(
       (detalle: DetalleFactura) => {
@@ -162,8 +163,6 @@ export class FacturasEditComponent implements OnInit {
           "success"
         );
       });
-    } else {
-      this.onIsError();
     }
   }
   private onIsError(): void {

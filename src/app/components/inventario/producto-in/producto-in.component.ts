@@ -31,6 +31,10 @@ export class ProductoInComponent implements OnInit {
           this.producto.cantidad_maxima = 0;
           this.codBarras = this.producto.codigo_barras;
         } else {
+          this.producto = new Producto();
+          this.cantidad_producto = 0;
+          this.nombre_producto = "Nombre del Producto";
+          this.codBarras = "";
           Swal.fire({
             title: "!PRODUCTO NO ENCONTRADO¡",
             icon: "error",

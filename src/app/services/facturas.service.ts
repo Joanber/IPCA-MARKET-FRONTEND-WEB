@@ -127,4 +127,22 @@ export class FacturasService {
         })
       );
   }
+  eliminaritem(factura: Factura, iddet: number): Observable<Factura> {
+    return this.http
+      .put<Factura>(`${this.baseEndpoint}/${factura.id}/${iddet}`, factura)
+      .pipe(
+        map((response: any) => response.factura as Factura),
+        catchError((e) => {
+          if (e.status == 400) {
+            return throwError(e);
+          }
+          Swal.fire(
+            "Error al eliminar item de la factura",
+            e.error.mensaje,
+            "error"
+          );
+          return throwError(e);
+        })
+      );
+  }
 }

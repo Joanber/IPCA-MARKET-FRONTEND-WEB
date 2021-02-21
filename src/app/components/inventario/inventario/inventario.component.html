@@ -32,6 +32,7 @@
     <i class="fas fa-file-download mr-2"></i>Productos bajos en Inventario
   </button>
   <button
+    *ngIf="authService.hasAnyRoles(this.authService.rolesNotAll)"
     type="button"
     class="btn bg-pri btn-sm text-white mr-3 mb-1"
     routerLink="/inventario/facturas"

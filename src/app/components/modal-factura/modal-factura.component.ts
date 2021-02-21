@@ -49,7 +49,7 @@ export class ModalFacturaComponent implements OnInit {
   public guardarVentaFactura() {
     this.srvF.crearFactura(this.factura).subscribe((factura) => {
       Swal.fire({
-        title: "!PRODUCTO VENDIDO CON ÉXITO¡",
+        title: "!VENTA REALIZADA CON ÉXITO¡",
         icon: "success",
         showConfirmButton: false,
         onOpen: function () {

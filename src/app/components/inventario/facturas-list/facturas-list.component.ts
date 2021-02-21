@@ -1,6 +1,7 @@
 import { DatePipe } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatPaginator, PageEvent } from "@angular/material";
+import { DetalleFactura } from "src/app/models/detalleFactura";
 import { Factura } from "src/app/models/factura";
 import { Usuario } from "src/app/models/usuario";
 import { FacturasService } from "src/app/services/facturas.service";
@@ -93,14 +94,52 @@ export class FacturasListComponent implements OnInit {
             );
             swalWithBootstrapButtons.fire(
               "Factura Eliminada!",
-              `Factura  eliminada correctamente!`,
+              `Factura  eliminada con su respectiva devolución!`,
               "success"
             );
           });
         }
       });
   }
+  public eliminaritem(factura: Factura, id: number, idpro: number) {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
 
+    swalWithBootstrapButtons
+      .fire({
+        title: "¿Estas  seguro?",
+        text: `¿Seguro que quieres hacer la devolucion de este producto?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, eliminar!",
+        cancelButtonText: "No, cancelar!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.value) {
+          factura.detalles_facturas = factura.detalles_facturas.filter(
+            (detalle: DetalleFactura) => idpro !== detalle.producto.id
+          );
+          this.srvF.eliminaritem(factura, id).subscribe((response) => {
+            this.obtenerFacturas(
+              this.paginaActual.toString(),
+              this.user,
+              this.fecha
+            );
+            swalWithBootstrapButtons.fire(
+              "Item Producto!",
+              `Devolucion exitosa!`,
+              "success"
+            );
+          });
+        }
+      });
+  }
   public consultarFacturas() {
     this.fecha = this.formatoFecha(this.fecha);
     if (this.user == undefined) {

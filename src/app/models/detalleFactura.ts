@@ -1,6 +1,7 @@
 import { Producto } from "./producto";
 
 export class DetalleFactura {
+  id: number;
   cantidad: number = 1;
   producto: Producto;
   total: number;

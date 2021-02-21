@@ -66,6 +66,7 @@
             <div class="row justify-content-center">
               <input
                 type="number"
+                min="1"
                 value="{{ item.cantidad }}"
                 class="form-control col-sm-4"
                 (change)="actualizarCantidad(item.producto.id, $event)"

@@ -1,5 +1,5 @@
 <div class="text-center">
-  <h6>Facturas</h6>
+  <h6>Listado de Facturas</h6>
 </div>
 <div class="form-row">
   <div class="col-sm-3">
@@ -92,6 +92,9 @@
                     <th>Cantidad</th>
                     <th>Precio</th>
                     <th>SubTotal</th>
+                    <th *ngIf="factura.detalles_facturas.length > 1">
+                      Devolución
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -100,6 +103,17 @@
                     <td>{{ detalle.cantidad }}</td>
                     <td>{{ detalle.producto.precio | currency }}</td>
                     <td>{{ detalle.total | currency }}</td>
+                    <td *ngIf="factura.detalles_facturas.length > 1">
+                      <button
+                        class="btn btn-sm"
+                        type="button"
+                        (click)="
+                          eliminaritem(factura, detalle.id, detalle.producto.id)
+                        "
+                      >
+                        <i class="fas fa-undo"></i>
+                      </button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
